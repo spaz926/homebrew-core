@@ -6,7 +6,9 @@ class PyenvVirtualenvwrapper < Formula
   license "MIT"
   head "https://github.com/pyenv/pyenv-virtualenvwrapper.git"
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "c0c302d7010b5d22e5f452a8dacc52d6f899522d976d51763cbaa60c372add15"
+  end
 
   depends_on "pyenv"
 

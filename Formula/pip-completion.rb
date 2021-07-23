@@ -2,8 +2,9 @@ class PipCompletion < Formula
   desc "Bash completion for Pip"
   homepage "https://github.com/ekalinin/pip-bash-completion"
   url "https://github.com/ekalinin/pip-bash-completion.git",
-      revision: "f5a7216a5620c3da5ae1d4a2c6ce9b64009b31c2"
-  version "20190723"
+      revision: "321d8bd2c56bb1565ac20210367bd272a111a1aa"
+  version "20200731"
+  license "MIT"
   head "https://github.com/ekalinin/pip-bash-completion.git"
 
   # There currently aren't any versions of pip-completion and the formula
@@ -14,7 +15,9 @@ class PipCompletion < Formula
     skip "No version information available"
   end
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "51b5af04de256b9399c94fc7665f601b9636ea48257936afd7f4517fb5cc4414"
+  end
 
   def install
     bash_completion.install "pip"

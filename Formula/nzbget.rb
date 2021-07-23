@@ -1,10 +1,9 @@
 class Nzbget < Formula
   desc "Binary newsgrabber for nzb files"
   homepage "https://nzbget.net/"
-  url "https://github.com/nzbget/nzbget/releases/download/v21.0/nzbget-21.0-src.tar.gz"
-  sha256 "65a5d58eb8f301e62cf086b72212cbf91de72316ffc19182ae45119ddd058d53"
+  url "https://github.com/nzbget/nzbget/releases/download/v21.1/nzbget-21.1-src.tar.gz"
+  sha256 "4e8fc1beb80dc2af2d6a36a33a33f44dedddd4486002c644f4c4793043072025"
   license "GPL-2.0-or-later"
-  revision 1
   head "https://github.com/nzbget/nzbget.git", branch: "develop"
 
   livecheck do
@@ -13,10 +12,10 @@ class Nzbget < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 big_sur:  "0e6628877593d52315c0390d9c92dfef1673806ff99eb4bb76ab7c0ceb9ef13f"
-    sha256 catalina: "ecf6a149b5f521f683f5d2fda434b5dc74191a5bae5e0c0f0879c4c6fbe60510"
-    sha256 mojave:   "c61cd9afc8d82e05e1a755552de7f056147023fc1569c51567b9b3f1739c9979"
+    sha256                               big_sur:      "58bdb9f03b4fd13f12a8ae0eaad6c4a020843ee63458b7309350d84dd1507679"
+    sha256                               catalina:     "9a83ad81e63662db998f945f0a3531615332eed2d8b26bf035559aca133d52b6"
+    sha256                               mojave:       "6a63b3f3645d5f03333db43d5e216a8bcc2a8d97935ae79423a892af1f452855"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "7181a81344fa3ca15bd73a984257bf3dd5f7ad75af25dd4e2c54128edb0050ce"
   end
 
   depends_on "pkg-config" => :build
@@ -30,9 +29,16 @@ class Nzbget < Formula
 
     # Fix "ncurses library not found"
     # Reported 14 Aug 2016: https://github.com/nzbget/nzbget/issues/264
-    (buildpath/"brew_include").install_symlink MacOS.sdk_path/"usr/include/ncurses.h"
-    ENV["ncurses_CFLAGS"] = "-I#{buildpath}/brew_include"
-    ENV["ncurses_LIBS"] = "-L/usr/lib -lncurses"
+    on_macos do
+      (buildpath/"brew_include").install_symlink MacOS.sdk_path/"usr/include/ncurses.h"
+      ENV["ncurses_CFLAGS"] = "-I#{buildpath}/brew_include"
+      ENV["ncurses_LIBS"] = "-L/usr/lib -lncurses"
+    end
+
+    on_linux do
+      ENV["ncurses_CFLAGS"] = "-I#{Formula["ncurses"].opt_include}"
+      ENV["ncurses_LIBS"] = "-L#{Formula["ncurses"].opt_lib} -lncurses"
+    end
 
     # Tell configure to use OpenSSL
     system "./configure", "--disable-debug", "--disable-dependency-tracking",
@@ -45,8 +51,10 @@ class Nzbget < Formula
 
     # Set upstream's recommended values for file systems without
     # sparse-file support (e.g., HFS+); see Homebrew/homebrew-core#972
-    inreplace "nzbget.conf", "DirectWrite=yes", "DirectWrite=no"
-    inreplace "nzbget.conf", "ArticleCache=0", "ArticleCache=700"
+    on_macos do
+      inreplace "nzbget.conf", "DirectWrite=yes", "DirectWrite=no"
+      inreplace "nzbget.conf", "ArticleCache=0", "ArticleCache=700"
+    end
 
     etc.install "nzbget.conf"
   end
@@ -91,10 +99,10 @@ class Nzbget < Formula
   test do
     (testpath/"downloads/dst").mkpath
     # Start nzbget as a server in daemon-mode
-    system "#{bin}/nzbget", "-D"
+    system "#{bin}/nzbget", "-D", "-c", etc/"nzbget.conf"
     # Query server for version information
-    system "#{bin}/nzbget", "-V"
+    system "#{bin}/nzbget", "-V", "-c", etc/"nzbget.conf"
     # Shutdown server daemon
-    system "#{bin}/nzbget", "-Q"
+    system "#{bin}/nzbget", "-Q", "-c", etc/"nzbget.conf"
   end
 end

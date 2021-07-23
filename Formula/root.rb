@@ -4,6 +4,7 @@ class Root < Formula
   url "https://root.cern.ch/download/root_v6.22.08.source.tar.gz"
   sha256 "6f061ff6ef8f5ec218a12c4c9ea92665eea116b16e1cd4df4f96f00c078a2f6f"
   license "LGPL-2.1-or-later"
+  revision 2
   head "https://github.com/root-project/root.git"
 
   livecheck do
@@ -12,10 +13,10 @@ class Root < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "6a4af2c361ac4f65f523b5487a93afe1ff7ea3939997bd376d6971a1de6dd1fb"
-    sha256 big_sur:       "6f3b9e7ce0cc079488e9e4b9d6ca8a0b948c0d605887ff95f40a881c0645a1b6"
-    sha256 catalina:      "7fdc50aa5b0b2889c0b93f77c8dad5b8f838b924663f4d5b38fe2f423ef6effd"
-    sha256 mojave:        "385d6278a1dd4c09fd1031b8c443e19b7ec4482ad85105c0d0f06bc6dea60229"
+    sha256 arm64_big_sur: "17c9442b2c82a2ba1ce3978a7be33d928ed11696874dd9a7593514d79bedcbf8"
+    sha256 big_sur:       "002227927383e2b3361ca8a26b85949f9eaafff657d61cf4bc7aed70dff71e4c"
+    sha256 catalina:      "24d53591f952dfdee8d31fd57a468a008fc512cdb3e823ea8b89da01e8c77c17"
+    sha256 mojave:        "47f7f1c5c2a3215dfbb127cb96b831e73f22a34a708418b5ebe2575d239f4032"
   end
 
   depends_on "cmake" => :build

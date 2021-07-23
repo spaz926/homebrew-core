@@ -4,7 +4,7 @@ class Bc < Formula
   url "https://ftp.gnu.org/gnu/bc/bc-1.07.1.tar.gz"
   mirror "https://ftpmirror.gnu.org/bc/bc-1.07.1.tar.gz"
   sha256 "62adfca89b0a1c0164c2cdca59ca210c1d44c3ffc46daf9931cf4942664cb02a"
-  license "GPL-3.0"
+  license "GPL-3.0-or-later"
 
   bottle do
     rebuild 1
@@ -15,12 +15,14 @@ class Bc < Formula
     sha256 cellar: :any_skip_relocation, high_sierra:   "0baf2e31191d80258636186bf9adcdf6b3f554f213d36cb3054213f736e52bf1"
     sha256 cellar: :any_skip_relocation, sierra:        "1d8f0459c0b67aae275c43e01e5312146be72163acadd3d6c8f2bc440181508c"
     sha256 cellar: :any_skip_relocation, el_capitan:    "e5c4b3fa712d705c3cc9bfae12242c9b4dc429e329c61d12aa01b65c1623a11f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1a362b8441afe9204305f4ae8909a67ff7e9ea702d4c4e8394911af1c914dbac"
   end
 
   keg_only :provided_by_macos
 
   uses_from_macos "bison" => :build
   uses_from_macos "ed" => :build
+  uses_from_macos "texinfo" => :build
   uses_from_macos "flex"
 
   def install

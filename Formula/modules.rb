@@ -1,10 +1,9 @@
 class Modules < Formula
   desc "Dynamic modification of a user's environment via modulefiles"
   homepage "https://modules.sourceforge.io/"
-  url "https://downloads.sourceforge.net/project/modules/Modules/modules-4.7.0/modules-4.7.0.tar.bz2"
-  sha256 "68099b98f075c669af3a6eb638b75a2feefc8dd7f778bcae3f5504ded9c1b2ca"
+  url "https://downloads.sourceforge.net/project/modules/Modules/modules-4.8.0/modules-4.8.0.tar.bz2"
+  sha256 "e9254c93efcbd17806a421eb414f7ce22fee37108748b02562cded851b46bfaa"
   license "GPL-2.0-or-later"
-  revision 1
 
   livecheck do
     url :stable
@@ -12,10 +11,10 @@ class Modules < Formula
   end
 
   bottle do
-    sha256               arm64_big_sur: "9efa2847cd3b742278569de48251e6e4a3828a4faaee55621c399f8d01efe5ed"
-    sha256               big_sur:       "637ca6ff4592b1c2392a927f289bdb8d867d922f90a9df91aed57c45d6c1d1d4"
-    sha256 cellar: :any, catalina:      "768a0050642449eea6a5d714e39a83f23ca32b2e19a8f3c15e29a75854aebf55"
-    sha256 cellar: :any, mojave:        "9778d58e3a2f1a41236f26c634e75062c1b2c2be2569c65e758c2226a81a0463"
+    sha256               arm64_big_sur: "1e68e132bea8d5133661124ada2eb86e28b2df6f02add99a8db81f0372f7ebf6"
+    sha256               big_sur:       "f7db523c25f10422709babd29da071fb844fb8207ccd0c8e0ba54948e4119cd3"
+    sha256 cellar: :any, catalina:      "ad84ed490ed2640a32799c5fb3ca7d815c45989f90bf246e087354e60ae23537"
+    sha256 cellar: :any, mojave:        "92b00fca6d79e453bf2231d10783912342aa45c7c9ef926998c2ff39e2cc3160"
   end
 
   depends_on "tcl-tk"

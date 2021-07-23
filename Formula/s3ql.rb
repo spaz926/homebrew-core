@@ -22,11 +22,7 @@ class S3ql < Formula
   uses_from_macos "libffi"
 
   on_macos do
-    # Requires fuse3, while osxfuse only has fuse2 API
-    # https://github.com/s3ql/s3ql/issues/192
-    # Moreover, we disable all FUSE-based formulas anyway
-    deprecate! date: "2020-11-10", because: "requires FUSE"
-    depends_on :osxfuse
+    disable! date: "2021-04-08", because: "requires closed-source macFUSE"
   end
 
   on_linux do
@@ -152,6 +148,18 @@ class S3ql < Formula
 
     system libexec/"bin/python3", "setup.py", "build_ext", "--inplace"
     venv.pip_install_and_link buildpath
+  end
+
+  def caveats
+    on_macos do
+      <<~EOS
+        The reasons for disabling this formula can be found here:
+          https://github.com/Homebrew/homebrew-core/pull/64491
+
+        An external tap may provide a replacement formula. See:
+          https://docs.brew.sh/Interesting-Taps-and-Forks
+      EOS
+    end
   end
 
   test do

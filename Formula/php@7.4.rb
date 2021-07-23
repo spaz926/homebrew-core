@@ -2,16 +2,23 @@ class PhpAT74 < Formula
   desc "General-purpose scripting language"
   homepage "https://www.php.net/"
   # Should only be updated if the new version is announced on the homepage, https://www.php.net/
-  url "https://www.php.net/distributions/php-7.4.16.tar.xz"
-  mirror "https://fossies.org/linux/www/php-7.4.16.tar.xz"
-  sha256 "1c16cefaf88ded4c92eed6a8a41eb682bb2ef42429deb55f1c4ba159053fb98b"
+  url "https://www.php.net/distributions/php-7.4.21.tar.xz"
+  mirror "https://fossies.org/linux/www/php-7.4.21.tar.xz"
+  sha256 "cf43384a7806241bc2ff22022619baa4abb9710f12ec1656d0173de992e32a90"
   license "PHP-3.01"
+  revision 1
+
+  livecheck do
+    url "https://www.php.net/downloads"
+    regex(/href=.*?php[._-]v?(#{Regexp.escape(version.major_minor)}(?:\.\d+)*)\.t/i)
+  end
 
   bottle do
-    sha256 arm64_big_sur: "3d8f32719809271463e0fa2a6df17cf0f7366fad12a872a9f85e74e29a71470d"
-    sha256 big_sur:       "9fe2442ca2be2fd0b4af1876dc83176fe9b575dbf66528fa9fdbbd57bfeb38d3"
-    sha256 catalina:      "96b0767f4d6c2c4757d1d2fa47d42009be1664d0d2df3c38bbbc0132790eb97c"
-    sha256 mojave:        "e17c40aa2b61bf892245cdb6db158be9bd151cef06d86c44b75bb9159b597662"
+    sha256 arm64_big_sur: "1dc40c0ae0e4c12e9684ed9beaa066f2686421f7b1b252723bebd162083400b8"
+    sha256 big_sur:       "c4c3d32c3389182e1cee26480c1a23aa73e4bf342dee60e0c896a9a6ad1502c1"
+    sha256 catalina:      "de72b3070516a8d24a47e48af719fb4317b3f92fc3235fffabfc5b928a2deb48"
+    sha256 mojave:        "cfdb1b7705e729c90caab267dbe65ee22896032287945aa3800480f8e6f5ee61"
+    sha256 x86_64_linux:  "6f487b0d1ba984da5ece70bfc96b444fbf2e2c7cafc7f30404b679226d3ac686"
   end
 
   keg_only :versioned_formula
@@ -358,7 +365,7 @@ class PhpAT74 < Formula
     system "#{bin}/phpdbg", "-V"
     system "#{bin}/php-cgi", "-m"
     # Prevent SNMP extension to be added
-    assert_no_match(/^snmp$/, shell_output("#{bin}/php -m"),
+    refute_match(/^snmp$/, shell_output("#{bin}/php -m"),
       "SNMP extension doesn't work reliably with Homebrew on High Sierra")
     begin
       port = free_port

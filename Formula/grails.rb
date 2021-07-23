@@ -1,8 +1,8 @@
 class Grails < Formula
   desc "Web application framework for the Groovy language"
   homepage "https://grails.org"
-  url "https://github.com/grails/grails-core/releases/download/v4.0.9/grails-4.0.9.zip"
-  sha256 "42ac18d0a3e586db780b82ac01fdd7a97786eacc0c500eb41bed098c58cbd181"
+  url "https://github.com/grails/grails-core/releases/download/v4.0.11/grails-4.0.11.zip"
+  sha256 "1c7a9439b48024f14833bce73a971074cf0be76481e35b54048442c5ac52f528"
   license "Apache-2.0"
 
   livecheck do
@@ -10,7 +10,9 @@ class Grails < Formula
     regex(/^v?(\d+(?:\.\d+)+)$/i)
   end
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "91ae9492204373e5180cd66da98f0699e734a886e5160c3e5a44faf1841d7b46"
+  end
 
   depends_on "openjdk@11"
 

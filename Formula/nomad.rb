@@ -1,10 +1,10 @@
 class Nomad < Formula
   desc "Distributed, Highly Available, Datacenter-Aware Scheduler"
   homepage "https://www.nomadproject.io"
-  url "https://github.com/hashicorp/nomad/archive/v1.0.4.tar.gz"
-  sha256 "24f7d7853af6aa2c92645bddd0cbfa44797bc44d5375c4d53b52698d8c5968be"
+  url "https://github.com/hashicorp/nomad/archive/v1.1.2.tar.gz"
+  sha256 "4f125ecc318209052a242bc186a83ddedaee18a46f4a8bdf7977b4be456ce2b9"
   license "MPL-2.0"
-  head "https://github.com/hashicorp/nomad.git"
+  head "https://github.com/hashicorp/nomad.git", branch: "main"
 
   livecheck do
     url :stable
@@ -12,10 +12,11 @@ class Nomad < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "62e0ec12e5fcb8f69d5d2512d5da01c2a717bad962fb6a3d046547bbf6823d06"
-    sha256 cellar: :any_skip_relocation, big_sur:       "7cde444ca439554b1f223a19bc09147c71a4d6d1297e584d70bb582d0e80f24e"
-    sha256 cellar: :any_skip_relocation, catalina:      "2083afc6560435aba845e0d3bbe933030968d6155a6f18becb9ecfa4dcfe30c5"
-    sha256 cellar: :any_skip_relocation, mojave:        "b353d6c34e14f4ba048af85a116678f1b36a43bea30e3136ca3a32861324376a"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "d6c9246bb9cb10b13f36f5b297bba560b5339094ed65da16e57274ca9302bd87"
+    sha256 cellar: :any_skip_relocation, big_sur:       "3831bbd1df02820cf90bd2f99877a7798f8f92863c19acc864175375bfe3a144"
+    sha256 cellar: :any_skip_relocation, catalina:      "ac251c800cb74648fefc59fdd99570afdf51e26e57dc320aefbfb0e06971f5df"
+    sha256 cellar: :any_skip_relocation, mojave:        "ad7552780d162217a5c55daccaafc1992fa3d183eb2a821df737673604503ea9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bef4277e814809b4c2af4325af9849b2466b6c63aa0dc3fef25840247ba8f9bf"
   end
 
   depends_on "go" => :build

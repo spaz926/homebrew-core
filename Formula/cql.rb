@@ -11,6 +11,7 @@ class Cql < Formula
     sha256 cellar: :any_skip_relocation, big_sur:       "cf8e7615d8f5c837efd97b0d5dfc1c0376522fa8823b3d12242470084e82fd81"
     sha256 cellar: :any_skip_relocation, catalina:      "56b5f1a6ac0916da4bf79ae54ce6be4d5d7fae8d943cc3bab400e66e79cd0aec"
     sha256 cellar: :any_skip_relocation, mojave:        "100623450a27784a84597f68cc03956ec715a7121cdffbe33d51126bb681392c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e63e0a586b7c7ffd735aa11519b7a7c2fdb65c34edd3f45339de8753a9616793"
   end
 
   depends_on "go" => :build
@@ -20,8 +21,8 @@ class Cql < Formula
     ENV["CGO_ENABLED"] = "1"
 
     ldflags = "-s -w -X main.version=v#{version} " \
-      "-X github.com/CovenantSQL/CovenantSQL/conf.RoleTag=C " \
-      "-X github.com/CovenantSQL/CovenantSQL/utils/log.SimpleLog=Y"
+              "-X github.com/CovenantSQL/CovenantSQL/conf.RoleTag=C " \
+              "-X github.com/CovenantSQL/CovenantSQL/utils/log.SimpleLog=Y"
     system "go", "build", *std_go_args, "-tags", "sqlite_omit_load_extension",
       "-ldflags", ldflags, "./cmd/cql"
 

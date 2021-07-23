@@ -1,8 +1,8 @@
 class Ooniprobe < Formula
   desc "Network interference detection tool"
   homepage "https://ooni.org/"
-  url "https://github.com/ooni/probe-cli/archive/v3.7.0.tar.gz"
-  sha256 "27f0eec380825f236f7ab3aff22dd29d7090ef47d1ce1ccb1e728e0b846b30ce"
+  url "https://github.com/ooni/probe-cli/archive/v3.10.0.tar.gz"
+  sha256 "0e8732c012b685d4533f608c3b0f554b89fa5834bd40a421c225789abcc47470"
   license "BSD-3-Clause"
 
   livecheck do
@@ -11,10 +11,10 @@ class Ooniprobe < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "8febc99962cd25a8a448198c8837f62a82add56b7011505ba487ca4bfc4450fd"
-    sha256 cellar: :any_skip_relocation, big_sur:       "5f34b6c2d134075598168d4865a2e44bea47a7320f27a4a352b33c3000e5547a"
-    sha256 cellar: :any_skip_relocation, catalina:      "cf2c12e4144baa698d11f121b3f862b9b07a0691ee23aae2b2c8e330269f9376"
-    sha256 cellar: :any_skip_relocation, mojave:        "310bb173502552cf62532c82d5cfa888f0ff6d1550b2377bd612bc6e8dfe92b1"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "b73c1e177e7a99467aea8b310f16e0feb457eb77fc07f6330e2b47139181bba1"
+    sha256 cellar: :any_skip_relocation, big_sur:       "55467a50e161f783789e3f64f2900c61b8d87b5d9ae7c1d401e31843dbc9289e"
+    sha256 cellar: :any_skip_relocation, catalina:      "a3a0390fb67335c4e9b9285253df4732e26f3de9ac0b5336c090c5155d713292"
+    sha256 cellar: :any_skip_relocation, mojave:        "ad681ca897aff22143dcee2f94f4fada53eff9ee89d58295c41ae37dce7e20b0"
   end
 
   depends_on "go" => :build

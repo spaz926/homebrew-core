@@ -1,32 +1,42 @@
 class Libgccjit < Formula
   desc "JIT library for the GNU compiler collection"
+  if Hardware::CPU.arm?
+    # Branch from the Darwin maintainer of GCC with Apple Silicon support,
+    # located at https://github.com/iains/gcc-darwin-arm64 and
+    # backported with his help to gcc-11 branch. Too big for a patch.
+    url "https://github.com/fxcoudert/gcc/archive/refs/tags/gcc-11.1.0-arm-20210504.tar.gz"
+    sha256 "ce862b4a4bdc8f36c9240736d23cd625a48af82c2332d2915df0e16e1609a74c"
+    version "11.1.0"
+  else
+    url "https://ftp.gnu.org/gnu/gcc/gcc-11.1.0/gcc-11.1.0.tar.xz"
+    mirror "https://ftpmirror.gnu.org/gcc/gcc-11.1.0/gcc-11.1.0.tar.xz"
+    sha256 "4c4a6fb8a8396059241c2e674b85b351c26a5d678274007f076957afa1cc9ddf"
+  end
   homepage "https://gcc.gnu.org/"
-  url "https://ftp.gnu.org/gnu/gcc/gcc-10.2.0/gcc-10.2.0.tar.xz"
-  sha256 "b8dd4368bb9c7f0b98188317ee0254dd8cc99d1e3a18d0ff146c855fe16c1d8c"
   license "GPL-3.0-or-later" => {
     with: "GCC-exception-3.1",
   }
-  revision 1
   head "https://gcc.gnu.org/git/gcc.git"
 
   livecheck do
-    url :stable
+    # Should be
+    # url :stable
+    # but that does not work with the ARM-specific branch above
+    url "https://ftp.gnu.org/gnu/gcc/gcc-11.1.0"
     regex(%r{href=.*?gcc[._-]v?(\d+(?:\.\d+)+)(?:/?["' >]|\.t)}i)
   end
 
   bottle do
     rebuild 1
-    sha256 big_sur:  "84b3e7df022c08bd70d96a3897ef0391e48b8e796c49f6600e3b82b65e1120e6"
-    sha256 catalina: "014c277de860ab4862ef33a056c559d62693a06f1667ca0b267349ec8f58ddf0"
-    sha256 mojave:   "3b40caf5f7bb340467374f4f020028d1450226436a72290db55ed5eb5a3bfb3b"
+    sha256 arm64_big_sur: "2355d93ae4c5b11d46dab907d4efcbfec1b3709cb43a109e7154380ea85c3f50"
+    sha256 big_sur:       "c989e946e04eca805211b334f29cb31324754b411bff322bffd7201bcf308365"
+    sha256 catalina:      "1930af2cbcf23a92ef2b8961d179f8ce14bc2648f4ce6d8f94f1e55eac5d17db"
+    sha256 mojave:        "d2f6470ba1f348962768fb2d4cd12fbbc3508062ffbd91d14269a68ad59ffbed"
   end
 
   # The bottles are built on systems with the CLT installed, and do not work
   # out of the box on Xcode-only systems due to an incorrect sysroot.
-  pour_bottle? do
-    reason "The bottle needs the Xcode CLT to be installed."
-    satisfy { MacOS::CLT.installed? }
-  end
+  pour_bottle? only_if: :clt_installed
 
   depends_on "gcc" => :test
   depends_on "gmp"
@@ -43,11 +53,11 @@ class Libgccjit < Formula
     # GCC will suffer build errors if forced to use a particular linker.
     ENV.delete "LD"
 
-    osmajor = `uname -r`.split(".").first
     pkgversion = "Homebrew GCC #{pkg_version} #{build.used_options*" "}".strip
+    cpu = Hardware::CPU.arm? ? "aarch64" : "x86_64"
 
     args = %W[
-      --build=x86_64-apple-darwin#{osmajor}
+      --build=#{cpu}-apple-darwin#{OS.kernel_version.major}
       --prefix=#{prefix}
       --libdir=#{lib}/gcc/#{version.major}
       --disable-nls
@@ -64,15 +74,16 @@ class Libgccjit < Formula
     # Xcode 10 dropped 32-bit support
     args << "--disable-multilib" if DevelopmentTools.clang_build_version >= 1000
 
+    # Workaround for Xcode 12.5 bug on Intel
+    # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=100340
+    args << "--without-build-config" if Hardware::CPU.intel? && DevelopmentTools.clang_build_version >= 1205
+
     # System headers may not be in /usr/include
     sdk = MacOS.sdk_path_if_needed
     if sdk
       args << "--with-native-system-header-dir=/usr/include"
       args << "--with-sysroot=#{sdk}"
     end
-
-    # Avoid reference to sed shim
-    args << "SED=/usr/bin/sed"
 
     # Use -headerpad_max_install_names in the build,
     # otherwise updated load commands won't fit in the Mach-O header.

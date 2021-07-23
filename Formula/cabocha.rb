@@ -2,8 +2,7 @@ class Cabocha < Formula
   desc "Yet Another Japanese Dependency Structure Analyzer"
   homepage "https://taku910.github.io/cabocha/"
   # Files are listed in https://drive.google.com/drive/folders/0B4y35FiV1wh7cGRCUUJHVTNJRnM
-  url "https://dl.bintray.com/homebrew/mirror/cabocha-0.69.tar.bz2"
-  mirror "https://mirrorservice.org/sites/ftp.netbsd.org/pub/pkgsrc/distfiles/cabocha-20160909/cabocha-0.69.tar.bz2"
+  url "https://mirrorservice.org/sites/ftp.netbsd.org/pub/pkgsrc/distfiles/cabocha-20160909/cabocha-0.69.tar.bz2"
   sha256 "9db896d7f9d83fc3ae34908b788ae514ae19531eb89052e25f061232f6165992"
 
   bottle do
@@ -12,6 +11,7 @@ class Cabocha < Formula
     sha256 big_sur:       "1dd5c1474946aaab675326323c8f7e3d101687b50d5542464558f54a8c477cc8"
     sha256 catalina:      "0cf6edea1fa69790984c762aaff33bcea3d6cf5206e06cf489c53e8644cbc9a4"
     sha256 mojave:        "34825bb06bd8cbdb2fe082471044168cccdafc7414eac37eb6550f8a12e0dbe2"
+    sha256 x86_64_linux:  "182dfe90c7dcc7c8bf00ece489a1d03b39b1dc66719a58c52efce8f8a8b30b96"
   end
 
   depends_on "crf++"
@@ -19,7 +19,7 @@ class Cabocha < Formula
   depends_on "mecab-ipadic"
 
   def install
-    ENV["LIBS"] = "-liconv"
+    on_macos { ENV["LIBS"] = "-liconv" }
 
     inreplace "Makefile.in" do |s|
       s.change_make_var! "CFLAGS", ENV.cflags
@@ -38,7 +38,9 @@ class Cabocha < Formula
   end
 
   test do
-    result = `echo "CaboCha はフリーソフトウェアです。" | cabocha | md5`.chomp
-    assert_equal "a5b8293e6ebcb3246c54ecd66d6e18ee", result
+    md5 = "md5"
+    on_linux { md5 = "md5sum" }
+    result = pipe_output(md5, pipe_output(bin/"cabocha", "CaboCha はフリーソフトウェアです。"))
+    assert_equal "a5b8293e6ebcb3246c54ecd66d6e18ee", result.chomp.split.first
   end
 end

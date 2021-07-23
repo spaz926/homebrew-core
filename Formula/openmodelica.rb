@@ -6,18 +6,20 @@ class Openmodelica < Formula
     tag:      "v1.16.5",
     revision: "11fcab4f2d6895f2db073572b2bff1a43177313f"
   license "GPL-3.0-only"
+  revision 1
   head "https://github.com/OpenModelica/OpenModelica.git"
 
   bottle do
-    sha256 cellar: :any, big_sur:  "e6360f11e4eeaec8010b41b880867f5be1ffe445f60ce46e36ed18108b445954"
-    sha256 cellar: :any, catalina: "f16736174646351d55ad03fd7af8f69b0de282adf343782216259aaf271cba36"
-    sha256 cellar: :any, mojave:   "488cb4da54c5c608d9a835c58484fe7acaab4ec4edcdf258fcf5d084045533d7"
+    rebuild 1
+    sha256 cellar: :any, big_sur:  "bffa7dc5380a70a9d158ff22277113396ed4d9102308531c2addd12f4e10d9e1"
+    sha256 cellar: :any, catalina: "bf668ccb74f44cac73702fa18f7561c38b86ed97195e3c0b3300b541caf92593"
+    sha256 cellar: :any, mojave:   "1754d9ab98671cd3b2a9af2dbd09553370a63fd41eb05797f7ff3c52d367daa0"
   end
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "cmake" => :build
-  depends_on "gcc" => :build # for gfortran
+  depends_on "gcc@10" => :build # for gfortran
   depends_on "gnu-sed" => :build
   depends_on "libtool" => :build
   depends_on "openjdk" => :build
@@ -39,6 +41,13 @@ class Openmodelica < Formula
   uses_from_macos "libffi"
   uses_from_macos "ncurses"
 
+  # Fix issues with CMake 3.20+
+  # https://github.com/OpenModelica/OpenModelica/pull/7445
+  patch do
+    url "https://github.com/OpenModelica/OpenModelica/commit/71aa2f871639041f3569fafe1b1cea25b84981ff.patch?full_index=1"
+    sha256 "0f794a01481227b4c58a4c57c3f37035962de3955b9878f78207d0d3ebfbce09"
+  end
+
   def install
     ENV.append_to_cflags "-I#{MacOS.sdk_path_if_needed}/usr/include/ffi"
     args = %W[
@@ -52,7 +61,7 @@ class Openmodelica < Formula
       --with-omniORB
     ]
 
-    system "autoconf"
+    system "autoreconf", "--install", "--verbose", "--force"
     system "./configure", *args
     # omplot needs qt & OpenModelica #7240.
     # omparser needs OpenModelica #7247

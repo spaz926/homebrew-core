@@ -5,16 +5,18 @@ class GmtAT5 < Formula
   mirror "https://mirrors.ustc.edu.cn/gmt/gmt-5.4.5-src.tar.gz"
   mirror "https://fossies.org/linux/misc/GMT/gmt-5.4.5-src.tar.gz"
   sha256 "225629c7869e204d5f9f1a384c4ada43e243f83e1ed28bdca4f7c2896bf39ef6"
-  license "LGPL-3.0"
-  revision 9
+  license "LGPL-3.0-or-later"
+  revision 12
 
   bottle do
-    sha256 big_sur:  "57284c711b15ccbc3bd5b7f9d6e34d89b0476025d69106ef1cac0b37ae31b963"
-    sha256 catalina: "0a68232508487f1437b5c04edc86ca122cba781435fbfdb3b05ef6cbf24ab699"
-    sha256 mojave:   "99954d018be706225bbb71532a51cea50df01955e9844bcbd5a7cf2b8fce881c"
+    sha256 big_sur:  "f8d14f1c37b086a21aecf7ff3d744bfe5f3362af7c33de49890b77073c7227ef"
+    sha256 catalina: "f13e7d03b2ff5961cd7d0ccc294880574c5cddcbfc50274d7a75f8cf4d9f01c9"
+    sha256 mojave:   "d4af49c8a7680a26b9f7b344a7e9acdaa8cd2cfa320d9d04365308e2afb43765"
   end
 
   keg_only :versioned_formula
+
+  deprecate! date: "2021-05-22", because: :unmaintained
 
   depends_on "cmake" => :build
   depends_on "fftw"
@@ -41,6 +43,11 @@ class GmtAT5 < Formula
     url "https://raw.githubusercontent.com/Homebrew/formula-patches/cdbf0de198531528db908a5d827f3d2e5b9618cc/gmt%405/netcdf-4.7.4.patch"
     sha256 "d894869830f6e57b0670dc31df6b5c684e079418f8bf5c0cd0f7014b65c1981f"
   end
+
+  # This patch is required because of incorrect usage of the `date` command in
+  # cmake/modules/ConfigCMake.cmake; this arises because SOURCE_DATE_EPOCH is
+  # set for builds.
+  patch :DATA
 
   def install
     (buildpath/"gshhg").install resource("gshhg")
@@ -82,3 +89,18 @@ class GmtAT5 < Formula
     assert_predicate testpath/"test.ps", :exist?
   end
 end
+
+__END__
+diff --git a/cmake/modules/ConfigCMake.cmake b/cmake/modules/ConfigCMake.cmake
+index 3579171..cbe75d6 100644
+--- a/cmake/modules/ConfigCMake.cmake
++++ b/cmake/modules/ConfigCMake.cmake
+@@ -79,7 +79,7 @@ set (GMT_LONG_VERSION_STRING "${GMT_PACKAGE_NAME} - ${GMT_PACKAGE_DESCRIPTION_SU
+ # Get date
+ if(DEFINED ENV{SOURCE_DATE_EPOCH})
+ 	EXECUTE_PROCESS(
+-	  COMMAND "date" "-u" "-d" "@$ENV{SOURCE_DATE_EPOCH}" "+%Y;%m;%d;%B"
++	  COMMAND "date" "-u" "-j" "-f" "%s" "@$ENV{SOURCE_DATE_EPOCH}" "+%Y;%m;%d;%B"
+ 	  OUTPUT_VARIABLE _today
+ 	  OUTPUT_STRIP_TRAILING_WHITESPACE)
+ else(DEFINED ENV{SOURCE_DATE_EPOCH})

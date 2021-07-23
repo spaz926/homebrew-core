@@ -2,16 +2,17 @@ class Tile38 < Formula
   desc "In-memory geolocation data store, spatial index, and realtime geofence"
   homepage "https://tile38.com/"
   url "https://github.com/tidwall/tile38.git",
-      tag:      "1.22.6",
-      revision: "d211858db62a3e13768879b3954648b2147759fe"
+      tag:      "1.25.0",
+      revision: "d9164f3efc273f6627f3e3e01a252b641fced1cf"
   license "MIT"
   head "https://github.com/tidwall/tile38.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "1f387e3ffa1428b4b1c2804a7d52a34932062e1b7464587bf2a47ed0c9e52d6a"
-    sha256 cellar: :any_skip_relocation, big_sur:       "675b17af3d429dca6462194f62007c1544c0a4782fd22d54440f11e13f24c825"
-    sha256 cellar: :any_skip_relocation, catalina:      "9972d32b249e738605729640cd449e998a7de599685887d41277b913eaa14d3f"
-    sha256 cellar: :any_skip_relocation, mojave:        "711814efd1b7a8f0ec7673910e6ecb37b6a6f5dadff3e2b88468e0f8def8a7aa"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "56b7a1a92358f582383655f0677ace0916fc9cee202e8c365444fc918f5f89c1"
+    sha256 cellar: :any_skip_relocation, big_sur:       "5543bb2cb6d2f53f4472aa0fac65c885a3a1169d431c2d00ebe6b6c020e8307e"
+    sha256 cellar: :any_skip_relocation, catalina:      "6e1ea4135dd7441ce7807013535fa60ebc779566998f3f0081cee1f7ed159618"
+    sha256 cellar: :any_skip_relocation, mojave:        "f84929bab43edfdcea870378bb04ddda9b77f6e3dbc10a17df3c3003cecce1b7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "40a297e53a7552c62b85573c5f684e7b9a3db7609d039b1e0f0237428ce46d32"
   end
 
   depends_on "go" => :build
@@ -25,10 +26,10 @@ class Tile38 < Formula
       -s -w
       -X github.com/tidwall/tile38/core.Version=#{version}
       -X github.com/tidwall/tile38/core.GitSHA=#{Utils.git_short_head}
-    ]
+    ].join(" ")
 
-    system "go", "build", "-o", bin/"tile38-server", "-ldflags", ldflags.join(" "), "./cmd/tile38-server"
-    system "go", "build", "-o", bin/"tile38-cli", "-ldflags", ldflags.join(" "), "./cmd/tile38-cli"
+    system "go", "build", *std_go_args(ldflags: ldflags), "-o", bin/"tile38-server", "./cmd/tile38-server"
+    system "go", "build", *std_go_args(ldflags: ldflags), "-o", bin/"tile38-cli", "./cmd/tile38-cli"
   end
 
   def post_install
@@ -77,14 +78,17 @@ class Tile38 < Formula
   end
 
   test do
+    port = free_port
     pid = fork do
-      exec "#{bin}/tile38-server", "-q"
+      exec "#{bin}/tile38-server", "-q", "-p", port.to_s
     end
     sleep 2
     # remove `$408` in the first line output
-    json_output = shell_output("#{bin}/tile38-cli server").lines[1]
+    json_output = shell_output("#{bin}/tile38-cli -p #{port} server")
     tile38_server = JSON.parse(json_output)
+
     assert_equal tile38_server["ok"], true
+    assert_predicate testpath/"data", :exist?
   ensure
     Process.kill("HUP", pid)
   end

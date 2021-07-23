@@ -1,21 +1,21 @@
 class RubyAT25 < Formula
   desc "Powerful, clean, object-oriented scripting language"
   homepage "https://www.ruby-lang.org/"
-  url "https://cache.ruby-lang.org/pub/ruby/2.5/ruby-2.5.8.tar.xz"
-  sha256 "0391b2ffad3133e274469f9953ebfd0c9f7c186238968cbdeeb0651aa02a4d6d"
+  url "https://cache.ruby-lang.org/pub/ruby/2.5/ruby-2.5.9.tar.xz"
+  sha256 "a87f2fa901408cc77652c1a55ff976695bbe54830ff240e370039eca14b358f0"
   license "Ruby"
 
   bottle do
-    sha256 arm64_big_sur: "bbae2085587722707f40c1edff065697a150902c171c1c1279ff2d2d54b291d6"
-    sha256 big_sur:       "e1c9a7e1f481bdb5390b911e17616f96e2dd4824ef15d134cb96bf579991fb29"
-    sha256 catalina:      "77c3f363f6d159824f6a6b1b80ac7e1d2bcb79528f79a0bf78ab3feaa837ad94"
-    sha256 mojave:        "bbd75b74d1694bfb1378de37a21d692ca4ecdf3e4c5f6ad7f381ab1ac4942119"
-    sha256 high_sierra:   "cb21f7f22afc2f304a9dc9ab7aba730563656a054b0407943ba0cb1f68b010a2"
+    sha256 arm64_big_sur: "deb2ee5e006f4fc7b3829dfcdb377300f3dc5f339562a6a1c1b4dec48ed21ae6"
+    sha256 big_sur:       "fb6b696623fc988abecbf9fb9f5298219c62c69851123b9d9d69c3f127b0ec3c"
+    sha256 catalina:      "8fab1468c593b5907e027c175dc19e3273b08cc8b344822ce593dcab645e857d"
+    sha256 mojave:        "ef4974800a4417e6251fb548486150157c2f0ff62275170431381480bac1c3ed"
+    sha256 x86_64_linux:  "8b85cf06b1f139109bae913ade71190a65fb71f7848d846428cf95dbd0658e05"
   end
 
   keg_only :versioned_formula
 
-  deprecate! date: "2021-03-31", because: :unsupported
+  deprecate! date: "2021-04-05", because: :unsupported
 
   depends_on "pkg-config" => :build
   depends_on "libyaml"

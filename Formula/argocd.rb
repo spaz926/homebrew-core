@@ -2,16 +2,16 @@ class Argocd < Formula
   desc "GitOps Continuous Delivery for Kubernetes"
   homepage "https://argoproj.io"
   url "https://github.com/argoproj/argo-cd.git",
-      tag:      "v1.8.7",
-      revision: "eb3d1fb84b9b77cdffd70b14c4f949f1c64a9416"
+      tag:      "v2.0.4",
+      revision: "0842d448107eb1397b251e63ec4d4bc1b4efdd6e"
   license "Apache-2.0"
-  revision 1
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "ca05ba87d8052af20f79a28fcc5822f0ac10b3d072ea88a2ea06118503e2aa11"
-    sha256 cellar: :any_skip_relocation, big_sur:       "32ba976ad68b3fdb6fb0ebe8364885c72e40dae653caf846f70806d2b5a4287c"
-    sha256 cellar: :any_skip_relocation, catalina:      "dc3a6ea221d0b2aa2455f6c7fe1ded2784d5ada329a39c9a24d413b6f4d96b18"
-    sha256 cellar: :any_skip_relocation, mojave:        "e8baffe94bf2cacbbcedb31248a6a8609556a45f6b49e953fe6b7f944bc77e76"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "3b550f85106ca48abaa9f57f851da97911c2ca36957b86b64a0ebb15f57f20b7"
+    sha256 cellar: :any_skip_relocation, big_sur:       "22b393539caafd3aa9517684125412e657e279c0835754797bcca427212ebc26"
+    sha256 cellar: :any_skip_relocation, catalina:      "1a03ca8526778811395dc73aebcc4caabddc6fdf8b08551000579f3a0e6144e4"
+    sha256 cellar: :any_skip_relocation, mojave:        "26be6e642c38e0e2d90cf374aa6aee0b5a6c176ec6d631bde33f1cce137e155e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ffc77b5c6a5bba780d111a60f819d1be5febd0c64474953fa5ad5b5874ca5239"
   end
 
   depends_on "go" => :build
@@ -21,6 +21,7 @@ class Argocd < Formula
     inreplace "Makefile", "CGO_ENABLED=0", ""
     system "make", "cli-local"
     bin.install "dist/argocd"
+    bin.install_symlink "argocd" => "argocd-util"
 
     output = Utils.safe_popen_read("#{bin}/argocd", "completion", "bash")
     (bash_completion/"argocd").write output
@@ -31,6 +32,9 @@ class Argocd < Formula
   test do
     assert_match "argocd controls a Argo CD server",
       shell_output("#{bin}/argocd --help")
+
+    assert_match "argocd-util has internal utility tools used by Argo CD",
+      shell_output("#{bin}/argocd-util --help")
 
     # Providing argocd with an empty config file returns the contexts table header
     touch testpath/"argocd-config"

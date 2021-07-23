@@ -1,8 +1,8 @@
 class Vapoursynth < Formula
   desc "Video processing framework with simplicity in mind"
   homepage "http://www.vapoursynth.com"
-  url "https://github.com/vapoursynth/vapoursynth/archive/R52.tar.gz"
-  sha256 "4d5dc7950f4357da695d29708bc98013bc3e0bd72fc5d697f8c91ce3c4a4b2ac"
+  url "https://github.com/vapoursynth/vapoursynth/archive/R53.tar.gz"
+  sha256 "78e2c5311b2572349ff7fec2e16311e9e4f6acdda78673872206ab660eadf7c8"
   license "LGPL-2.1-or-later"
   head "https://github.com/vapoursynth/vapoursynth.git"
 
@@ -12,10 +12,11 @@ class Vapoursynth < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "b3c19ccf1ca5ced181f926a8bf4216161e1768d32206a1a37d9622429d58c1a1"
-    sha256 cellar: :any, big_sur:       "3c71ee0d92d3187ddab6500dac2a36597268efa50cee90c854ffb69d75d5e6e7"
-    sha256 cellar: :any, catalina:      "4e4668fb68c7df01857472c070dfcf562fd392c48200204f637856a1368181b8"
-    sha256 cellar: :any, mojave:        "3d1e521272e5b5cff323d6678ff56f959945b9756f938c5ad46a797a345959c1"
+    sha256 cellar: :any,                 arm64_big_sur: "79987efc9aa04472c4567b9ad708ef4e939a367099f9ed824d901649cbdc4214"
+    sha256 cellar: :any,                 big_sur:       "1405ff1797a5bc77132d25f04ad1d67c54dea3f472f692445be9d68f96b55bce"
+    sha256 cellar: :any,                 catalina:      "ae8eabe048ec75da1b9b28ee0aaf745aa098b60fe21340aaa89c104886fc4a13"
+    sha256 cellar: :any,                 mojave:        "a42f53e1ac5f7d008e1685e02b6a9b94a9e466f19572ad8f7695df38349d4f37"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c50077a10fae4285afb93503c08f529788854d9ee3746015504661a739b04417"
   end
 
   depends_on "autoconf" => :build

@@ -1,8 +1,8 @@
 class Psqlodbc < Formula
   desc "Official PostgreSQL ODBC driver"
   homepage "https://odbc.postgresql.org"
-  url "https://ftp.postgresql.org/pub/odbc/versions/src/psqlodbc-13.00.0000.tar.gz"
-  sha256 "4f156931b44d78401abfc2b72e512147a02b836677f8aac610b812f12e08910d"
+  url "https://ftp.postgresql.org/pub/odbc/versions/src/psqlodbc-13.01.0000.tar.gz"
+  sha256 "435de2ea38109b8384ed76d327032b73a53a915379a752a34b0f9c7539055da7"
 
   livecheck do
     url "https://ftp.postgresql.org/pub/odbc/versions/src/"
@@ -10,10 +10,11 @@ class Psqlodbc < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "fc5b844285d44f184e3c8e15f6837dd72c8633f884903c467534d59aa82dadbe"
-    sha256 cellar: :any, big_sur:       "dc00104df170c4a7d76b5a6ee00e721f8bdbff6b7d5d06c2002d60c883de5c75"
-    sha256 cellar: :any, catalina:      "3a8dbc9d7c56020a5d775fb8275599cdcea33456546f371cdabf9822e0778669"
-    sha256 cellar: :any, mojave:        "b2278560b6a308742d65a4b956736c6c597ceb8d94f757a7d178623b5711328b"
+    sha256 cellar: :any,                 arm64_big_sur: "f8d95d1b2ba785dcb50b91b0b50e49b4f40d7f05b5417dc7eaf8b078ca88464a"
+    sha256 cellar: :any,                 big_sur:       "4bc2ee5d89cc5f84220abdcbcef1a42b30959cf19b071a46a13cb9c583ee9142"
+    sha256 cellar: :any,                 catalina:      "3d65ab705dbece7ef42f2fc975e3ee8f118a6fc1e12a51d9b34425cf83dfc860"
+    sha256 cellar: :any,                 mojave:        "9b8332fa7f0b03677744c1e48057e65f04140892cc143fa32858179c9f1cc38a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4befb4353cbd839bebed19fd661449af4f0c31b61063dadaa32bb318aaef1a80"
   end
 
   head do

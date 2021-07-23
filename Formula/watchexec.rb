@@ -1,31 +1,33 @@
 class Watchexec < Formula
   desc "Execute commands when watched files change"
   homepage "https://github.com/watchexec/watchexec"
-  url "https://github.com/watchexec/watchexec/archive/1.14.1.tar.gz"
-  sha256 "23ca90f1f070b0d30e821667c8b9deaf174d020373ea032e9e22f1a78adcfa1c"
+  url "https://github.com/watchexec/watchexec/archive/cli-v1.16.2.tar.gz"
+  sha256 "628bb0df6c6c68191c499b12fa637c1248e8ac334d1197eeac7331bafcf714d9"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "6d4e987c12e2ccdd9ed5ec73c7c987259faf2687195c5d3be4e8896b67c372f9"
-    sha256 cellar: :any_skip_relocation, big_sur:       "d53e7eccb32fcefde96e0237d8a900a64fcda304d94b9a675528c75dd0cc419a"
-    sha256 cellar: :any_skip_relocation, catalina:      "bd5816dbe23399183808f0a407a4d605d7113644c0e8fcf815439fefaf734dfb"
-    sha256 cellar: :any_skip_relocation, mojave:        "c8ba045ce6c7d45bbd5b3c12dc4a17038b1ca1d1ffbd2a1742d13c8a971e15bd"
-    sha256 cellar: :any_skip_relocation, high_sierra:   "2add0c1e367f4626d16ded8470adbc3e1780811259d0b2faf52e8d0aaf50f91e"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "abb7699f530ec734c1335fe284e36c33cb60feb9db3e5af234303761ba7bad67"
+    sha256 cellar: :any_skip_relocation, big_sur:       "b3cd2c7cc38113ffce6ffbc529936b7c1445f6ac4137690fb490da2ffda55745"
+    sha256 cellar: :any_skip_relocation, catalina:      "30e005514bea634a0e0e446e9406e67dc089af202c24ba8f7600530cef260a52"
+    sha256 cellar: :any_skip_relocation, mojave:        "733a21641f453b071e7a9271bb0ba0994fc95bb898bf7aed535d645441916431"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ac89d5befea2c723f0a8af6bd14a8a0c2f9d9ded54d478ad2c68bd600b0b3d5a"
   end
 
   depends_on "rust" => :build
 
   def install
-    system "cargo", "install", *std_cargo_args
+    cd "cli" do
+      system "cargo", "install", *std_cargo_args
+    end
     man1.install "doc/watchexec.1"
   end
 
   test do
     o = IO.popen("#{bin}/watchexec -1 --postpone -- echo 'saw file change'")
-    sleep 1
+    sleep 15
     touch "test"
-    sleep 1
-    Process.kill("INT", o.pid)
+    sleep 15
+    Process.kill("TERM", o.pid)
     assert_match "saw file change", o.read
   end
 end

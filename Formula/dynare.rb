@@ -1,15 +1,20 @@
 class Dynare < Formula
   desc "Platform for economic models, particularly DSGE and OLG models"
   homepage "https://www.dynare.org/"
-  url "https://www.dynare.org/release/source/dynare-4.6.3.tar.xz"
-  sha256 "1e346fc70a8ab47cad115ecb7116d98c920b366069a2491170661c51664352fd"
+  url "https://www.dynare.org/release/source/dynare-4.6.4.tar.xz"
+  sha256 "3c2e0069a3e5c23866130d5c73c3da840a38612baa2aa3d90f42e3d984abad80"
   license "GPL-3.0-or-later"
-  revision 1
+  revision 2
+
+  livecheck do
+    url "https://www.dynare.org/download/"
+    regex(/href=.*?dynare[._-]v?(\d+(?:\.\d+)+)\.t/i)
+  end
 
   bottle do
-    sha256 cellar: :any, big_sur:  "15c1b69d088625e07e469c0adb6da39e07256fd922c5a5e47c7ca6cde114a528"
-    sha256 cellar: :any, catalina: "c7e5373a802c53a41978ab54be897f340a33380fc38898461b5a4c9d8cbc86b5"
-    sha256 cellar: :any, mojave:   "e747a0ee8f372bbb12e9472eb7a1540f4dc5132480261f226bc709c973b0b405"
+    sha256 cellar: :any, big_sur:  "3720b92ade75016292e3b73e3ec20638a9a3c3e6d8043efac22353267f89bbe0"
+    sha256 cellar: :any, catalina: "7c51854c6d6c605bce750beefa3e6d79b949ec127bf18d026d9cafbc3bb3be1d"
+    sha256 cellar: :any, mojave:   "c6ec439351bdbfb3ad73f0bc08cd3242bc5e31042d04bcc094c17c82fd6e497c"
   end
 
   head do

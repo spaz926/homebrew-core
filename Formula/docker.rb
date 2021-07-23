@@ -2,20 +2,23 @@ class Docker < Formula
   desc "Pack, ship and run any application as a lightweight container"
   homepage "https://www.docker.com/"
   url "https://github.com/docker/cli.git",
-      tag:      "v20.10.5",
-      revision: "55c4c88966a912ddb365e2d73a4969e700fc458f"
+      tag:      "v20.10.7",
+      revision: "f0df35096d5f5e6b559b42c7fde6c65a2909f7c5"
   license "Apache-2.0"
   head "https://github.com/docker/cli.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "850164428281e1382f71c129b7de8e0295557c8dd085513807602e402a88b347"
-    sha256 cellar: :any_skip_relocation, big_sur:       "6945466371797914754b3f42f597c119703fffa5d1dd0c72ee5c25048f1ac968"
-    sha256 cellar: :any_skip_relocation, catalina:      "aa8c1e0fb619cba19be6a633b0984d559dd4c091f234549df7f3751d53a11355"
-    sha256 cellar: :any_skip_relocation, mojave:        "d209b6efc28e3a496a689f7a9175b766da8cf30af40518a805ea89a19d660330"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "c4ada3bfb0b5e0915079f5a26ea28e46b506e6bc1ad859e609272de7296416c7"
+    sha256 cellar: :any_skip_relocation, big_sur:       "626a28393a8e833b5848a52c1fbe2b71d63e1540c4c689216c3d2b27d2a871b4"
+    sha256 cellar: :any_skip_relocation, catalina:      "4d09b76ce85c651cb4454ddf2ed8b3f680231793747f5d997a1a41111e92e997"
+    sha256 cellar: :any_skip_relocation, mojave:        "7f947fa8659c8b81daf5fdf3fe065d97d7443db9653fdfbcb5e91de724635d22"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "61eb6f531596b84a10ddd5c20e0c8b371b886600bfe1aa13cc0134c3d8c1ef12"
   end
 
   depends_on "go" => :build
   depends_on "go-md2man" => :build
+
+  conflicts_with "docker-completion", because: "docker already includes these completion scripts"
 
   def install
     ENV["GOPATH"] = buildpath
@@ -23,14 +26,11 @@ class Docker < Formula
     dir = buildpath/"src/github.com/docker/cli"
     dir.install (buildpath/"").children
     cd dir do
-      commit = Utils.git_short_head
-      build_time = Time.now.utc.strftime("%Y-%m-%dT%H:%M:%SZ")
-      ldflags = ["-X \"github.com/docker/cli/cli/version.BuildTime=#{build_time}\"",
-                 "-X github.com/docker/cli/cli/version.GitCommit=#{commit}",
+      ldflags = ["-X \"github.com/docker/cli/cli/version.BuildTime=#{time.iso8601}\"",
+                 "-X github.com/docker/cli/cli/version.GitCommit=#{Utils.git_short_head}",
                  "-X github.com/docker/cli/cli/version.Version=#{version}",
-                 "-X \"github.com/docker/cli/cli/version.PlatformName=Docker Engine - Community\""]
-      system "go", "build", "-o", bin/"docker", "-ldflags", ldflags.join(" "),
-             "github.com/docker/cli/cmd/docker"
+                 "-X \"github.com/docker/cli/cli/version.PlatformName=Docker Engine - Community\""].join(" ")
+      system "go", "build", *std_go_args(ldflags: ldflags), "github.com/docker/cli/cmd/docker"
 
       Pathname.glob("man/*.[1-8].md") do |md|
         section = md.to_s[/\.(\d+)\.md\Z/, 1]

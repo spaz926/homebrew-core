@@ -4,13 +4,13 @@ class VtkAT82 < Formula
   url "https://www.vtk.org/files/release/8.2/VTK-8.2.0.tar.gz"
   sha256 "34c3dc775261be5e45a8049155f7228b6bd668106c72a3c435d95730d17d57bb"
   license "BSD-3-Clause"
-  revision 4
+  revision 7
 
   bottle do
-    sha256 arm64_big_sur: "d95b405c4883226bd780c37568934f4ca3f0a4f06d631fec18674ce6dc7bfbca"
-    sha256 big_sur:       "3656f39b182eb289039de5d0a0de7b69271eee8a835acc1993a24df81fa9a7b2"
-    sha256 catalina:      "3255f3051080ea973ae7558ed11cebf5defd107128ce3e8d95cda80f6678e312"
-    sha256 mojave:        "45ef73f0480f7efa959c93e980088f5558c0b0f0fa1fb764db3d91dd04a1e9b0"
+    sha256 arm64_big_sur: "8a001dca2e5878f669a252c1e84ca87944c4251aba881e591180a5378d54ce83"
+    sha256 big_sur:       "1ed6e5ba0461c769d63c956dbcb171c0e511dfc538a8f2eb932050a0344858d3"
+    sha256 catalina:      "3d776b859879687ff1344482f120e463bab4074df900b6bc7061fd12b631a333"
+    sha256 mojave:        "0b07673d56b58197760644ff74c99519073539b8bbf1602d9b40e5f29fbb991d"
   end
 
   keg_only :versioned_formula
@@ -29,23 +29,32 @@ class VtkAT82 < Formula
   depends_on "python@3.9"
   depends_on "qt@5"
 
+  uses_from_macos "tcl-tk"
+
+  on_linux do
+    depends_on "icu4c"
+    depends_on "libxt"
+    depends_on "szip"
+    depends_on "mesa-glu"
+  end
+
   # TODO: use diff
   # Fix compile issues on Mojave and later
   patch do
-    url "https://gitlab.kitware.com/vtk/vtk/commit/ca3b5a50d945b6e65f0e764b3138cad17bd7eb8d.patch"
-    sha256 "49574bb914e2564b21ab0fb23cadcccd7dd323ae7f0f26f64fd6346c3db14cd7"
+    url "https://gitlab.kitware.com/vtk/vtk/commit/ca3b5a50d945b6e65f0e764b3138cad17bd7eb8d.diff"
+    sha256 "b9f7a3ebf3c29f3cad4327eb15844ac0ee849755b148b60fef006314de8e822e"
   end
 
   # Python 3.8 compatibility
   patch do
-    url "https://gitlab.kitware.com/vtk/vtk/commit/257b9d7b18d5f3db3fe099dc18f230e23f7dfbab.patch"
-    sha256 "41914057adc511527167b812f9604f1ff0aed74e12dc20c98bbc5c52ccab9cda"
+    url "https://gitlab.kitware.com/vtk/vtk/commit/257b9d7b18d5f3db3fe099dc18f230e23f7dfbab.diff"
+    sha256 "572c06a4ba279a133bfdcf0190fec2eff5f330fa85ad6a2a0b0f6dfdea01ca69"
   end
 
   # Qt 5.15 support
   patch do
-    url "https://gitlab.kitware.com/vtk/vtk/-/commit/797f28697d5ba50c1fa2bc5596af626a3c277826.patch"
-    sha256 "01e870a943edea2a096c7bc9e43d2a70e10a5a80d1cd89b08868ab0f746c1c1c"
+    url "https://gitlab.kitware.com/vtk/vtk/-/commit/797f28697d5ba50c1fa2bc5596af626a3c277826.diff"
+    sha256 "cb3b3a0e6978889a9cb95be35f3d4a6928397d3b843ab72ecaaf96554c6d4fc7"
   end
 
   def install
@@ -62,7 +71,6 @@ class VtkAT82 < Formula
       -DModule_vtkInfovisBoostGraphAlgorithms=ON
       -DModule_vtkRenderingFreeTypeFontConfig=ON
       -DVTK_REQUIRED_OBJCXX_FLAGS=''
-      -DVTK_USE_COCOA=ON
       -DVTK_USE_SYSTEM_EXPAT=ON
       -DVTK_USE_SYSTEM_HDF5=ON
       -DVTK_USE_SYSTEM_JPEG=ON
@@ -81,6 +89,10 @@ class VtkAT82 < Formula
       -DSIP_PYQT_DIR='#{Formula["pyqt5"].opt_share}/sip'
     ]
 
+    on_macos do
+      args << "-DVTK_USE_COCOA=ON"
+    end
+
     mkdir "build" do
       system "cmake", "..", *args
       system "make"
@@ -91,6 +103,7 @@ class VtkAT82 < Formula
     inreplace Dir["#{lib}/cmake/**/vtkhdf5.cmake"].first,
               Formula["hdf5"].prefix.realpath,
               Formula["hdf5"].opt_prefix
+
     # get rid of bad include paths on 10.14+
     if MacOS.version >= :mojave
       inreplace Dir["#{lib}/cmake/vtk-*/Modules/vtklibxml2.cmake"], %r{;/Library/Developer/CommandLineTools[^"]*}, ""
@@ -98,6 +111,14 @@ class VtkAT82 < Formula
       inreplace Dir["#{lib}/cmake/vtk-*/Modules/vtkzlib.cmake"], %r{;/Library/Developer/CommandLineTools[^"]*}, ""
       inreplace Dir["#{lib}/cmake/vtk-*/Modules/vtkpng.cmake"], %r{;/Library/Developer/CommandLineTools[^"]*}, ""
     end
+
+    # Prevent dependents from using fragile Cellar paths
+    inreplace_cmake_modules = [
+      lib/"cmake/vtk-#{version.major_minor}/VTKConfig.cmake",
+      lib/"cmake/vtk-#{version.major_minor}/VTKTargets-release.cmake",
+      lib/"cmake/vtk-#{version.major_minor}/Modules/vtkPython.cmake",
+    ]
+    inreplace inreplace_cmake_modules, prefix, opt_prefix
   end
 
   test do

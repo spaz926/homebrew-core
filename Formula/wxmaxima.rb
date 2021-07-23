@@ -1,16 +1,17 @@
 class Wxmaxima < Formula
   desc "Cross platform GUI for Maxima"
   homepage "https://wxmaxima-developers.github.io/wxmaxima/"
-  url "https://github.com/wxMaxima-developers/wxmaxima/archive/Version-21.02.0.tar.gz"
-  sha256 "573ab40de4e4dd3ca56d1e73fc913e3f6495c2331c4b71b1e4c48626499c0a6c"
+  url "https://github.com/wxMaxima-developers/wxmaxima/archive/Version-21.05.2.tar.gz"
+  sha256 "4d2d486a24090ace2f64ceccb026210e2e6299a32cb348d43134ef80440bcf01"
   license "GPL-2.0-or-later"
-  head "https://github.com/wxMaxima-developers/wxmaxima.git"
+  revision 1
+  head "https://github.com/wxMaxima-developers/wxmaxima.git", branch: "main"
 
   bottle do
-    sha256 arm64_big_sur: "3bad4d99fc33460e381b1b601cc54811396933d23caa6991bad504bf9e89fe98"
-    sha256 big_sur:       "e15dcc46f0848c6c7d6a1b68f4a76b6d3329fb3d381e4c07cd41e1dc1c2b0383"
-    sha256 catalina:      "e66764ba84d6fb8df4c9816c0e8ec84db840e8aa978abaa35e6fb8cec98e21a0"
-    sha256 mojave:        "d8ae8e9d2d931fd612ece6980ef11223305d6bd80870b0f844d31fa176b72fed"
+    sha256 arm64_big_sur: "78916b4586ee997df546d122218d3a43e9038db4edffdb53289a97c5ff39632d"
+    sha256 big_sur:       "2b8f8beb1f2daa77e0750a660bf90fcbe60ac113947dc6e09a70e26af20faf58"
+    sha256 catalina:      "4bc58244e091d68df832006318abc156ce528acba0e7eeb157ba42504fb913da"
+    sha256 mojave:        "8b9b6be8aabfbe43db4124dc916c91d799cb384ea8c83828a413b95e8da27741"
   end
 
   depends_on "cmake" => :build
@@ -24,11 +25,17 @@ class Wxmaxima < Formula
       system "cmake", "..", "-GNinja", *std_cmake_args
       system "ninja"
       system "ninja", "install"
-      prefix.install "src/wxMaxima.app"
+
+      on_macos do
+        prefix.install "src/wxMaxima.app"
+      end
     end
 
     bash_completion.install "data/wxmaxima"
-    bin.write_exec_script "#{prefix}/wxMaxima.app/Contents/MacOS/wxmaxima"
+
+    on_macos do
+      bin.write_exec_script "#{prefix}/wxMaxima.app/Contents/MacOS/wxmaxima"
+    end
   end
 
   def caveats

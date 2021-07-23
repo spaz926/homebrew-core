@@ -2,16 +2,16 @@ class Openrct2 < Formula
   desc "Open source re-implementation of RollerCoaster Tycoon 2"
   homepage "https://openrct2.io/"
   url "https://github.com/OpenRCT2/OpenRCT2.git",
-      tag:      "v0.3.3",
-      revision: "3f65f282d7332c284dcb5daaf4c278b7e9da9b92"
+      tag:      "v0.3.4",
+      revision: "e0daac9442dec8bf1502690f6310af50c7bb5f25"
   license "GPL-3.0-only"
   head "https://github.com/OpenRCT2/OpenRCT2.git", branch: "develop"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "ac0f4eea3f300700d5b0df3b8d2d87152fbe0f8b309fd1fe262d462335af1b51"
-    sha256 cellar: :any, big_sur:       "695b7f738e351056830895590214e8cd1012dc7bc0fffd651362788d288bd362"
-    sha256 cellar: :any, catalina:      "35096f5211f6d8e22e9abda4517386695eec4cc905afcb811caf251140a9d7e5"
-    sha256 cellar: :any, mojave:        "f56c06bd73c4a5c09a6b208920a3105d5868658313a2dbb22e764dcf88b84f6f"
+    sha256 cellar: :any, arm64_big_sur: "398b1d23b464b782af6636995d50709d96178dc7e2a9014630df8ee0c9278413"
+    sha256 cellar: :any, big_sur:       "82b39d32eccfa28691e05c0bcda33ce440374cb912d07a1e25a045cdfd04de5c"
+    sha256 cellar: :any, catalina:      "ba8effccd58cdf90cd4159124629a9e7e291b595beee7390fae2bbd7148ade9c"
+    sha256 cellar: :any, mojave:        "361a0c120975f6b1ac632226895d34172269245d3306da0dadde030c3f96adbb"
   end
 
   depends_on "cmake" => :build
@@ -34,8 +34,8 @@ class Openrct2 < Formula
   end
 
   resource "objects" do
-    url "https://github.com/OpenRCT2/objects/archive/v1.0.21.tar.gz"
-    sha256 "31129188916dc9ba2318d851e03393ce55782f121ab7c9d97544abdc7bbc92ab"
+    url "https://github.com/OpenRCT2/objects/archive/v1.2.1.tar.gz"
+    sha256 "07816ab18779ab5988d737e1c21c25f0d95404c82919758dfdc44fdd3edf8ab5"
   end
 
   def install

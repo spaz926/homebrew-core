@@ -4,7 +4,7 @@ class Caffe < Formula
   url "https://github.com/BVLC/caffe/archive/1.0.tar.gz"
   sha256 "71d3c9eb8a183150f965a465824d01fe82826c22505f7aa314f700ace03fa77f"
   license "BSD-2-Clause"
-  revision 31
+  revision 33
 
   livecheck do
     url :stable
@@ -12,9 +12,10 @@ class Caffe < Formula
   end
 
   bottle do
-    sha256 big_sur:  "a34103d1deed73801e19d46c7033332f8f14916dd2adfdf7d054b2782d40cf71"
-    sha256 catalina: "7f236f59400a7ffc13cff85af277e116e31db1c44b6fc094127e0928b5ba9de1"
-    sha256 mojave:   "081fc76b8d6525124bbea609a56b0944ea627ed210aa63cf134e096592fd235b"
+    sha256 cellar: :any, arm64_big_sur: "22169addf9ac9ae8a7b3477716499799fd85a4aeccb732a0c580a87d1b171e59"
+    sha256 cellar: :any, big_sur:       "b7f91af462268b50722ce6f993232034c297e01765ea9016cc46543c9d50a2dd"
+    sha256 cellar: :any, catalina:      "691fb884f9a4a8db955e318ea71a2a6c6908feb3f3fa1271fd3a6ec56e641571"
+    sha256 cellar: :any, mojave:        "5f1c675912742ac91bf9bddb0360509b6f307a122bc8329d5c02be23df6c420c"
   end
 
   depends_on "cmake" => :build
@@ -29,9 +30,9 @@ class Caffe < Formula
   depends_on "snappy"
   depends_on "szip"
 
-  resource "test_model_weights" do
-    url "https://bintray.com/homebrew/mirror/download_file?file_path=bvlc_reference_caffenet.caffemodel"
-    sha256 "472d4a06035497b180636d8a82667129960371375bd10fcb6df5c6c7631f25e0"
+  resource "test_model" do
+    url "https://github.com/nandahkrishna/CaffeMNIST/archive/2483b0ba9b04728041f7d75a3b3cf428cb8edb12.tar.gz"
+    sha256 "2d4683899e9de0949eaf89daeb09167591c060db2187383639c34d7cb5f46b31"
   end
 
   # Fix compilation with OpenCV 4
@@ -65,13 +66,10 @@ class Caffe < Formula
   end
 
   test do
-    model = "bvlc_reference_caffenet"
-    m_path = "#{pkgshare}/models/#{model}"
-    resource("test_model_weights").stage do
+    resource("test_model").stage do
       system "#{bin}/caffe", "test",
-             "-model", "#{m_path}/deploy.prototxt",
-             "-solver", "#{m_path}/solver.prototxt",
-             "-weights", "#{model}.caffemodel"
+             "-model", "lenet_train_test.prototxt",
+             "-weights", "lenet_iter_10000.caffemodel"
     end
   end
 end

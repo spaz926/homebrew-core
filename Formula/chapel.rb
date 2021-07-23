@@ -1,14 +1,15 @@
 class Chapel < Formula
-  desc "Emerging programming language designed for parallel computing"
+  desc "Programming language for productive parallel computing at scale"
   homepage "https://chapel-lang.org/"
-  url "https://github.com/chapel-lang/chapel/releases/download/1.24.0/chapel-1.24.0.tar.gz"
-  sha256 "77c6087f3e0837268470915f2ad260d49cf7ac4adf16f5b44862ae624c1be801"
+  url "https://github.com/chapel-lang/chapel/releases/download/1.24.1/chapel-1.24.1.tar.gz"
+  sha256 "f898f266fccaa34d937b38730a361d42efb20753ba43a95e5682816e008ce5e4"
   license "Apache-2.0"
 
   bottle do
-    sha256 big_sur:  "31a99c8d05a4f7b15fe4304e28c19afc649d383f3067cec248e1b53e83aa419e"
-    sha256 catalina: "0a8b6f467f3bcc5e3c8c9f5f6f4bf69224df6fdd63c930b6638f393194e474fd"
-    sha256 mojave:   "8a9bb9ed268f74bf9fac32456b36a73847e6f98aea8e0c8c76531c2aad5356a4"
+    sha256 big_sur:      "e792266fb772218ca4acfc90910d4d26836e2c1fe1faa60ffc104bd7baf31046"
+    sha256 catalina:     "7a06d32c992460337aa0af964803ace53465ecd90727c6ca57392017d5fb1890"
+    sha256 mojave:       "c048b2189f4900731fbbfb76efc70bc8e4d85809759ac80b2de7bdeb6db76acf"
+    sha256 x86_64_linux: "ca34ea32e25b7c9fea13bf25a09ac8b3151f45f8b8ac2dfeebfc0d18773783ba"
   end
 
   depends_on "python@3.9"
@@ -27,6 +28,7 @@ class Chapel < Formula
       system "make", "chpldoc"
       system "make", "mason"
       system "make", "cleanall"
+      rm_rf("third-party/llvm/llvm-src/")
     end
 
     prefix.install_metafiles

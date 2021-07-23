@@ -1,9 +1,14 @@
 class Redland < Formula
   desc "RDF Library"
-  homepage "http://librdf.org/"
-  url "http://download.librdf.org/source/redland-1.0.17.tar.gz"
+  homepage "https://librdf.org/"
+  url "https://download.librdf.org/source/redland-1.0.17.tar.gz"
   sha256 "de1847f7b59021c16bdc72abb4d8e2d9187cd6124d69156f3326dd34ee043681"
   revision 1
+
+  livecheck do
+    url :homepage
+    regex(/href=.*?redland[._-]v?(\d+(?:\.\d+)+)\.t/i)
+  end
 
   bottle do
     sha256 arm64_big_sur: "f54c731eecd682be899b7b8b5ab3424db134a1a48fe7076f0113deedb9a7f057"
@@ -14,7 +19,6 @@ class Redland < Formula
     sha256 sierra:        "0ed03c897836946cbadf2e390bd25c79eeb6ad34ea1144ef69d8bf1dfbfaf2eb"
     sha256 el_capitan:    "38eac3bae25aa65cbb7b688ecfaae91ab79c0c292e7505596ffc3b409bc8ca3b"
     sha256 yosemite:      "6047842b51137c968df4787bbfcf2080b4f32b73bb9d3412fa117ee9c1ff22d2"
-    sha256 mavericks:     "06d1c7c81a9803ad37cd40303987b90456fb565f4305965388bc8faff54c6db7"
   end
 
   depends_on "pkg-config" => :build

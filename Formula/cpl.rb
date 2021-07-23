@@ -1,8 +1,8 @@
 class Cpl < Formula
   desc "ISO-C libraries for developing astronomical data-reduction tasks"
   homepage "https://www.eso.org/sci/software/cpl/"
-  url "ftp://ftp.eso.org/pub/dfs/pipelines/libraries/cpl/cpl-7.1.3.tar.gz"
-  sha256 "04109613819b97273045102bd7acf52d13ee7f9217779f17ae2a170c491965c5"
+  url "ftp://ftp.eso.org/pub/dfs/pipelines/libraries/cpl/cpl-7.1.4.tar.gz"
+  sha256 "cb43adba7ab15e315fbfcba4e2d8b88fa56d29a5a16036a7f082621b8416bd6c"
   license "GPL-2.0-or-later"
 
   livecheck do
@@ -11,10 +11,11 @@ class Cpl < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "fcc333aeb18c1c3ae29de030f7eca67b72f5dd688d2fd5d609208722dc669bb7"
-    sha256 cellar: :any, big_sur:       "fdfd479b8c8f52b085f4b04b65dc4c8a2117598180dc6ff4d5b335910d9ac614"
-    sha256 cellar: :any, catalina:      "7fbc74cf613b6247bcbba46ffced1b1436ab7fbee5a53e5c7493eb5b4f9b29cd"
-    sha256 cellar: :any, mojave:        "70f2086f3529c963bbbf9b09069ff29c39d244e49c85decbcea8b6d99642315e"
+    sha256 cellar: :any,                 arm64_big_sur: "7b2de6ed276784ff0a34ec7386c11539836fe6a8a16b3f9a6fc12062e7593372"
+    sha256 cellar: :any,                 big_sur:       "f03c10e6918ff16d484174e91a78e900dc2270237370aa8e448be23f0bb0496a"
+    sha256 cellar: :any,                 catalina:      "23a33f0c139d0c56928bd6aa9bc7612c4da460f33468adcdd2ab267c444300ae"
+    sha256 cellar: :any,                 mojave:        "8dd0ea688094de418970818c68eada0a5ee6eca74e4a5b09e4ab2864b8d0837c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4d3b59f3737480691d03897fd6d0131b8c35ae0f90b479f3220d20c52feb964e"
   end
 
   depends_on "cfitsio"
@@ -30,9 +31,7 @@ class Cpl < Formula
                           "--prefix=#{prefix}",
                           "--with-cfitsio=#{Formula["cfitsio"].prefix}",
                           "--with-fftw=#{Formula["fftw"].prefix}",
-                          "--with-wcslib=#{Formula["wcslib"].prefix}",
-                          # Needed for 7.1.2's ./configure to work under Xcode 12:
-                          "CC=#{ENV.cc} -Wno-implicit-function-declaration"
+                          "--with-wcslib=#{Formula["wcslib"].prefix}"
     system "make", "install"
   end
 

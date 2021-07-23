@@ -1,8 +1,8 @@
 class Afsctool < Formula
   desc "Utility for manipulating HFS+ compressed files"
   homepage "https://brkirch.wordpress.com/afsctool/"
-  url "https://dl.bintray.com/homebrew/mirror/afsctool-1.6.4.zip"
-  mirror "https://docs.google.com/uc?export=download&id=0BwQlnXqL939ZQjBQNEhRQUo0aUk"
+  url "https://docs.google.com/uc?export=download&id=0BwQlnXqL939ZQjBQNEhRQUo0aUk"
+  version "1.6.4"
   sha256 "bb6a84370526af6ec1cee2c1a7199134806e691d1093f4aef060df080cd3866d"
   license "GPL-3.0"
   revision 2
@@ -16,6 +16,8 @@ class Afsctool < Formula
     sha256 cellar: :any_skip_relocation, high_sierra:   "72e92414d524b82ec1d8381ad50f55bd330f1109a5e10bca4235300fee557caf"
     sha256 cellar: :any_skip_relocation, sierra:        "96437b04a2974c215979550d3d70b4c8e3f609e76954ca41059c6f246da452ee"
   end
+
+  depends_on :macos
 
   # Fixes Sierra "Unable to compress" issue; reported upstream on 24 July 2017
   patch :p2 do

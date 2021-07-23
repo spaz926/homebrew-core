@@ -18,7 +18,7 @@ class Docbook2x < Formula
     sha256 cellar: :any_skip_relocation, sierra:        "a1110d4bd90cecf9ce8edacc27a3edc84dfcd4db7ab50b67269af0eb6a9bb00a"
     sha256 cellar: :any_skip_relocation, el_capitan:    "acfdd1c80cb523b213dea0125819b1b6fc783d6d740cc8fc0047f44756b57889"
     sha256 cellar: :any_skip_relocation, yosemite:      "e3efe4afe190e126174c6e3bec0a9feb4ad37ddd0ecaef778b1e8df8a60e8717"
-    sha256 cellar: :any_skip_relocation, mavericks:     "4b4750b139d7a262735e33ee0e314c7a589b6ada2d72e336aabaf334789a411d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1e054b07a0d7e8817a58b2c656e8f435289cd1d2110d7fae083e1bf79eece522"
   end
 
   depends_on "docbook"
@@ -27,18 +27,45 @@ class Docbook2x < Formula
   uses_from_macos "perl"
 
   on_linux do
+    resource "XML::NamespaceSupport" do
+      url "https://cpan.metacpan.org/authors/id/P/PE/PERIGRIN/XML-NamespaceSupport-1.12.tar.gz"
+      sha256 "47e995859f8dd0413aa3f22d350c4a62da652e854267aa0586ae544ae2bae5ef"
+    end
     resource "XML::Parser" do
       url "https://cpan.metacpan.org/authors/id/T/TO/TODDR/XML-Parser-2.44.tar.gz"
       sha256 "1ae9d07ee9c35326b3d9aad56eae71a6730a73a116b9fe9e8a4758b7cc033216"
     end
+    resource "XML::SAX::Exception" do
+      url "https://cpan.metacpan.org/authors/id/G/GR/GRANTM/XML-SAX-Base-1.09.tar.gz"
+      sha256 "66cb355ba4ef47c10ca738bd35999723644386ac853abbeb5132841f5e8a2ad0"
+    end
+    resource "XML::SAX::ParserFactory" do
+      url "https://cpan.metacpan.org/authors/id/G/GR/GRANTM/XML-SAX-1.02.tar.gz"
+      sha256 "4506c387043aa6a77b455f00f57409f3720aa7e553495ab2535263b4ed1ea12a"
+    end
   end
 
   def install
+    on_linux do
+      ENV.prepend_create_path "PERL5LIB", libexec/"lib/perl5"
+      resources.each do |res|
+        res.stage do
+          system "perl", "Makefile.PL", "INSTALL_BASE=#{libexec}"
+          system "make", "PERL5LIB=#{ENV["PERL5LIB"]}"
+          system "make", "install"
+        end
+      end
+    end
+
     inreplace "perl/db2x_xsltproc.pl", "http://docbook2x.sf.net/latest/xslt", "#{share}/docbook2X/xslt"
     inreplace "configure", "${prefix}", prefix
     system "./configure", "--disable-dependency-tracking",
                           "--prefix=#{prefix}"
     system "make", "install"
+
+    on_linux do
+      bin.env_script_all_files libexec/"bin", PERL5LIB: ENV["PERL5LIB"]
+    end
   end
 
   test do

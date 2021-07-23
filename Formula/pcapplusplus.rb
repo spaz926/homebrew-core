@@ -1,32 +1,24 @@
 class Pcapplusplus < Formula
   desc "C++ network sniffing, packet parsing and crafting framework"
   homepage "https://pcapplusplus.github.io"
-  url "https://github.com/seladb/PcapPlusPlus/archive/v20.08.tar.gz"
-  sha256 "b35150a8517d3e5d5d8d1514126e4e8e4688f0941916af4256214c013c06ff50"
+  url "https://github.com/seladb/PcapPlusPlus/archive/v21.05.tar.gz"
+  sha256 "f7bc2caea72544f42e3547c8acf65fca07ddd4cd45f7be2f5132dd1826ea27bb"
   license "Unlicense"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "fb22355c98d5c62862816ed1ed211986cef53c1bfc3debe1eaee2a19c7249d6d"
-    sha256 cellar: :any_skip_relocation, big_sur:       "a85939e3b64f246eb7b4c7d0e0c8ec7eac3a108c17b33af1328d6c54a30dfeb0"
-    sha256 cellar: :any_skip_relocation, catalina:      "d0f032c98d420d3b340e5b6421877e5c89dcf31e74b2dbb6fbed33bd153ab6be"
-    sha256 cellar: :any_skip_relocation, mojave:        "30ad1d79f76c841448e3e76bd25c9ddeae2c0ba543d11fbd621799f8da81077f"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "ebdc93c7ccb4ddb29c1fe4133657cdf9c55740927c85e1568a25a0e42debad66"
+    sha256 cellar: :any_skip_relocation, big_sur:       "c66896b5edabf916a4db8522e38f4b836f63a2b1bb3705a21e9d9309b9fb1307"
+    sha256 cellar: :any_skip_relocation, catalina:      "39ad69b47800c0d0c98f513750f1170e0dd56e0aca9e02eb29cb37e2e75c22f6"
+    sha256 cellar: :any_skip_relocation, mojave:        "098062050ba28c2c168edb8abd60a6fb0f7185df57f12e5aed897b8cd98f0d9d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a38e0066b0df3ee6a3ee87d0ad9dc33b57f49e65d377b7582cdb2f741bcb7229"
   end
 
-  def install
-    system "./configure-mac_os_x.sh", "--install-dir", prefix
+  uses_from_macos "libpcap"
 
-    # Fix OS/X build issue in v20.08 which inclues <in.h> whether it exists or not,
-    # can be removed next release:
-    inreplace %w[Examples/DnsSpoofing/main.cpp
-                 Examples/HttpAnalyzer/main.cpp
-                 Examples/IPDefragUtil/main.cpp
-                 Examples/IPFragUtil/main.cpp
-                 Examples/IcmpFileTransfer/Common.cpp
-                 Examples/IcmpFileTransfer/IcmpFileTransfer-catcher.cpp
-                 Examples/IcmpFileTransfer/IcmpFileTransfer-pitcher.cpp
-                 Examples/PcapSplitter/IPPortSplitters.h
-                 Examples/SSLAnalyzer/main.cpp], "#include <in.h>", "#include <netinet/in.h>"
+  def install
+    os = "mac_os_x"
+    on_linux { os = "linux" }
+    system "./configure-#{os}.sh", "--install-dir", prefix
 
     # library requires to run 'make all' and
     # 'make install' in two separate commands.
@@ -42,7 +34,7 @@ class Pcapplusplus < Formula
         const std::vector<pcpp::PcapLiveDevice*>& devList =
           pcpp::PcapLiveDeviceList::getInstance().getPcapLiveDevicesList();
         if (devList.size() > 0) {
-          if (devList[0]->getName() == NULL)
+          if (devList[0]->getName() == "")
             return 1;
           return 0;
         }

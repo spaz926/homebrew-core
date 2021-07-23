@@ -1,12 +1,14 @@
 class Solr < Formula
   desc "Enterprise search platform from the Apache Lucene project"
-  homepage "https://lucene.apache.org/solr/"
-  url "https://www.apache.org/dyn/closer.lua?path=lucene/solr/8.8.1/solr-8.8.1.tgz"
-  mirror "https://archive.apache.org/dist/lucene/solr/8.8.1/solr-8.8.1.tgz"
-  sha256 "00b573afd3ae0a3dd4ff79668ee3c4193a1fc681aeb031da9a7385fbc01c1f1d"
+  homepage "https://solr.apache.org/"
+  url "https://www.apache.org/dyn/closer.lua?path=lucene/solr/8.9.0/solr-8.9.0.tgz"
+  mirror "https://archive.apache.org/dist/lucene/solr/8.9.0/solr-8.9.0.tgz"
+  sha256 "c9c970e0603318eac1ca5bae24e9a85e917d012266159237e572e636c5a3da62"
   license "Apache-2.0"
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "42d751cd394c49d151949d118f1c858d7f69de3046b7d32b4d8a07924af2a4b9"
+  end
 
   depends_on "openjdk"
 
@@ -23,6 +25,8 @@ class Solr < Formula
     env["SOLR_PID_DIR"] = "${SOLR_PID_DIR:-#{var/"run/solr"}}"
     bin.env_script_all_files libexec, env
     (libexec/"bin").rmtree
+
+    inreplace libexec/"solr", "/usr/local/share/solr", pkgshare
   end
 
   def post_install

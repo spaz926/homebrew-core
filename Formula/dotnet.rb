@@ -2,8 +2,8 @@ class Dotnet < Formula
   desc ".NET Core"
   homepage "https://dotnet.microsoft.com/"
   url "https://github.com/dotnet/source-build.git",
-      tag:      "v5.0.104-SDK",
-      revision: "269e323b5f2e2df4678c7763282c14fb1a530cfa"
+      tag:      "v5.0.204-SDK",
+      revision: "a002cbfb6b9d903b59bd6acdef8022957538276d"
   license "MIT"
 
   livecheck do
@@ -12,9 +12,9 @@ class Dotnet < Formula
   end
 
   bottle do
-    sha256 cellar: :any, big_sur:  "ec13dc6a956f92de6cde591c575c2df601cfefab99827a3d5ae3a89358c40224"
-    sha256 cellar: :any, catalina: "4402b3291b0ef7eb32c234d13d30e3bb03d84df76dc5d7bbce504712c554fd2a"
-    sha256 cellar: :any, mojave:   "a6db75bc17964a0edeca4ec3913ce871641a80c1d170bf4096fa5f7726ec1a5f"
+    sha256 cellar: :any, big_sur:  "614cf7d93f8028b3ef76d5c7a62eb715ee1220de555cd3d03b9f1f6d92766763"
+    sha256 cellar: :any, catalina: "14539181400c8e2a729a13646a8315fe2983b069509bb9e177540f3730efd7e3"
+    sha256 cellar: :any, mojave:   "c6249aa4a3c1a7db037fda9b7d7e40085dbbd2555dd195b03f2c767bc9381d90"
   end
 
   depends_on "cmake" => :build
@@ -24,16 +24,7 @@ class Dotnet < Formula
   depends_on "icu4c"
   depends_on "openssl@1.1"
 
-  # libicu 68 deprecates its defined boolean constants for TRUE/FALSE
-  # https://github.com/dotnet/runtime/issues/47346
-  resource "runtime-libicu-68-patch" do
-    url "https://raw.githubusercontent.com/archlinux/svntogit-community/ac84e64334a020b62551896bf54a87c49baa2b8e/trunk/9999-runtime-libicu-68.patch"
-    sha256 "f3ce241390dd396ba641d842f43c89ead63c53f0db95776e2c9df1786bf7c296"
-  end
-
   def install
-    (buildpath/"patches/runtime").install resource("runtime-libicu-68-patch")
-
     # Arguments needed to not artificially time-limit downloads from Azure.
     # See the following GitHub issue comment for details:
     # https://github.com/dotnet/source-build/issues/1596#issuecomment-670995776

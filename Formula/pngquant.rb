@@ -1,8 +1,8 @@
 class Pngquant < Formula
   desc "PNG image optimizing utility"
   homepage "https://pngquant.org/"
-  url "https://pngquant.org/pngquant-2.13.1-src.tar.gz"
-  sha256 "4b911a11aa0c35d364b608c917d13002126185c8c314ba4aa706b62fd6a95a7a"
+  url "https://pngquant.org/pngquant-2.15.1-src.tar.gz"
+  sha256 "718aabbc346b82ed93564d8e757b346988d86de268ee03d2904207cd5d64c829"
   license :cannot_represent
   head "https://github.com/kornelski/pngquant.git"
 
@@ -12,10 +12,11 @@ class Pngquant < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "02b1cdd8853cd9b69cc5afead63c26af493ede6b6ee4199a040f3dd7a3302357"
-    sha256 cellar: :any, big_sur:       "581ba7e25c2df8ac52853df3771ac13c151a23d2f0d932fa9bf532e483c3aba0"
-    sha256 cellar: :any, catalina:      "a19326b4dd20ac58d8048cb5f540e3a278e454ca58c786ba4a2141926bb28cf3"
-    sha256 cellar: :any, mojave:        "a6a7ae1b165e9f571fcb5b9708f9b14f4a566a4b37b256429c98ec6949ac0b06"
+    sha256 cellar: :any,                 arm64_big_sur: "ed5a067febf7c6cbf819c51f79c0623ba6cb64e155ad1e95d35cc3162aa67ee8"
+    sha256 cellar: :any,                 big_sur:       "0bc025960043fb557d6d539dcf23b28b92f2bea1510633ab60f18be46291df69"
+    sha256 cellar: :any,                 catalina:      "4ebceda76f537444ec729a1728b319f3023b2e14d22e7921c6159060c20e0bea"
+    sha256 cellar: :any,                 mojave:        "ca06335788b3f0e24dd910b8efaf6222f4c742cbb5bf2bbdc6ec4e6bf802b69d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "79d1c82a5d9cbe75765ac1db9172fe6275307615abb73ff91070d355ecd8fce1"
   end
 
   depends_on "pkg-config" => :build

@@ -1,8 +1,9 @@
 class PerconaServer < Formula
   desc "Drop-in MySQL replacement"
   homepage "https://www.percona.com"
-  url "https://www.percona.com/downloads/Percona-Server-8.0/Percona-Server-8.0.22-13/source/tarball/percona-server-8.0.22-13.tar.gz"
-  sha256 "614249dc7790e82cabf22fdb20492be7ec5b8e98550f662204a17e0e8797cc9a"
+  url "https://www.percona.com/downloads/Percona-Server-8.0/Percona-Server-8.0.23-14/source/tarball/percona-server-8.0.23-14.tar.gz"
+  sha256 "613b8c110ede5cf67a7ac32e16556f4c67d8ad35263f4f8d6457ae0789074048"
+  license "BSD-3-Clause"
 
   livecheck do
     url "https://www.percona.com/downloads/Percona-Server-LATEST/"
@@ -10,10 +11,10 @@ class PerconaServer < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "6fc23e2340c93784c2b12e712688ef293a81693becb500c742bd7182f08b5429"
-    sha256 big_sur:       "1279dd11e7a27faa7617a517b7ff44a7260d2a2591555c436a326017bd978b83"
-    sha256 catalina:      "290a88ceec94ecd8b6d830df04ec27482887b92b8dc12ae9df491afd6afeb141"
-    sha256 mojave:        "feb100bec9928591c10367c22cf0c041ec317d12377ff3eeb4d8f0eb23bbb39f"
+    sha256 arm64_big_sur: "203f38588d3946e10b980ff4f2605daa3f7e796fc356382b07a08ea095a44f84"
+    sha256 big_sur:       "d011c254fc8c786d0733f15d13bac1def3cce54f7f4911f3136cff283aa882b4"
+    sha256 catalina:      "80c63a69c27d459ecc9a8cef46a863c26c214294fe53f864ed66e77f4b2364b5"
+    sha256 mojave:        "ac9341b8923f8d9bdfc4a673d71eac24d80314ddbb9c996140265c13bb4a5986"
   end
 
   pour_bottle? do
@@ -22,8 +23,21 @@ class PerconaServer < Formula
   end
 
   depends_on "cmake" => :build
+  depends_on "pkg-config" => :build
+  depends_on "icu4c"
+  depends_on "libevent"
+  depends_on "lz4"
   depends_on "openssl@1.1"
   depends_on "protobuf"
+  depends_on "zstd"
+
+  uses_from_macos "curl"
+  uses_from_macos "libedit"
+  uses_from_macos "zlib"
+
+  on_linux do
+    depends_on "readline"
+  end
 
   conflicts_with "mariadb", "mysql",
     because: "percona, mariadb, and mysql install the same binaries"
@@ -37,7 +51,7 @@ class PerconaServer < Formula
 
   # https://github.com/percona/percona-server/blob/Percona-Server-#{version}/cmake/boost.cmake
   resource "boost" do
-    url "https://dl.bintray.com/boostorg/release/1.73.0/source/boost_1_73_0.tar.bz2"
+    url "https://boostorg.jfrog.io/artifactory/main/release/1.73.0/source/boost_1_73_0.tar.bz2"
     sha256 "4eb3b8d442b426dc35346235c8733b5ae35ba431690e38c6a8263dce9fcbb402"
   end
 
@@ -63,13 +77,18 @@ class PerconaServer < Formula
       -DINSTALL_PLUGINDIR=lib/percona-server/plugin
       -DMYSQL_DATADIR=#{datadir}
       -DSYSCONFDIR=#{etc}
-      -DWITH_SSL=#{Formula["openssl@1.1"].opt_prefix}
-      -DWITH_UNIT_TESTS=OFF
-      -DWITH_EMBEDDED_SERVER=ON
       -DENABLED_LOCAL_INFILE=1
+      -DWITH_EMBEDDED_SERVER=ON
       -DWITH_INNODB_MEMCACHED=ON
+      -DWITH_UNIT_TESTS=OFF
       -DWITH_EDITLINE=system
+      -DWITH_ICU=system
+      -DWITH_LIBEVENT=system
+      -DWITH_LZ4=system
       -DWITH_PROTOBUF=system
+      -DWITH_SSL=#{Formula["openssl@1.1"].opt_prefix}
+      -DWITH_ZLIB=system
+      -DWITH_ZSTD=system
     ]
 
     # MySQL >5.7.x mandates Boost as a requirement to build & has a strict

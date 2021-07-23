@@ -2,27 +2,27 @@ class AwsIamAuthenticator < Formula
   desc "Use AWS IAM credentials to authenticate to Kubernetes"
   homepage "https://github.com/kubernetes-sigs/aws-iam-authenticator"
   url "https://github.com/kubernetes-sigs/aws-iam-authenticator.git",
-      tag:      "v0.5.2",
-      revision: "292b9b82df69b87af962b92485b254d9f4b10f00"
+      tag:      "v0.5.3",
+      revision: "a0516fb9ace571024263424f1770e6d861e65d09"
   license "Apache-2.0"
-  revision 1
   head "https://github.com/kubernetes-sigs/aws-iam-authenticator.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "0374175f7d0a1965de553e0a4d990d92690d5984c9f1fd0275384f58cd1ec921"
-    sha256 cellar: :any_skip_relocation, big_sur:       "50e376c205f257a76486f4ca4da86e6eaaf48231970f13be2039727a9c7e3e31"
-    sha256 cellar: :any_skip_relocation, catalina:      "99c0b3d4f1987306f04553d0d8f234d1d105131c844d14c2197b8aa21602f6a1"
-    sha256 cellar: :any_skip_relocation, mojave:        "5c722bc544bfaa0d51c903aabe81e1beb4c4f607c5559340fc6a3b2aecc8d5f2"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "30639bda3ecb72388aeabc0f3e6587f58bc9867dc6b3a9f3046e9d0ef659f122"
+    sha256 cellar: :any_skip_relocation, big_sur:       "a161d4ea3ef00ab85c8f0cea198e0dafde39cd3a76359b75ea22521c35eac7d6"
+    sha256 cellar: :any_skip_relocation, catalina:      "192ace97a0c76ed0aceda060290db6abcde5af8ad7dfc30faaf5f4ed4ae92b6a"
+    sha256 cellar: :any_skip_relocation, mojave:        "c7f23ccd6bdd852a7c1928df437381204aa9da22a2f41eb3a5776864838f39db"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d6d0c278ef6d1d19a160035e5ff0039a16121be7107acce9bfa55ab59054c2f4"
   end
 
   depends_on "go" => :build
 
   def install
     ldflags = ["-s", "-w",
-               "-X main.version=#{version}",
-               "-X main.commit=#{Utils.git_head}"]
-    system "go", "build", "-ldflags", ldflags.join(" "), "-trimpath",
-           "-o", bin/"aws-iam-authenticator", "./cmd/aws-iam-authenticator"
+               "-X sigs.k8s.io/aws-iam-authenticator/pkg.Version=#{version}",
+               "-X sigs.k8s.io/aws-iam-authenticator/pkg.CommitID=#{Utils.git_head}",
+               "-buildid=''"]
+    system "go", "build", *std_go_args(ldflags: ldflags.join(" ")), "./cmd/aws-iam-authenticator"
     prefix.install_metafiles
   end
 
@@ -33,7 +33,7 @@ class AwsIamAuthenticator < Formula
     system "#{bin}/aws-iam-authenticator", "init", "-i", "test"
     contents = Dir.entries(".")
     ["cert.pem", "key.pem", "aws-iam-authenticator.kubeconfig"].each do |created|
-      assert_include contents, created
+      assert_includes contents, created
     end
   end
 end

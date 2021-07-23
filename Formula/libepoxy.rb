@@ -1,10 +1,9 @@
 class Libepoxy < Formula
   desc "Library for handling OpenGL function pointer management"
   homepage "https://github.com/anholt/libepoxy"
-  url "https://download.gnome.org/sources/libepoxy/1.5/libepoxy-1.5.5.tar.xz"
-  sha256 "261663db21bcc1cc232b07ea683252ee6992982276536924271535875f5b0556"
+  url "https://download.gnome.org/sources/libepoxy/1.5/libepoxy-1.5.8.tar.xz"
+  sha256 "cf05e4901778c434aef68bb7dc01bea2bce15440c0cecb777fb446f04db6fe0d"
   license "MIT"
-  revision 1
 
   # We use a common regex because libepoxy doesn't use GNOME's "even-numbered
   # minor is stable" version scheme.
@@ -14,16 +13,21 @@ class Libepoxy < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "f4b0803937d1fa962e698890caa1ec96d7ba1847a4df990ad07db5ed480d8821"
-    sha256 cellar: :any, big_sur:       "70c98f994735bd0cd3c23286460c06fcbe324294f97b61ea91dc72303132c64d"
-    sha256 cellar: :any, catalina:      "f410ca0d9f4d101901beec178b22f4e65facdad58d496c7b2b5f9a56ec241852"
-    sha256 cellar: :any, mojave:        "4ca20871fe9fd9bf37cebd4dc3b7f081406dc08d60c404d970132cb48f26900b"
+    sha256 cellar: :any,                 arm64_big_sur: "af3bc3c7e7710cff30fdebbe386f52fab7cd5083b41d6d9a043eba4b2b1c049a"
+    sha256 cellar: :any,                 big_sur:       "4a6a1766bb7ff4a4c9dbd5136f655685141a3c3eae8b082edc94cada21f613ec"
+    sha256 cellar: :any,                 catalina:      "2af927d87affad9ff2ba2bce8b9410f1a7b131ddbd82ba157ffd0ec6a31b15b9"
+    sha256 cellar: :any,                 mojave:        "9ff86759f0fce587b7063d2f2b156c3da556d54d6e40a108f72e1813580329bf"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bc9eb2e98145c2132f84df724881c2d0b2e79461a55d3ab9e89c9242f57e9089"
   end
 
   depends_on "meson" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => :build
   depends_on "python@3.9" => :build
+
+  on_linux do
+    depends_on "freeglut"
+  end
 
   def install
     mkdir "build" do
@@ -37,11 +41,14 @@ class Libepoxy < Formula
     (testpath/"test.c").write <<~EOS
 
       #include <epoxy/gl.h>
+      #ifdef OS_MAC
       #include <OpenGL/CGLContext.h>
       #include <OpenGL/CGLTypes.h>
       #include <OpenGL/OpenGL.h>
+      #endif
       int main()
       {
+          #ifdef OS_MAC
           CGLPixelFormatAttribute attribs[] = {0};
           CGLPixelFormatObj pix;
           int npix;
@@ -49,14 +56,22 @@ class Libepoxy < Formula
 
           CGLChoosePixelFormat( attribs, &pix, &npix );
           CGLCreateContext(pix, (void*)0, &ctx);
+          #endif
 
           glClear(GL_COLOR_BUFFER_BIT);
+          #ifdef OS_MAC
           CGLReleasePixelFormat(pix);
           CGLReleaseContext(pix);
+          #endif
           return 0;
       }
     EOS
-    system ENV.cc, "test.c", "-L#{lib}", "-lepoxy", "-framework", "OpenGL", "-o", "test"
+    args = %w[-lepoxy]
+    on_macos do
+      args += %w[-framework OpenGL -DOS_MAC]
+    end
+    args += %w[-o test]
+    system ENV.cc, "test.c", "-L#{lib}", *args
     system "ls", "-lh", "test"
     system "file", "test"
     system "./test"

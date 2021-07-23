@@ -1,15 +1,16 @@
 class Sngrep < Formula
   desc "Command-line tool for displaying SIP calls message flows"
   homepage "https://github.com/irontec/sngrep"
-  url "https://github.com/irontec/sngrep/archive/v1.4.8.tar.gz"
-  sha256 "f39fded8dc9ef0b7a41319f223dd4afa348bb2418bea578ed281557726829728"
+  url "https://github.com/irontec/sngrep/archive/v1.4.9.tar.gz"
+  sha256 "3c6f28b5c795a5b1844a8997aa430aba72e083c8bd52939990900450c5f4c85a"
   license "GPL-3.0-or-later"
 
   bottle do
-    sha256 arm64_big_sur: "18b64ed24e66e3030fd8cf53ac64293d657093bfede0ccb7929621efe5edd146"
-    sha256 big_sur:       "9f4802e1906e6177e83aff155174187fafdac32401d38c22af472035801c01c2"
-    sha256 catalina:      "489e6591c8008cbec241633ef0697c609aef20b02b9d97e7249c35d88af15d70"
-    sha256 mojave:        "d645f96ed390b34ce5e4fe9b01a687722b4046db196c0933546a7bb7a964d55a"
+    sha256 cellar: :any,                 arm64_big_sur: "449af17f3cb8673ec2beb158ba5a48bfc620739bac89bce15eeaea4297c65972"
+    sha256                               big_sur:       "d226ad4dbc036097beeefdb5d181954c3ed8eaeef9d236189598783d03a6a4c3"
+    sha256                               catalina:      "95e8048031ea84674d2147c224aae73c14616164c74234f25d3001e15b779a35"
+    sha256                               mojave:        "20e51aa586d1a16ad0ed97aacc941649b8872a78e36f3ec34dbdb8ea2a674216"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0ce3e5f4cb6aded2538bef214778a5b4204b460421ec57f6314685e4a90085b9"
   end
 
   depends_on "autoconf" => :build
@@ -17,7 +18,14 @@ class Sngrep < Formula
   depends_on "ncurses" if DevelopmentTools.clang_build_version >= 1000
   depends_on "openssl@1.1"
 
+  uses_from_macos "libpcap"
+  uses_from_macos "ncurses"
+
   def install
+    on_linux do
+      ENV.append_to_cflags "-I#{Formula["ncurses"].opt_include}/ncursesw"
+    end
+
     system "./bootstrap.sh"
     system "./configure", "--disable-debug",
                           "--disable-dependency-tracking",

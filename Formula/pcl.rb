@@ -2,7 +2,7 @@ class Pcl < Formula
   desc "Library for 2D/3D image and point cloud processing"
   homepage "https://pointclouds.org/"
   license "BSD-3-Clause"
-  revision 7
+  revision 8
 
   stable do
     url "https://github.com/PointCloudLibrary/pcl/archive/pcl-1.11.1.tar.gz"
@@ -13,10 +13,11 @@ class Pcl < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "198a4310035fb316ad2519391327ca0788e5961103bf95c37c2e8a662a7f20f9"
-    sha256 big_sur:       "0151798b4a13ab326f3df30d454cdc34a430760fee942e93672e5e7ea3678735"
-    sha256 catalina:      "8b8eb46953987960629d6a2241f356891a7f069ab088637ab31b3519c2cfc485"
-    sha256 mojave:        "0917ef7fd1deed11b1ded50a8324eb787dad309c734812d774f049cb4e6e52fc"
+    rebuild 1
+    sha256 cellar: :any, arm64_big_sur: "6ba5d120dd629c8fe294cfcfd75817024935e4901807732ec3ecb4404430ca63"
+    sha256 cellar: :any, big_sur:       "e26ac7c25e8d1cd5581b0c25a4a5abcfdc49938784696f988c606cd4248294a8"
+    sha256 cellar: :any, catalina:      "4c25e37d19f4f7e300be112a6ef5dcfeaa9523b1e4aa0457a4873e478663dc54"
+    sha256 cellar: :any, mojave:        "ee7e82622e783b380752ed27eeb65f6a33bc843c30a633c73bde7db2a5f3a304"
   end
 
   head do
@@ -113,7 +114,7 @@ class Pcl < Formula
       # (Homebrew/homebrew-test-bot#544) when bumping the boost
       # revision without bumping this formula's revision as well
       ENV.prepend_path "PKG_CONFIG_PATH", Formula["eigen"].opt_share/"pkgconfig"
-      system "cmake", "..", *std_cmake_args
+      system "cmake", "..", "-DGLEW_DIR=#{Formula["glew"].opt_lib}/cmake/glew", *std_cmake_args
       system "make"
       system "./pcd_write"
       assert_predicate (testpath/"build/test_pcd.pcd"), :exist?

@@ -1,8 +1,8 @@
 class RubyAT27 < Formula
   desc "Powerful, clean, object-oriented scripting language"
   homepage "https://www.ruby-lang.org/"
-  url "https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.2.tar.xz"
-  sha256 "1b95ab193cc8f5b5e59d2686cb3d5dcf1ddf2a86cb6950e0b4bdaae5040ec0d6"
+  url "https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.4.tar.xz"
+  sha256 "2a80824e0ad6100826b69b9890bf55cfc4cf2b61a1e1330fccbcb30c46cef8d7"
   license "Ruby"
 
   livecheck do
@@ -11,11 +11,11 @@ class RubyAT27 < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 arm64_big_sur: "495d438227b12dd726981cbde5f97ad2266169976042c519086336918b118590"
-    sha256 big_sur:       "9d9a96326e21b878179285b9964ac4145f8dc0765cca841a394c2cf791286081"
-    sha256 catalina:      "6126c27ef5998b8ad3fb7112e4331191c9b6d8e45fadf52d9f4f21af823d25aa"
-    sha256 mojave:        "74278fbbb07822bc074b9a75848ce7501b4e9171279e6c02988d51b5a72a056f"
+    sha256 arm64_big_sur: "c69d8b9a90e4ec60cbefc2dfea8bda47e4eb02102f00b527df040a1f822f2f6b"
+    sha256 big_sur:       "81b7afe251434a03c0da4654afc07bd0c2f36ecc16bc6c34847564b124167724"
+    sha256 catalina:      "f55efd7734e36bb91b3fda9d30819f9d6e9bd731ad32ea1bc775586723e1e201"
+    sha256 mojave:        "b297b0ae4295e6757efb79a9c6634a80c8fff68f5399bf45e5d179b1c25cbe8e"
+    sha256 x86_64_linux:  "4114feae001b41fe15163cfe307b241f1a9034988d745f49fb55380eb188f233"
   end
 
   keg_only :versioned_formula
@@ -31,8 +31,8 @@ class RubyAT27 < Formula
   # The exception is Rubygem security fixes, which mandate updating this
   # formula & the versioned equivalents and bumping the revisions.
   resource "rubygems" do
-    url "https://rubygems.org/rubygems/rubygems-3.1.4.tgz"
-    sha256 "d8030019d86d60469d3f4f48b7cfcd724b184157ac2881a5bec4394d9cd93f7d"
+    url "https://rubygems.org/rubygems/rubygems-3.2.22.tgz"
+    sha256 "368979ef8103b550a98fc6479543831f0d55c3567d5ee4622d5aa569ee17418b"
   end
 
   def api_version

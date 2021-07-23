@@ -3,23 +3,24 @@ class Gitlint < Formula
 
   desc "Linting for your git commit messages"
   homepage "https://jorisroovers.github.io/gitlint"
-  url "https://files.pythonhosted.org/packages/df/b5/04355d3abe6b372e6bae36864ec7b659012343da437b595895637713f90f/gitlint-0.15.0.tar.gz"
-  sha256 "aae7e966d765a818d941398f2d3aff6ec7f30a7251dd5c915846b7e82f4f7776"
+  url "https://files.pythonhosted.org/packages/3e/bd/31f661a621a22094c0f905a228142dd463dacdc71ed2b2a570956062b64e/gitlint-0.15.1.tar.gz"
+  sha256 "4b22916dcbdca381244aee6cb8d8743756cfd98f27e7d1f02e78733f07c3c21c"
   license "MIT"
   head "https://github.com/jorisroovers/gitlint.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "8131d633d12e717a5cffd63fcd8717d1f7de4660c0ecea17e39a35cee982d9ca"
-    sha256 cellar: :any_skip_relocation, big_sur:       "52ac0738eaf1ee717e838a7a2d2c2e8c4745f281bafc846a054be2526567c411"
-    sha256 cellar: :any_skip_relocation, catalina:      "79dacaaf2f45dedcca1fb05efbf8c84d37f85996db920a4a675ceff724a8110f"
-    sha256 cellar: :any_skip_relocation, mojave:        "dbb9d4e5bbabaa3a75ea7d38df6cb46ad51f95e5378591068f397884cee9ceb6"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "415d16b4b9224c4f35e7e9d1157b369080b215757e841a1b1580e47736fe75ab"
+    sha256 cellar: :any_skip_relocation, big_sur:       "5d5cca443df3d7a86db359642f404da3236983165ed3bf59471b9d1262c95be7"
+    sha256 cellar: :any_skip_relocation, catalina:      "102fd40cb4d4e8d5f1e1b2c23164e327dc9506f59aea5a79a81a963249c3ce50"
+    sha256 cellar: :any_skip_relocation, mojave:        "427ca21ef9d7d31b021c13889b2f291e3a70740ab45d3aff36de8dec04338b08"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8ac6012949c127b182719deae1e9098b8986fa28a5acfd9db1a0c0a566417730"
   end
 
   depends_on "python@3.9"
 
   resource "arrow" do
-    url "https://files.pythonhosted.org/packages/ec/74/1cf2d9912921cebdba3fa954949206c8aa159c9cc803b88140fb227f8a0e/arrow-0.17.0.tar.gz"
-    sha256 "ff08d10cda1d36c68657d6ad20d74fbea493d980f8b2d45344e00d6ed2bf6ed4"
+    url "https://files.pythonhosted.org/packages/f6/72/e8c899f0eef9c0131ffdb1bc25d79ff65c60411f831ab17d29e3809f5812/arrow-1.0.3.tar.gz"
+    sha256 "399c9c8ae732270e1aa58ead835a79a40d7be8aa109c579898eb41029b5a231d"
   end
 
   resource "click" do

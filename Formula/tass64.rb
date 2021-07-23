@@ -1,15 +1,16 @@
 class Tass64 < Formula
   desc "Multi pass optimizing macro assembler for the 65xx series of processors"
   homepage "https://tass64.sourceforge.io/"
-  url "https://downloads.sourceforge.net/project/tass64/source/64tass-1.55.2200-src.zip"
-  sha256 "067d0a54cb3c473b26aa5d69ea3f1f956be7cccc9044f1117fc20cb84aa63880"
+  url "https://downloads.sourceforge.net/project/tass64/source/64tass-1.56.2625-src.zip"
+  sha256 "c4e570c717c9500f3af61a3ad5d536f22415e2b29ed1eb09b1a955d310c9f3d3"
+  license all_of: ["GPL-2.0-or-later", "LGPL-2.0-or-later", "LGPL-2.1-only", "MIT"]
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "cf68212ef8aa0d63b5390a0108d00a61dad254fa630af42dca211368484647f0"
-    sha256 cellar: :any_skip_relocation, big_sur:       "8c9cac57b73b6e69b31534935f72bc832f9ee85618063bd93dde2fa932183330"
-    sha256 cellar: :any_skip_relocation, catalina:      "afefda676ae81f3340850d132e17fa408505d79da25fd50c42c3042ca3b4f7f2"
-    sha256 cellar: :any_skip_relocation, mojave:        "4a1a224e806b0f9827ffe1f4e5e8ce792e616e6b2e829c278fad5c8a5ee958af"
-    sha256 cellar: :any_skip_relocation, high_sierra:   "1aa51c3d25cf651f7d4725d89a022ab2510963684dc3b3ebe4845b488b3bb5d7"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "7468a371a0c4627bf592d4e6fe36b9c854def7caa2b7270faa20ff97ca2cc7df"
+    sha256 cellar: :any_skip_relocation, big_sur:       "70f966e5974c671aac1c1209c2273325be29b5d56de851416344d0559c8b8c34"
+    sha256 cellar: :any_skip_relocation, catalina:      "e59c0c91030879fbc49cd205a1e5e0e5c0026434d1bff86a9742b4d00139824c"
+    sha256 cellar: :any_skip_relocation, mojave:        "a5be46e97063271c7bc9ddadc88e4b318193ee0f0556489593c3db9aed5ef03b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e5d380c36fde7617c613b0da5854de0f8b73150a3370f0f8b4d281191a67ed60"
   end
 
   def install

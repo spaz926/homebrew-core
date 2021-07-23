@@ -1,21 +1,24 @@
 class CargoC < Formula
   desc "Helper program to build and install c-like libraries"
   homepage "https://github.com/lu-zero/cargo-c"
-  url "https://github.com/lu-zero/cargo-c/archive/v0.7.3.tar.gz"
-  sha256 "533c65d555330e86b91415753efc140ffdb900abd59b5b6403352c4264941a99"
+  url "https://github.com/lu-zero/cargo-c/archive/v0.9.1.tar.gz"
+  sha256 "ae79b9a6e862f103a71db044a0713d9dad753000913c751b124a11c19cb3a94c"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "ae5d43a195dc94aeb80c0110822f8eb94fd4d2d758dd51e394fd81b5cbf14afc"
-    sha256 cellar: :any, big_sur:       "bef3ef700fd4e9cce5b7287a7103b2128b06fdb530c20d936baddb0708fe7987"
-    sha256 cellar: :any, catalina:      "5adc9772a6c58eff96522a8505b726d380c8627e9e9d9fe9b3a22d68fe42b4b0"
-    sha256 cellar: :any, mojave:        "97a83b63745a14cd44f97bc2de584b6888207b8120cf91d4d6f8b2c0cf7c877f"
+    sha256 cellar: :any,                 arm64_big_sur: "97c23df26f4434e8ca3dfe644f585d03223bcb4f190a2cba0bc5e840585212e1"
+    sha256 cellar: :any,                 big_sur:       "538b726ef6a18403c8627a68d9ff225d7d0bf71591a3709ed538e21327c9bfce"
+    sha256 cellar: :any,                 catalina:      "7fce95456199ccc3064e7ad9540288d7b84f8ccbdc7bf541a8455b50ba706393"
+    sha256 cellar: :any,                 mojave:        "c9015ac00b4910478ff20ac2f5ed7790dc24afa14c64b72e32351c4f9c617fc2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0abc904deecc38b19fb7a4fc9fccd005c951ff43d666af39d9d30c08f8238950"
   end
 
   depends_on "rust" => :build
   depends_on "libgit2"
   depends_on "libssh2"
   depends_on "openssl@1.1"
+
+  uses_from_macos "zlib"
 
   on_linux do
     depends_on "pkg-config" => :build

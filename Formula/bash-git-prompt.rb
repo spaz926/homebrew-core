@@ -6,7 +6,9 @@ class BashGitPrompt < Formula
   license "BSD-2-Clause"
   head "https://github.com/magicmonty/bash-git-prompt.git"
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "aba8fdb7276afbd19020d92a907102912674172b4ff9d4883e349fd73fd69995"
+  end
 
   def install
     share.install "gitprompt.sh", "gitprompt.fish", "git-prompt-help.sh",
@@ -29,6 +31,6 @@ class BashGitPrompt < Formula
 
   test do
     output = shell_output("/bin/sh #{share}/gitstatus.sh 2>&1")
-    assert_match "Not a git repository", output
+    assert_match "not a git repository", output
   end
 end

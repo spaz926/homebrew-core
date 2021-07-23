@@ -1,15 +1,15 @@
 class Arangodb < Formula
   desc "Multi-Model NoSQL Database"
   homepage "https://www.arangodb.com/"
-  url "https://download.arangodb.com/Source/ArangoDB-3.7.10.tar.gz"
-  sha256 "f7c18acd5ba766fd637d16304f0679ecaad2d4e2eb528bf0b261c944afb54597"
+  url "https://download.arangodb.com/Source/ArangoDB-3.7.12.tar.gz"
+  sha256 "c59340f57c0096c010126d2f08dc7ab48bc024fb96adf332b24eebcf680d4345"
   license "Apache-2.0"
   head "https://github.com/arangodb/arangodb.git", branch: "devel"
 
   bottle do
-    sha256 big_sur:  "de5157fe79d440dd4f8355677aa832eeeae13b590f4b1dd5a52a8c99738a04a6"
-    sha256 catalina: "e782d211ea1dd0f6114257e4556a1d296ef864ce2bfd08b7ed2f352970d4cad8"
-    sha256 mojave:   "f92c084774f8172ec4062ed4a218caf0aaf13629b5130dd83627cddf3fbd8211"
+    sha256 big_sur:  "c26f312e0bf7f3e91d7d29d65c3ccca39149164e70b3d128373ee9b5a194d02c"
+    sha256 catalina: "5d3a07342eaf5eaba075f42cad77e87c3b19f3afb5d6b926a1a5695060273b60"
+    sha256 mojave:   "56e53d405de58b9784d89cbadda06e04e6b4aa78c65d1fed29777553d942e72b"
   end
 
   depends_on "ccache" => :build
@@ -24,8 +24,8 @@ class Arangodb < Formula
   # with a unified CLI
   resource "starter" do
     url "https://github.com/arangodb-helper/arangodb.git",
-        tag:      "0.14.15-1",
-        revision: "fe064e0136f009f65ea767dec6203a0d5bc5117e"
+        tag:      "0.15.0",
+        revision: "74b0760828c3b84b63267184ec8eb8492cdf4c6b"
   end
 
   def install
@@ -82,25 +82,9 @@ class Arangodb < Formula
     EOS
   end
 
-  plist_options manual: "#{HOMEBREW_PREFIX}/opt/arangodb/sbin/arangod"
-
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-        <dict>
-          <key>KeepAlive</key>
-          <true/>
-          <key>Label</key>
-          <string>#{plist_name}</string>
-          <key>Program</key>
-          <string>#{opt_sbin}/arangod</string>
-          <key>RunAtLoad</key>
-          <true/>
-        </dict>
-      </plist>
-    EOS
+  service do
+    run opt_sbin/"arangod"
+    keep_alive true
   end
 
   test do
@@ -117,7 +101,7 @@ class Arangodb < Formula
               "--server.js-dir", "#{share}/arangodb3/js") do |r, _, pid|
       loop do
         available = IO.select([r], [], [], 60)
-        assert_not_equal available, nil
+        refute_equal available, nil
 
         line = r.readline.strip
         ohai line

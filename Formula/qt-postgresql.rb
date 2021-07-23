@@ -1,16 +1,15 @@
 class QtPostgresql < Formula
   desc "Qt SQL Database Driver"
   homepage "https://www.qt.io/"
-  url "https://download.qt.io/official_releases/qt/6.0/6.0.2/submodules/qtbase-everywhere-src-6.0.2.tar.xz"
-  sha256 "991a0e4e123104e76563067fcfa58602050c03aba8c8bb0c6198347c707817f1"
+  url "https://download.qt.io/official_releases/qt/6.1/6.1.2/submodules/qtbase-everywhere-src-6.1.2.tar.xz"
+  sha256 "b9c4061c1c7999c42c315fc5b0f4f654067b4186066dd729bbcf1bdce8d781c8"
   license all_of: ["GFDL-1.3-only", "GPL-2.0-only", "GPL-3.0-only", "LGPL-2.1-only", "LGPL-3.0-only"]
-  revision 1
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "724401fca766c5392a43fd45f4b51abdbba9e025f794aba8b0368c1838acf9a2"
-    sha256 cellar: :any, big_sur:       "a651810e0b2ad115fd4b97848b594c77d9ae17bc7a66f37ce6bace93a343fa41"
-    sha256 cellar: :any, catalina:      "c66fa835bd9207a3250e156e02c2759e2307bc736aacff50aace947eb1a9db9d"
-    sha256 cellar: :any, mojave:        "295410a53ddf994afccdec41b4da015d5d39df28bb987d349b336221b32b7495"
+    sha256 cellar: :any, arm64_big_sur: "481efd46fb39308f3be72bf2e415c8d3d5d7407dc448eb91b216d9719c075fe5"
+    sha256 cellar: :any, big_sur:       "de90f21a15df813a6bc7eab5b470d768290068092412f920597204676b6a6aa6"
+    sha256 cellar: :any, catalina:      "91f4269c314c112bd44bfa765395d89d0ca32701d4119dc0fab13da329770fd5"
+    sha256 cellar: :any, mojave:        "e44ad953fc14bda258abbfc6aab48fbc325d23bcb8ee1258bf401a06416e3744"
   end
 
   depends_on "cmake" => [:build, :test]

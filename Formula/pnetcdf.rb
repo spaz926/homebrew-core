@@ -4,12 +4,18 @@ class Pnetcdf < Formula
   url "https://parallel-netcdf.github.io/Release/pnetcdf-1.12.2.tar.gz"
   sha256 "3ef1411875b07955f519a5b03278c31e566976357ddfc74c2493a1076e7d7c74"
   license "NetCDF"
+  revision 1
+
+  livecheck do
+    url "https://parallel-netcdf.github.io/wiki/Download.html"
+    regex(/href=.*?pnetcdf[._-]v?(\d+(?:\.\d+)+)\.t/i)
+  end
 
   bottle do
-    sha256 arm64_big_sur: "050d7d04413ccbc8b015ff662dabfa5abd051e116270437125987d2378037663"
-    sha256 big_sur:       "85211030d47c598d6ff4de8af6c063194d82cfd030c3799ffe61d0ea775fee91"
-    sha256 catalina:      "850305bbe69b1ada59f7cc8628d12471819e720dbd41f873d269ff12ff7a9f86"
-    sha256 mojave:        "7313cd18dde083b4cb5bee094a43e1138ab70f97f33e762c8d97d64d916143eb"
+    sha256 arm64_big_sur: "e15cc2caf8c4aeffa65126c52e3dceffdf6fc93dee09eed8dae9db2085756f38"
+    sha256 big_sur:       "c2f92ef84469ce44c4b502c72120a750ff64eb06b08e0ed6ebdbf74c11f026d2"
+    sha256 catalina:      "4813fb99e57bd2399fe44683d58cae95638ee4a7837ef00a0fb7ef9e7151842c"
+    sha256 mojave:        "845ad46ce85c49bb2e680fb2f3313bf86bce98d4dc0756be208dc60c678fb429"
   end
 
   depends_on "gcc"

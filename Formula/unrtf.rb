@@ -4,7 +4,7 @@ class Unrtf < Formula
   url "https://ftp.gnu.org/gnu/unrtf/unrtf-0.21.10.tar.gz"
   mirror "https://ftpmirror.gnu.org/unrtf/unrtf-0.21.10.tar.gz"
   sha256 "b49f20211fa69fff97d42d6e782a62d7e2da670b064951f14bbff968c93734ae"
-  license "GPL-3.0"
+  license "GPL-3.0-or-later"
   head "https://hg.savannah.gnu.org/hgweb/unrtf/", using: :hg
 
   bottle do
@@ -14,6 +14,7 @@ class Unrtf < Formula
     sha256 mojave:        "b038c53ba7341cc9365db6cf9d46c6f7c3feba843643168e24a12856a29a6dbb"
     sha256 high_sierra:   "9abc63bdeae500637c8e1d6d31c72be013d0f2cf8ad8e3f1cb6e3babe5b6d94a"
     sha256 sierra:        "4c9e869dad1a76bf4077d9e19cabf9d383ed914b5a1c348dadc1eb0961c23b0a"
+    sha256 x86_64_linux:  "c3e2f45e057ebc00b8a825db67d9bd29396038f2beb692edcea2815c7b9d1284"
   end
 
   depends_on "autoconf" => :build
@@ -21,7 +22,11 @@ class Unrtf < Formula
 
   def install
     system "./bootstrap"
-    system "./configure", "LIBS=-liconv", "--prefix=#{prefix}"
+    args = %W[--prefix=#{prefix}]
+    on_macos do
+      args << "LIBS=-liconv"
+    end
+    system "./configure", *args
     system "make", "install"
   end
 

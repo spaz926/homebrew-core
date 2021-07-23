@@ -1,16 +1,17 @@
 class Subfinder < Formula
   desc "Subdomain discovery tool"
   homepage "https://github.com/projectdiscovery/subfinder"
-  url "https://github.com/projectdiscovery/subfinder/archive/v2.4.6.tar.gz"
-  sha256 "ab7b67d7e8f79b5f2afebdb45dea8cc90c166f7b4f256387e0917ff4b753ffcb"
+  url "https://github.com/projectdiscovery/subfinder/archive/v2.4.8.tar.gz"
+  sha256 "0e97f8a7bf48dc247af3dcac7bae67c1cb514b055fbcfb164a5190a484b0492c"
   license "MIT"
   head "https://github.com/projectdiscovery/subfinder.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "bc4bce48737f9738622f326651af48de8876f463eda8385a42381ee2c61f6ba2"
-    sha256 cellar: :any_skip_relocation, big_sur:       "c6730bcaccc2f5111940fe68ebd54158a35cd715378307f00fe781ce7bcd9b79"
-    sha256 cellar: :any_skip_relocation, catalina:      "c988222baa5ad827d1b9b80994791ea791ef72b889fc2d4a756724d0183599df"
-    sha256 cellar: :any_skip_relocation, mojave:        "76ea1e018ea82afc7b7e9f083a5166037b245a73dd9147eae45e1981f18f3484"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "54279ba72b52aebf1aea25b02cba294a79a8bea56bb98312b8ea69e09de1ed0b"
+    sha256 cellar: :any_skip_relocation, big_sur:       "6caece489765bc37f6164278c96d5ef2a6bf081a3e70d0e9513d4dba803cda9f"
+    sha256 cellar: :any_skip_relocation, catalina:      "88cab330e3cfb8325a8d295c512598670f626408e7a90520605f684c20089e06"
+    sha256 cellar: :any_skip_relocation, mojave:        "35a8328f2fdc17c610ab78cf29dca7ef13a5cc77c6547983c1e81abdd6dcb939"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0443b0e2d76ee7252666a214cc498d9050dc63c8bdcfc05bcfd5e50eaca43bee"
   end
 
   depends_on "go" => :build

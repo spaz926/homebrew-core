@@ -1,8 +1,8 @@
 class MariadbAT104 < Formula
   desc "Drop-in replacement for MySQL"
   homepage "https://mariadb.org/"
-  url "https://downloads.mariadb.org/f/mariadb-10.4.18/source/mariadb-10.4.18.tar.gz"
-  sha256 "330d9e8273002fc92f0f3f3f9b08157a3cab1265a0f114adeb6235e4283a0d3e"
+  url "https://downloads.mariadb.org/f/mariadb-10.4.20/source/mariadb-10.4.20.tar.gz"
+  sha256 "87d5e29ee1f18de153266ec658138607703ed2a05b3ffb1f89091d33f4abf545"
   license "GPL-2.0-only"
 
   livecheck do
@@ -11,9 +11,10 @@ class MariadbAT104 < Formula
   end
 
   bottle do
-    sha256 big_sur:  "b97912fb1faea853c98aafee31e3c2f728988b391d87f279e9882f5bb498b931"
-    sha256 catalina: "d3f2cbc99fe0c6f154ebab3c76a6084b8828d924cdf82e11e8756c6e6fba5318"
-    sha256 mojave:   "9e9a15b2639b7934e2f6dff626fabc40a3b31a7eaf52fd1bff43c38a4962817c"
+    sha256 big_sur:      "c88bb9782bd0adfff9cd822e89be6f55a8c7f94cc6a20a4fde0ce1493ca86668"
+    sha256 catalina:     "cdc9413533dde13878cffcff28f8d189b4492d47d7c5f9c67c382c8560c0b37d"
+    sha256 mojave:       "86f2e63ec9006701da206c89cad1a454a641c4468ef5a395380abd6ba84ba0ed"
+    sha256 x86_64_linux: "81bef22e939d3eb0279468b4e7b9b3fbbede5a3d96492c75fe042c29c682131d"
   end
 
   keg_only :versioned_formula
@@ -21,19 +22,32 @@ class MariadbAT104 < Formula
   # See: https://mariadb.com/kb/en/changes-improvements-in-mariadb-104/
   deprecate! date: "2024-06-01", because: :unsupported
 
+  depends_on "bison" => :build
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
   depends_on "groonga"
   depends_on "openssl@1.1"
+  depends_on "pcre2"
 
-  uses_from_macos "bison" => :build
   uses_from_macos "bzip2"
   uses_from_macos "ncurses"
   uses_from_macos "zlib"
 
+  on_macos do
+    # Need patch to remove MYSQL_SOURCE_DIR from include path because it contains
+    # file called VERSION
+    # https://github.com/Homebrew/homebrew-core/pull/76887#issuecomment-840851149
+    # Reported upstream at https://jira.mariadb.org/browse/MDEV-7209 - this fix can be
+    # removed once that issue is closed and the fix has been merged into a stable release
+    patch :DATA
+  end
+
   on_linux do
+    depends_on "gcc"
     depends_on "linux-pam"
   end
+
+  fails_with gcc: "5"
 
   def install
     # Set basedir and ldata so that mysql_install_db can find the server
@@ -55,7 +69,6 @@ class MariadbAT104 < Formula
       -DINSTALL_DOCDIR=share/doc/#{name}
       -DINSTALL_INFODIR=share/info
       -DINSTALL_MYSQLSHAREDIR=share/mysql
-      -DWITH_PCRE=bundled
       -DWITH_READLINE=yes
       -DWITH_SSL=yes
       -DWITH_UNIT_TESTS=OFF
@@ -69,6 +82,15 @@ class MariadbAT104 < Formula
     args << "-DPLUGIN_TOKUDB=NO"
 
     system "cmake", ".", *std_cmake_args, *args
+
+    on_macos do
+      # Need to rename files called version/VERSION to avoid build failure
+      # https://github.com/Homebrew/homebrew-core/pull/76887#issuecomment-840851149
+      # Reported upstream at https://jira.mariadb.org/browse/MDEV-7209 - this fix can be
+      # removed once that issue is closed and the fix has been merged into a stable release
+      mv "storage/mroonga/version", "storage/mroonga/version.txt"
+    end
+
     system "make"
     system "make", "install"
 
@@ -102,7 +124,7 @@ class MariadbAT104 < Formula
       wsrep_sst_rsync
       wsrep_sst_mariabackup
     ].each do |f|
-      inreplace "#{bin}/#{f}", "$(dirname $0)/wsrep_sst_common",
+      inreplace "#{bin}/#{f}", "$(dirname \"$0\")/wsrep_sst_common",
                                "#{libexec}/wsrep_sst_common"
     end
 
@@ -182,3 +204,19 @@ class MariadbAT104 < Formula
     system "#{bin}/mysqladmin", "--port=#{port}", "--user=root", "--password=", "shutdown"
   end
 end
+
+__END__
+diff --git a/storage/mroonga/CMakeLists.txt b/storage/mroonga/CMakeLists.txt
+index 555ab248751..cddb6f2f2a6 100644
+--- a/storage/mroonga/CMakeLists.txt
++++ b/storage/mroonga/CMakeLists.txt
+@@ -215,8 +215,7 @@ set(MYSQL_INCLUDE_DIRS
+   "${MYSQL_REGEX_INCLUDE_DIR}"
+   "${MYSQL_RAPIDJSON_INCLUDE_DIR}"
+   "${MYSQL_LIBBINLOGEVENTS_EXPORT_DIR}"
+-  "${MYSQL_LIBBINLOGEVENTS_INCLUDE_DIR}"
+-  "${MYSQL_SOURCE_DIR}")
++  "${MYSQL_LIBBINLOGEVENTS_INCLUDE_DIR}")
+
+ if(MRN_BUNDLED)
+   set(MYSQL_PLUGIN_DIR "${INSTALL_PLUGINDIR}")nd

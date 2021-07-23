@@ -8,7 +8,10 @@ class Grc < Formula
   license "GPL-2.0-or-later"
   head "https://github.com/garabik/grc.git", branch: "devel"
 
-  bottle :unneeded
+  bottle do
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, all: "da6e328a8acfc73c3cc1021f37fcd83397452b98f14793845639b1c31c0034d8"
+  end
 
   depends_on "python@3.9"
 
@@ -16,8 +19,9 @@ class Grc < Formula
 
   def install
     # fix non-standard prefix installs
-    inreplace ["grc", "grc.1"], "/etc", etc
-    inreplace ["grcat", "grcat.1"], "/usr/local", HOMEBREW_PREFIX
+    inreplace "grc", "/usr/local/etc/", "#{etc}/"
+    inreplace "grc.1", " /etc/", " #{etc}/"
+    inreplace ["grcat", "grcat.1"], "/usr/local/share/grc/", "#{pkgshare}/"
 
     # so that the completions don't end up in etc/profile.d
     inreplace "install.sh",

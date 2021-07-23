@@ -1,6 +1,6 @@
 class SolrAT77 < Formula
   desc "Enterprise search platform from the Apache Lucene project"
-  homepage "https://lucene.apache.org/solr/"
+  homepage "https://solr.apache.org"
   url "https://www.apache.org/dyn/closer.lua?path=lucene/solr/7.7.3/solr-7.7.3.tgz"
   mirror "https://archive.apache.org/dist/lucene/solr/7.7.3/solr-7.7.3.tgz"
   sha256 "3ec67fa430afa5b5eb43bb1cd4a659e56ee9f8541e0116d6080c0d783870baee"
@@ -15,7 +15,9 @@ class SolrAT77 < Formula
     regex(/href=.*?solr[._-]v?(7(?:\.\d+)+)\.t/i)
   end
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "44a7fe1bbc1463445524b02f34752f20536b943012c4f0bb10ce1cde9680f792"
+  end
 
   keg_only :versioned_formula
 
@@ -34,6 +36,8 @@ class SolrAT77 < Formula
     env["SOLR_PID_DIR"] = "${SOLR_PID_DIR:-#{var/"run/solr"}}"
     bin.env_script_all_files libexec, env
     (libexec/"bin").rmtree
+
+    inreplace libexec/"solr", "/usr/local/share/solr", pkgshare
   end
 
   def post_install

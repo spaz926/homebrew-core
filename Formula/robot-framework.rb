@@ -3,16 +3,17 @@ class RobotFramework < Formula
 
   desc "Open source test framework for acceptance testing"
   homepage "https://robotframework.org/"
-  url "https://files.pythonhosted.org/packages/28/24/8028b7217e516ca520eb78ef522b51cf6944c9741657f413cf480e0d95d6/robotframework-4.0.zip"
-  sha256 "a02a6f4af3b0830e4396058694c333cb63eb47f50acf6723be34f0f7a4d73ad7"
+  url "https://files.pythonhosted.org/packages/e0/81/5247355aba88bc9c54dcf7127a9853cc88a3a0b75124d8391680a3787001/robotframework-4.0.3.zip"
+  sha256 "93c2107f789fd897f234f4b8f1ba8e7b9f4ef326d9bcbfceb71dda8cc197388c"
   license "Apache-2.0"
   head "https://github.com/robotframework/robotframework.git"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "1f664777d23d4720e312ea1badb8b21ba1e5d3f3546d0d3f1bbeada70b3fb239"
-    sha256 cellar: :any, big_sur:       "e8c1d774c29356f5154b2a556f08eb82cab0213f315176d656936a6e936726e9"
-    sha256 cellar: :any, catalina:      "b9524fc450fdc3f8f56d36520ad25d78c172c587efd50ec377e8066b82879156"
-    sha256 cellar: :any, mojave:        "a75c083428cb3bce8e1eda55430a6a11317b5ea8575ac56a5f73884f35db9fba"
+    sha256 cellar: :any,                 arm64_big_sur: "a0e20933f1824479aa59768ad01588e7de9221227c4e0684ff6904bd40f427c3"
+    sha256 cellar: :any,                 big_sur:       "6049e2e09ad5bff3c406d2fc53b5274ea44a8d8f5b32f50ea6d480a7f16d9b67"
+    sha256 cellar: :any,                 catalina:      "1d34cd445b028f3477338f6ccce56267491139fd14d9c45389e6905eb2e6374a"
+    sha256 cellar: :any,                 mojave:        "6bea33bdab5c5cb74afde044975094803e387e61be5ce4077fb4d87ec7a4a1cb"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "16bb29de8a591e970187e147f26ff6aec0912fd812a04c3f7074c15a5a683b03"
   end
 
   depends_on "rust" => :build
@@ -30,8 +31,8 @@ class RobotFramework < Formula
   end
 
   resource "cryptography" do
-    url "https://files.pythonhosted.org/packages/fa/2d/2154d8cb773064570f48ec0b60258a4522490fcb115a6c7c9423482ca993/cryptography-3.4.6.tar.gz"
-    sha256 "2d32223e5b0ee02943f32b19245b61a62db83a882f0e76cc564e1cec60d48f87"
+    url "https://files.pythonhosted.org/packages/9b/77/461087a514d2e8ece1c975d8216bc03f7048e6090c5166bc34115afdaa53/cryptography-3.4.7.tar.gz"
+    sha256 "3d10de8116d25649631977cb37da6cbdd2d6fa0e0281d014a5b7d337255ca713"
   end
 
   resource "paramiko" do
@@ -50,8 +51,8 @@ class RobotFramework < Formula
   end
 
   resource "robotframework-archivelibrary" do
-    url "https://files.pythonhosted.org/packages/29/b6/bf5bd38d5764f6afaf17b0debef580aee9bfbd63ad77a0e215389691fdfb/robotframework-archivelibrary-0.4.0.tar.gz"
-    sha256 "d18dd05a9d43decef1352a9a7601522639e4e6f02a084692b6392603c5f6c063"
+    url "https://files.pythonhosted.org/packages/3d/ca/0cd119e4ebf6944d48b7e9467c9bc254ea3188cb2cf9109e8e87ae906a99/robotframework-archivelibrary-0.4.1.tar.gz"
+    sha256 "61cfb1d74717cb11862c87d8f44f5b5cc4a2862de42c441859df83fc33dd3dcf"
   end
 
   resource "robotframework-pythonlibcore" do
@@ -65,8 +66,8 @@ class RobotFramework < Formula
   end
 
   resource "robotframework-seleniumlibrary" do
-    url "https://files.pythonhosted.org/packages/38/91/d0186c526522c849f75a53dcfa9273fa416f06539d98a939dd39e0a7ef13/robotframework-seleniumlibrary-5.1.1.tar.gz"
-    sha256 "87fd0a58af66b9e04b0450aa25692e34835f3d267db827de5d285839572cd4ff"
+    url "https://files.pythonhosted.org/packages/c4/75/fe0184ba697a585d80457b74b7bed1bb290501cd6f9883d149efb4a3d9f2/robotframework-seleniumlibrary-5.1.3.tar.gz"
+    sha256 "f51a0068c6c0d8107ee1120874a3afbf2bbe751fd0782cb86a27a616d9ca30b6"
   end
 
   resource "robotframework-sshlibrary" do
@@ -85,8 +86,8 @@ class RobotFramework < Formula
   end
 
   resource "six" do
-    url "https://files.pythonhosted.org/packages/6b/34/415834bfdafca3c5f451532e8a8d9ba89a21c9743a0c59fbd0205c7f9426/six-1.15.0.tar.gz"
-    sha256 "30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259"
+    url "https://files.pythonhosted.org/packages/71/39/171f1c67cd00715f190ba0b100d606d440a28c93c7714febeca8b79af85e/six-1.16.0.tar.gz"
+    sha256 "1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"
   end
 
   resource "urllib3" do

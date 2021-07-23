@@ -1,11 +1,15 @@
 class Epubcheck < Formula
   desc "Validate EPUB files, version 2.0 and later"
   homepage "https://github.com/w3c/epubcheck"
-  url "https://github.com/w3c/epubcheck/releases/download/v4.2.4/epubcheck-4.2.4.zip"
-  sha256 "11550a96f0695cb475026664f0015133e88d8a58f9f8b31180515f8e7ae2b7d2"
+  url "https://github.com/w3c/epubcheck/releases/download/v4.2.6/epubcheck-4.2.6.zip"
+  sha256 "3f73c1265cc92e3b53ffda6cd5bbeb58505b2b0c43411c26e74d8df1b193b2c0"
   license "BSD-3-Clause"
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "94dc30bc00494c090c9b47d285fb2e1b904c5e22c59b721ad11a0e018a1d4291"
+  end
+
+  depends_on "openjdk"
 
   def install
     jarname = "epubcheck.jar"

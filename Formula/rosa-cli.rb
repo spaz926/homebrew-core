@@ -1,8 +1,8 @@
 class RosaCli < Formula
   desc "RedHat OpenShift Service on AWS (ROSA) command-line interface"
   homepage "https://www.openshift.com/products/amazon-openshift"
-  url "https://github.com/openshift/rosa/archive/refs/tags/v1.0.2.tar.gz"
-  sha256 "e2bc5f03e5d295cb32b9b45523790572601823386444d4c4e6c86c99ef8248ee"
+  url "https://github.com/openshift/rosa/archive/refs/tags/v1.0.9.tar.gz"
+  sha256 "229b342e0767a9594f8c9e07c2792999c84627e2ef7ecdae5b0a21869ece2f8c"
   license "Apache-2.0"
   head "https://github.com/openshift/rosa.git"
 
@@ -13,10 +13,11 @@ class RosaCli < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "bab5a577bc86d7ed33a5fc42cbdde0e88bdf7c176a6ada455c4a1818bf23571a"
-    sha256 cellar: :any_skip_relocation, big_sur:       "b360aa16941c1adbc160e8d5e9903fed0ab0036e2c2b376d481a5228dff2ee73"
-    sha256 cellar: :any_skip_relocation, catalina:      "20c3d247cb3b6814cd31cab89d121527cea18da2f2be942064ab11125d8a6565"
-    sha256 cellar: :any_skip_relocation, mojave:        "3be76554945b1b40220c5e5416f8b3d23a3ab3f9ea5127e06179cbef4bbda8e9"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "637bc63a9a87158cb43069330b9df3b175b60bb0c9afbc1a7ad1deb24e29fd6f"
+    sha256 cellar: :any_skip_relocation, big_sur:       "d91d264307b1ab814bd4deb5ed34a13999420d859288d3a9e88fdfc6362a7f8a"
+    sha256 cellar: :any_skip_relocation, catalina:      "02978ca867911741f210a58d6a518eaa443ae0b4c7776165dfd31b062b254d3e"
+    sha256 cellar: :any_skip_relocation, mojave:        "1c77eb6e2ce4d27fbe09dafbf6e2d5cbedb79cd8420b1cf40c300202ed055825"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4cf41d1dbfc39507f78ae6c1f0a908f56ba97456d205490058ce745f0c2be67d"
   end
 
   depends_on "go" => :build
@@ -29,6 +30,6 @@ class RosaCli < Formula
 
   test do
     assert_match version.to_s, shell_output("#{bin}/rosa version")
-    assert_match "Error creating AWS client", shell_output("#{bin}/rosa create cluster 2<&1", 1)
+    assert_match "Not logged in, run the 'rosa login' command", shell_output("#{bin}/rosa create cluster 2<&1", 1)
   end
 end

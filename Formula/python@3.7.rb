@@ -1,10 +1,9 @@
 class PythonAT37 < Formula
   desc "Interpreted, interactive, object-oriented programming language"
   homepage "https://www.python.org/"
-  url "https://www.python.org/ftp/python/3.7.10/Python-3.7.10.tar.xz"
-  sha256 "f8d82e7572c86ec9d55c8627aae5040124fd2203af400c383c821b980306ee6b"
+  url "https://www.python.org/ftp/python/3.7.11/Python-3.7.11.tar.xz"
+  sha256 "ddb4196ab5c4f69e895920a422cb60d42b46e2de2b173ce7fd57f1435459a734"
   license "Python-2.0"
-  revision 2
 
   livecheck do
     url "https://www.python.org/ftp/python/"
@@ -12,23 +11,15 @@ class PythonAT37 < Formula
   end
 
   bottle do
-    sha256 big_sur:  "80254e0ed92ea7c5a77aab2e1ca9f1b7ea4f9258419710114b9cdca2740f2247"
-    sha256 catalina: "a5ae644b32ffc98ae4c06fa252b97d55abd653b6798cf908e8555bf03294ea12"
-    sha256 mojave:   "032d2875bd49a94e0a465f9ddb578198bc2c498a3308eb03536c07a9730dcf7b"
+    sha256 big_sur:      "26fa6036e2d40a47902c48d79c5a2a38fde2fa941b3f5efb3e1c0dda37445022"
+    sha256 catalina:     "765777095eac56c241fa82ac13f16e9de1974a4e6cd9c5217ca8f4fbfed10f70"
+    sha256 mojave:       "a2b71ac7208d22c643af119ac2da265bc1863db24830e4664b74746444b7215d"
+    sha256 x86_64_linux: "b4a67a9f47b74fa3653a6656c42eeb0bfe877921cc515de9519ff3b35f116504"
   end
 
   # setuptools remembers the build flags python is built with and uses them to
   # build packages later. Xcode-only systems need different flags.
-  pour_bottle? do
-    on_macos do
-      reason <<~EOS
-        The bottle needs the Apple Command Line Tools to be installed.
-          You can install them, if desired, with:
-            xcode-select --install
-      EOS
-      satisfy { MacOS::CLT.installed? }
-    end
-  end
+  pour_bottle? only_if: :clt_installed
 
   keg_only :versioned_formula
 
@@ -52,18 +43,18 @@ class PythonAT37 < Formula
              "bin/easy_install-3.6", "bin/easy_install-3.7"
 
   resource "setuptools" do
-    url "https://files.pythonhosted.org/packages/12/68/95515eaff788370246dac534830ea9ccb0758e921ac9e9041996026ecaf2/setuptools-53.0.0.tar.gz"
-    sha256 "1b18ef17d74ba97ac9c0e4b4265f123f07a8ae85d9cd093949fa056d3eeeead5"
+    url "https://files.pythonhosted.org/packages/cf/79/1a19c2f792da00cbead7b6caa176afdddf517522cb9163ce39576025b050/setuptools-57.1.0.tar.gz"
+    sha256 "cfca9c97e7eebbc8abe18d5e5e962a08dcad55bb63afddd82d681de4d22a597b"
   end
 
   resource "pip" do
-    url "https://files.pythonhosted.org/packages/b7/2d/ad02de84a4c9fd3b1958dc9fb72764de1aa2605a9d7e943837be6ad82337/pip-21.0.1.tar.gz"
-    sha256 "99bbde183ec5ec037318e774b0d8ae0a64352fe53b2c7fd630be1d07e94f41e5"
+    url "https://files.pythonhosted.org/packages/4d/0c/3b63fe024414a8a48661cf04f0993d4b2b8ef92daed45636474c018cd5b7/pip-21.1.3.tar.gz"
+    sha256 "b5b1eb91b36894bd01b8e5a56a422c2f3838573da0b0a1c63a096bb454e3b23f"
   end
 
   resource "wheel" do
-    url "https://files.pythonhosted.org/packages/75/28/521c6dc7fef23a68368efefdcd682f5b3d1d58c2b90b06dc1d0b805b51ae/wheel-0.34.2.tar.gz"
-    sha256 "8788e9155fe14f54164c1b9eb0a319d98ef02c160725587ad60f14ddc57b6f96"
+    url "https://files.pythonhosted.org/packages/ed/46/e298a50dde405e1c202e316fa6a3015ff9288423661d7ea5e8f22f589071/wheel-0.36.2.tar.gz"
+    sha256 "e11eefd162658ea59a60a0f6c7d493a7190ea4b9a85e335b33489d9f17e0245e"
   end
 
   resource "importlib-metadata" do
@@ -81,8 +72,8 @@ class PythonAT37 < Formula
   # ourselves.
   # https://bugs.python.org/issue42504
   patch do
-    url "https://raw.githubusercontent.com/Homebrew/formula-patches/05a27807/python/3.7.9.patch"
-    sha256 "486188ac1a4af4565de5ad54949939bb69bffc006297e8eac9339f19d7d7492b"
+    url "https://raw.githubusercontent.com/Homebrew/formula-patches/c4bc563a8d008ebd0e8d927c043f6dd132d3ba89/python/big-sur-3.7.patch"
+    sha256 "67c99bdf0bbe0a640d70747aad514cd74602e7c4715fd15f1f9863eef257735e"
   end
 
   # Link against libmpdec.so.3, update for mpdecimal.h symbol cleanup.
@@ -181,6 +172,17 @@ class PythonAT37 < Formula
       s.gsub! "sqlite_setup_debug = False", "sqlite_setup_debug = True"
       s.gsub! "for d_ in inc_dirs + sqlite_inc_paths:",
               "for d_ in ['#{Formula["sqlite"].opt_include}']:"
+    end
+
+    on_linux do
+      # Python's configure adds the system ncurses include entry to CPPFLAGS
+      # when doing curses header check. The check may fail when there exists
+      # a 32-bit system ncurses (conflicts with the brewed 64-bit one).
+      # See https://github.com/Homebrew/linuxbrew-core/pull/22307#issuecomment-781896552
+      # We want our ncurses! Override system ncurses includes!
+      inreplace "configure",
+        'CPPFLAGS="$CPPFLAGS -I/usr/include/ncursesw"',
+        "CPPFLAGS=\"$CPPFLAGS -I#{Formula["ncurses"].opt_include}\""
     end
 
     # Allow python modules to use ctypes.find_library to find homebrew's stuff

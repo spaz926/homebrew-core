@@ -14,10 +14,12 @@ class Cryptominisat < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "c203b2037a55507235aa4a64f35d7a96bf6af7913c27b64057fa61cc55a4b012"
-    sha256 big_sur:       "982f3dc69641c5c0e49857173283d732f631c228ce167a5fab142aa83b39d137"
-    sha256 catalina:      "4a3a5a12f7a19dea74436a5fd0de9f2dd848dbe7cfdd951dcdbf620822de32ab"
-    sha256 mojave:        "df9c576ce0f8b786cdbfbfd724e97196fa1e776447cf9df50e8ec7890ed509f3"
+    rebuild 1
+    sha256                               arm64_big_sur: "8b9940bdf5011a8f060de82576726b7138a60975f56fcd7113b692e026444021"
+    sha256                               big_sur:       "ca952863f4a030cff0f60b3dc1b598c9a070460b5372577e63c8df577008e5eb"
+    sha256                               catalina:      "9314367f35d7d82790d4840b04d744fba37196f068fa38b899c7ac4c7e8f987b"
+    sha256                               mojave:        "2ad7c47169eae4780e42ddec65f1f6144fc59ee5585dd8d26ff5d270d25d9cc3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "add4bd75d5ec2f5a1ce559282d81e207e99cd6da2b90234a2971808e3e8a222b"
   end
 
   depends_on "cmake" => :build
@@ -26,10 +28,10 @@ class Cryptominisat < Formula
 
   def install
     # fix audit failure with `lib/libcryptominisat5.5.7.dylib`
-    inreplace "src/GitSHA1.cpp.in", "@CMAKE_CXX_COMPILER@", "/usr/bin/clang++"
+    inreplace "src/GitSHA1.cpp.in", "@CMAKE_CXX_COMPILER@", ENV.cxx
 
     mkdir "build" do
-      system "cmake", "..", *std_cmake_args, "-DNOM4RI=ON", "-DCMAKE_INSTALL_RPATH=#{lib}"
+      system "cmake", "..", *std_cmake_args, "-DNOM4RI=ON", "-DCMAKE_INSTALL_RPATH=#{rpath}"
       system "make", "install"
     end
   end

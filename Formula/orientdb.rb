@@ -1,8 +1,8 @@
 class Orientdb < Formula
   desc "Graph database"
   homepage "https://orientdb.org/"
-  url "https://s3.us-east-2.amazonaws.com/orientdb3/releases/3.1.10/orientdb-3.1.10.zip"
-  sha256 "b3223fc265e737d612aaf8089df3a153f2a68f920c8ff7aa1a3c682b087aa9d3"
+  url "https://s3.us-east-2.amazonaws.com/orientdb3/releases/3.2.0/orientdb-3.2.0.zip"
+  sha256 "c9d669e6f7645b2217fe38be6d74cdef1ff3533b69b4ee1b3c0bd79744880bcd"
   license "Apache-2.0"
 
   livecheck do
@@ -11,10 +11,11 @@ class Orientdb < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "c4e8c976ebbf04a7897b39edcbc0b424fb49cb61562e20c129e47e2a48e37579"
-    sha256 cellar: :any_skip_relocation, big_sur:       "a2bfce633379195fcff2b61268cda80d21e4424b13b6cab30ea1815b276a5b8e"
-    sha256 cellar: :any_skip_relocation, catalina:      "ec7665de99117d059b1ee8dde965c7ff4ce76b21eb09c07f657f29d24bdd14b4"
-    sha256 cellar: :any_skip_relocation, mojave:        "db293ad374d77dd9b8ba35fd10bedc25817945c0826602c3a816bb2338ba739a"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "56880dbc1ae4f6d95dda29d1ea751f5e1075b972aa6240ef94347f010ac1121b"
+    sha256 cellar: :any_skip_relocation, big_sur:       "cd2df740ba5688d9e76470167c731c9e71a3aeacbdbcffb7647868bf7c21be86"
+    sha256 cellar: :any_skip_relocation, catalina:      "cd2df740ba5688d9e76470167c731c9e71a3aeacbdbcffb7647868bf7c21be86"
+    sha256 cellar: :any_skip_relocation, mojave:        "cd2df740ba5688d9e76470167c731c9e71a3aeacbdbcffb7647868bf7c21be86"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "56880dbc1ae4f6d95dda29d1ea751f5e1075b972aa6240ef94347f010ac1121b"
   end
 
   depends_on "maven" => :build

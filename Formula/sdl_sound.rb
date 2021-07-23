@@ -6,11 +6,6 @@ class SdlSound < Formula
   sha256 "3999fd0bbb485289a52be14b2f68b571cb84e380cc43387eadf778f64c79e6df"
   revision 1
 
-  livecheck do
-    url "https://icculus.org/SDL_sound/downloads/"
-    regex(/href=.*?SDL_sound[._-]v?(\d+(?:\.\d+)+)\.t/i)
-  end
-
   bottle do
     sha256 cellar: :any, arm64_big_sur: "2da102c4035e6cd0138668695cbee5eed9f730077a78e7221e73cb2a047d915c"
     sha256 cellar: :any, big_sur:       "8a2c07271bbc94a345cd8951ed897e9d12edda47d713c247a77e3186780247fc"
@@ -23,12 +18,15 @@ class SdlSound < Formula
   end
 
   head do
-    url "https://hg.icculus.org/icculus/SDL_sound", using: :hg
+    url "https://github.com/icculus/SDL_sound.git", branch: "stable-1.0"
 
     depends_on "autoconf" => :build
     depends_on "automake" => :build
     depends_on "libtool" => :build
   end
+
+  # SDL 1.2 is deprecated, unsupported, and not recommended for new projects.
+  deprecate! date: "2013-08-17", because: :deprecated_upstream
 
   depends_on "pkg-config" => :build
   depends_on "libogg"
@@ -36,16 +34,12 @@ class SdlSound < Formula
   depends_on "sdl"
 
   def install
-    if build.head?
-      inreplace "bootstrap", "/usr/bin/glibtoolize", "#{Formula["libtool"].opt_bin}/glibtoolize"
-      system "./bootstrap"
-    end
+    system "./autogen.sh" if build.head?
 
     system "./configure", "--disable-dependency-tracking",
                           "--prefix=#{prefix}",
                           "--disable-sdltest"
     system "make"
-    system "make", "check"
     system "make", "install"
   end
 end

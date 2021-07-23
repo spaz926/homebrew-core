@@ -1,9 +1,9 @@
 class Libtiff < Formula
   desc "TIFF library and utilities"
   homepage "https://libtiff.gitlab.io/libtiff/"
-  url "https://download.osgeo.org/libtiff/tiff-4.2.0.tar.gz"
-  mirror "https://fossies.org/linux/misc/tiff-4.2.0.tar.gz"
-  sha256 "eb0484e568ead8fa23b513e9b0041df7e327f4ee2d22db5a533929dfc19633cb"
+  url "https://download.osgeo.org/libtiff/tiff-4.3.0.tar.gz"
+  mirror "https://fossies.org/linux/misc/tiff-4.3.0.tar.gz"
+  sha256 "0e46e5acb087ce7d1ac53cf4f56a09b221537fc86dfc5daaad1c2e89e1b37ac8"
   license "libtiff"
 
   livecheck do
@@ -12,10 +12,11 @@ class Libtiff < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "50c09c0a4328c2625147ea78376523e11510ef26e4286953465e922e12d7e045"
-    sha256 cellar: :any, big_sur:       "31dc53e161b68394309dfe7743f9b7f37995b441d66b1637b9424696973b3d40"
-    sha256 cellar: :any, catalina:      "208176ae2c5642eb0dff7c97d7b011d6b1d6317be4242db1e54bbb92609f758b"
-    sha256 cellar: :any, mojave:        "706a61c81bd7a17f266f315339ff63e9bc965c962cd6d9a6a03167cd620d07a1"
+    sha256 cellar: :any,                 arm64_big_sur: "bd25355f2efb850a0e70c9ae208f0cd16caa0bfcaba8931d9ea9d374c5cf050a"
+    sha256 cellar: :any,                 big_sur:       "09f08e1168780c12c8f1526038eb4f4692624c85a9e78099b8ae2c58e39f5289"
+    sha256 cellar: :any,                 catalina:      "e413c1170e33242eb941683d14ae51de594a013b8c6e5151f53b3352358b26fe"
+    sha256 cellar: :any,                 mojave:        "06248bbf04ff5180541a90d60bae68246b5f1665d42909be471fdc9a6781a718"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e63441d702b567a622495e391564b7bc1f2352501fe982709469c6f609a6abb0"
   end
 
   depends_on "jpeg"

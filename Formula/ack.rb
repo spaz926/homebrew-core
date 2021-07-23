@@ -5,6 +5,11 @@ class Ack < Formula
   sha256 "6870d3c90691c3c4a9ec2ae69880e85c5188aa57adeeca2a794b477e034b989f"
   license "Artistic-2.0"
 
+  bottle do
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, all: "26e3c497d9583d7d8b8bfe60f75b3485bc7f07f0e1ea86ad5b338f58bd88a930"
+  end
+
   head do
     url "https://github.com/beyondgrep/ack3.git", branch: "dev"
 
@@ -14,7 +19,7 @@ class Ack < Formula
     end
   end
 
-  bottle :unneeded
+  depends_on "pod2man" => :build
 
   uses_from_macos "perl"
 
@@ -38,7 +43,7 @@ class Ack < Formula
       man1.install "blib/man1/ack.1"
     else
       bin.install "ack-v#{version.to_s.tr("-", "_")}" => "ack"
-      system "pod2man", "#{bin}/ack", "ack.1"
+      system "#{Formula["pod2man"].opt_bin}/pod2man", "#{bin}/ack", "ack.1", "--release=ack v#{version}"
       man1.install "ack.1"
     end
   end

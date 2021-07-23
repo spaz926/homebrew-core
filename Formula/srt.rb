@@ -1,17 +1,17 @@
 class Srt < Formula
   desc "Secure Reliable Transport"
   homepage "https://www.srtalliance.org/"
-  url "https://github.com/Haivision/srt/archive/v1.4.2.tar.gz"
-  sha256 "28a308e72dcbb50eb2f61b50cc4c393c413300333788f3a8159643536684a0c4"
+  url "https://github.com/Haivision/srt/archive/v1.4.3.tar.gz"
+  sha256 "c06e05664c71d635c37207a2b5a444f2c4a95950a3548402b3e0c524f735b33d"
   license "MPL-2.0"
   head "https://github.com/Haivision/srt.git"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any, arm64_big_sur: "ab7f65bed615a3c83007536df1b4c4d0d0f6851f350a78093203287ef1772aab"
-    sha256 cellar: :any, big_sur:       "44a1055208b9dc75d5ad82aa404b492fb28c226990ec0a01ab493a0d852bdd3b"
-    sha256 cellar: :any, catalina:      "7056a06ce6405fe33266d528e6a8aa295e1a3db6780f23627494610a7f31f8fc"
-    sha256 cellar: :any, mojave:        "0d14cac97d2dab6cdf4059c5472e448555fda17982c9e802869224f0049a13a2"
+    sha256 cellar: :any,                 arm64_big_sur: "5030a6897c290fe9c26bcd06b1033ca4e11b25709057f39060b2f3ad37235bf5"
+    sha256 cellar: :any,                 big_sur:       "5f8231fcfa94e640638c5a6b38e75630d48338118a578308dea0fa7e0deaadfd"
+    sha256 cellar: :any,                 catalina:      "1f1cdf82af07c72eeeee3a1ea96f87123f45fff74f6f4615fd491fe15e77f37b"
+    sha256 cellar: :any,                 mojave:        "37b8bb756634847c6ea8f53a32a61c3228f960e168953f0da646ae462396ca12"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0846df9e0c758dab3fe24f5b79c25e405771bb289ec9a90be037aa37f728ad63"
   end
 
   depends_on "cmake" => :build

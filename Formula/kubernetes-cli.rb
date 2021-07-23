@@ -2,10 +2,9 @@ class KubernetesCli < Formula
   desc "Kubernetes command-line interface"
   homepage "https://kubernetes.io/"
   url "https://github.com/kubernetes/kubernetes.git",
-      tag:      "v1.20.4",
-      revision: "e87da0bd6e03ec3fea7933c4b5263d151aafd07c"
+      tag:      "v1.21.3",
+      revision: "ca643a4d1f7bfe34773c74f79527be4afd95bf39"
   license "Apache-2.0"
-  revision 1
   head "https://github.com/kubernetes/kubernetes.git"
 
   livecheck do
@@ -14,27 +13,25 @@ class KubernetesCli < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "ca99ad0d433b5b92ecd4edef6b9f9e3045798af5e3e82dfcdc24e85591266882"
-    sha256 cellar: :any_skip_relocation, big_sur:       "c882f4b824a68f1ef5c0b15e8a25f3aefe9ed63ed464a618768d6704fc36d3c1"
-    sha256 cellar: :any_skip_relocation, catalina:      "e8fdc66b16ab2d82e5424230ab3aa3a3b9701bcb3fa9ddf2c8d7a566a3ba80cd"
-    sha256 cellar: :any_skip_relocation, mojave:        "c35dd6b593c8f0ba3544b8788f7058d289b0131300e13b243655e495069f9d43"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "1528b67378e4a963d2c713a42a2e255c34356e0c8a9da71609b44d4b3d76540b"
+    sha256 cellar: :any_skip_relocation, big_sur:       "0718d7295a6e87fe1173450b228af3516a2a9f700552140e5596df0447118996"
+    sha256 cellar: :any_skip_relocation, catalina:      "c75410c56abd2a6b673438c6393870d869820d92eb801f8633dc7c1eda4746bf"
+    sha256 cellar: :any_skip_relocation, mojave:        "a2c2b54fcfb24a83337f2ac30551a916cf2e918f3ac38136240e1b6416e2570f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "648e50a8afcd000ce1d37f7de94aa02be67df9870d3f2dd442fd429af67e3c55"
   end
 
+  depends_on "bash" => :build
+  depends_on "coreutils" => :build
   depends_on "go" => :build
 
   uses_from_macos "rsync" => :build
-
-  # ARM support, remove for next release and reinstate test
-  patch do
-    url "https://github.com/kubernetes/kubernetes/commit/f719624654c68d143cad4e4af2f21cca0bfde8fd.patch?full_index=1"
-    sha256 "3d40308a2f639c1a45a2105889776f0d02dd97000c188bc4cc78de739d5f0776"
-  end
 
   def install
     # Don't dirty the git tree
     rm_rf ".brew_home"
 
     # Make binary
+    ENV.prepend_path "PATH", Formula["coreutils"].libexec/"gnubin" # needs GNU date
     system "make", "WHAT=cmd/kubectl"
     bin.install "_output/bin/kubectl"
 
@@ -58,8 +55,7 @@ class KubernetesCli < Formula
 
     version_output = shell_output("#{bin}/kubectl version --client 2>&1")
 
-    # Due to ARM patch reinstate for next release
-    # assert_match "GitTreeState:\"clean\"", version_output
+    assert_match "GitTreeState:\"clean\"", version_output
 
     if build.stable?
       assert_match stable.instance_variable_get(:@resource)

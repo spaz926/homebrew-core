@@ -1,8 +1,8 @@
 class Jdupes < Formula
   desc "Duplicate file finder and an enhanced fork of 'fdupes'"
   homepage "https://github.com/jbruchon/jdupes"
-  url "https://github.com/jbruchon/jdupes/archive/v1.19.1.tar.gz"
-  sha256 "bb7c53cd463ab5e21da85948c4662a3b7ac9b038ae993cc14ccf793d2472e2e9"
+  url "https://github.com/jbruchon/jdupes/archive/v1.20.0.tar.gz"
+  sha256 "c1f728961ad8aeb074e5767367639e6b418f0ca572f70f7635655da722f1827e"
   license "MIT"
 
   livecheck do
@@ -11,10 +11,11 @@ class Jdupes < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "514a2dc2113a9ee6018bb9341064fb10437808ccab19028cf7d5b36131b4d31b"
-    sha256 cellar: :any_skip_relocation, big_sur:       "bf871f37dcb362d686dd45943fe9c99450f1c63a87cd5609b9c3a87f70c3fc84"
-    sha256 cellar: :any_skip_relocation, catalina:      "e45323a13531cfbe654f20187dfc34439979748e9f19c8b31c3adf8fc500e289"
-    sha256 cellar: :any_skip_relocation, mojave:        "3480a8d00c48aebfe2372034f5da4a9864a4a58afdda59ecd24420459726f6fc"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "694b8453af679ab4eb7a2e91263fcc76c392f818aed0a1b2b28be15ce27c850b"
+    sha256 cellar: :any_skip_relocation, big_sur:       "5261ed3efa79bfe31ae62a82c90b656495ebd63bdf727b2cba5ef18a16347c1f"
+    sha256 cellar: :any_skip_relocation, catalina:      "fae0c446827755c4fae47ad83f20f9930574eb2f29a50a2b7d286696e1e9a623"
+    sha256 cellar: :any_skip_relocation, mojave:        "949dbf283660112a5540f412f061ec3ff08bc0a9a8649a976335fd678b6cfe0c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c33c50a33b28b155ebb50140698f5ef14e7211ac1ada0dd3e0aaafab056cde5b"
   end
 
   def install

@@ -1,17 +1,17 @@
 class Tmuxinator < Formula
   desc "Manage complex tmux sessions easily"
   homepage "https://github.com/tmuxinator/tmuxinator"
-  url "https://github.com/tmuxinator/tmuxinator/archive/v2.0.2.tar.gz"
-  sha256 "2e473fc56f9491f682ec115b62c07b29bbfb79b2e5bb0cc33ea3c5e008e6f852"
+  url "https://github.com/tmuxinator/tmuxinator/archive/v3.0.1.tar.gz"
+  sha256 "1d79dd13beaaf2ed24c8a76410c1a41bedc7785498e199534fa3928bbf8aab01"
   license "MIT"
   head "https://github.com/tmuxinator/tmuxinator.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "afc36c0b2e025de0cc5ca6849de580f380405b6cfb1bcec099d95664da4e5ffd"
-    sha256 cellar: :any_skip_relocation, big_sur:       "c57d9e47b03552d52d480ad94123e9530db0e81c9e660bb516795dbf107eaf09"
-    sha256 cellar: :any_skip_relocation, catalina:      "afce6d81dd916ad941dc78336f249330279970d3dbcf40c41a4153ed17189bd1"
-    sha256 cellar: :any_skip_relocation, mojave:        "651de3698fd15d6088e7c60d75c2c0d5fe07304f015585b618e9b6db2db1295a"
-    sha256 cellar: :any_skip_relocation, high_sierra:   "59ae8d30dd41a1404d0da34d94efa6cf2146efe7a1c1cc69e72745770324f66c"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "cdd418ca1a015eb94bb192d8605d019ad4acdc69b1d7d066421ea9b0538d5003"
+    sha256 cellar: :any_skip_relocation, big_sur:       "0735adc0586540e832e281dcbc9e43179fb89b6f50045f253a77f6914afea273"
+    sha256 cellar: :any_skip_relocation, catalina:      "0735adc0586540e832e281dcbc9e43179fb89b6f50045f253a77f6914afea273"
+    sha256 cellar: :any_skip_relocation, mojave:        "0735adc0586540e832e281dcbc9e43179fb89b6f50045f253a77f6914afea273"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8d0233e824befa21871fa4ba3578be8e30bf952ca3fe46c6155cb2f03120d174"
   end
 
   depends_on "ruby"
@@ -25,8 +25,8 @@ class Tmuxinator < Formula
   end
 
   resource "thor" do
-    url "https://rubygems.org/downloads/thor-1.0.1.gem"
-    sha256 "7572061e3cbe6feee57828670e6a25a66dd397f05c1f8515d49f770a7d9d70f5"
+    url "https://rubygems.org/downloads/thor-1.1.0.gem"
+    sha256 "cacae12a3761be4ccbe63be19261352b108f86c721c37d87664328efeaa6d0a3"
   end
 
   resource "xdg" do
@@ -56,7 +56,7 @@ class Tmuxinator < Formula
     version_output = shell_output("#{bin}/tmuxinator version")
     assert_match "tmuxinator #{version}", version_output
 
-    completion = shell_output("source #{bash_completion}/tmuxinator && complete -p tmuxinator")
+    completion = shell_output("bash -c 'source #{bash_completion}/tmuxinator && complete -p tmuxinator'")
     assert_match "-F _tmuxinator", completion
 
     commands = shell_output("#{bin}/tmuxinator commands")

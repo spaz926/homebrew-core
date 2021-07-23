@@ -1,10 +1,9 @@
 class NodeAT12 < Formula
   desc "Platform built on V8 to build network applications"
   homepage "https://nodejs.org/"
-  url "https://nodejs.org/dist/v12.21.0/node-v12.21.0.tar.gz"
-  sha256 "36e862555bebc04b13f7afebf4472c4dd7ebf4c891f9d6746ec545a4f099d05e"
+  url "https://nodejs.org/dist/v12.22.3/node-v12.22.3.tar.gz"
+  sha256 "30acec454f26a168afe6d1c55307c5186ef23dba66527cc34e4497d01f91bda4"
   license "MIT"
-  revision 1
 
   livecheck do
     url "https://nodejs.org/dist/"
@@ -12,10 +11,11 @@ class NodeAT12 < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "a1e70d57bbafc4578ff8d956043f4bc38afe94f7b9a0b7fdabdb240ceec4f2f4"
-    sha256 cellar: :any, big_sur:       "1489d77d80acb5a36de769c235043f225c1f295826ad4cf799f0473ce31b8c5a"
-    sha256 cellar: :any, catalina:      "1f3f872487188abe46a9f3666f5c5dfbc22b663a1f08183ee47606131a9afb4a"
-    sha256 cellar: :any, mojave:        "e7b1fe6404255a92f9cffef1016478e6c98066a805f9ac7518be7b41b5bd3e10"
+    sha256 cellar: :any,                 arm64_big_sur: "c5e43bbfb4ed9b5866bd0f5aefb5cb40f06504138ec57bd92a595eec01ac823b"
+    sha256 cellar: :any,                 big_sur:       "09dce109119522b874a50633fce1b9e03c3a4f6d8e8fc17b56bc6aaabace8214"
+    sha256 cellar: :any,                 catalina:      "2a7c221af40ac971028770eaf5b005b0a1135b9c206da77aa57b1805b2632d30"
+    sha256 cellar: :any,                 mojave:        "1eefa8281d0ed8b35492b1fb57a6f579341de05325766c6f0587f282455473df"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e83be53c90a0e2b72d6f97509fe19c6dc008c1f39ce54f3bf2be8806e2f05d9d"
   end
 
   keg_only :versioned_formula
@@ -23,6 +23,13 @@ class NodeAT12 < Formula
   depends_on "pkg-config" => :build
   depends_on "python@3.9" => :build
   depends_on "icu4c"
+
+  # Patch for compatibility with ICU 69. Backported from
+  # https://github.com/v8/v8/commit/035c305ce7761f51328b45f1bd83e26aef267c9d
+  patch do
+    url "https://raw.githubusercontent.com/Homebrew/formula-patches/9eb96c36ff61c76c809c975f3b4463e826eae73c/node%4012/node%4012-icu69.patch"
+    sha256 "c23163cc26c784479471f904fb47f1c16ec4177c687fd9c3988a8208a3faa583"
+  end
 
   def install
     # make sure subprocesses spawned by make are using our Python 3

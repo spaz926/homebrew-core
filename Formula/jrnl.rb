@@ -3,15 +3,16 @@ class Jrnl < Formula
 
   desc "Command-line note taker"
   homepage "https://jrnl.sh/"
-  url "https://files.pythonhosted.org/packages/82/5b/145bef5f739d1451fa1c32130fef936cddb008684f67e0fbe611079399d3/jrnl-2.8.tar.gz"
-  sha256 "9a3240462523e56ef9497a5fcdec42ec693d2ef6b8959b965197b49dfee148fe"
+  url "https://files.pythonhosted.org/packages/76/9b/87e8c99a2bb5ae7d6912c25d70eadd20b1c5a882acfc8aec61402b157440/jrnl-2.8.1.tar.gz"
+  sha256 "a69f0fa9be3dff7fa32d8a2ea3697ed828329b1db595fde23bbba5eab460d519"
   license "GPL-3.0-only"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "38ede64f6f1a7c44eb781bb800e54e14bda7d722bf7548d14ef87a31d691bbd5"
-    sha256 cellar: :any, big_sur:       "a7868cb6773e07076239deff492e5f8c4886733e6c39d8d44008142cc58f8a6e"
-    sha256 cellar: :any, catalina:      "a71ca429843fcee08c062c528093c40aa4e5e3c68eef70b575aead737a659af0"
-    sha256 cellar: :any, mojave:        "161247abf10f53e31b228afadbc4cae5a35f45154837d6c8a32d5d509c4aab6d"
+    sha256 cellar: :any,                 arm64_big_sur: "8e35532250e8864b1b81559f6e675b794ffb20a301f6874dd8cc469df2b12de9"
+    sha256 cellar: :any,                 big_sur:       "75de14f6e281c827e06e3317a68c06fa680b1fff15d7ad63c9f4a991b1ac48e3"
+    sha256 cellar: :any,                 catalina:      "1819fb9d1ac45a4ac4ea688ab7269f89e66c7f505ece4dedcaaa64c268cbc152"
+    sha256 cellar: :any,                 mojave:        "64ff4066d306e04755e8f1fafbbc8806f42a10d63ca31d23d88f4123299f61b0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "369d83264052d3a8617084e71e61ed5411d0058934f301ca9d19e3bd40f25f86"
   end
 
   depends_on "rust" => :build
@@ -49,8 +50,8 @@ class Jrnl < Formula
   end
 
   resource "importlib-metadata" do
-    url "https://files.pythonhosted.org/packages/64/bc/1b4b48fc8ec1375717736f6dfb06e6a57972b1dd4ed16d5e9463c880e7b0/importlib_metadata-3.8.1.tar.gz"
-    sha256 "eb83dfc8d87a64d42fb2904312d632bb8d57e47c5b435f8d4d5523d2b0efc3d0"
+    url "https://files.pythonhosted.org/packages/91/b6/4f8d521c15fa22bca780aeff56a5b43665ac522585b2b2090e3626ca585f/importlib_metadata-4.0.1.tar.gz"
+    sha256 "8c501196e49fb9df5df43833bdb1e4328f64847763ec8a50703148b73784d581"
   end
 
   resource "keyring" do
@@ -135,7 +136,7 @@ class Jrnl < Formula
 
   test do
     (testpath/"tests.sh").write <<~EOS
-      #!/usr/bin/expect -f
+      #!/usr/bin/env expect
 
       set timeout 3
       match_max 100000

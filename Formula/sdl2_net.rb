@@ -7,7 +7,7 @@ class Sdl2Net < Formula
 
   livecheck do
     url :homepage
-    regex(/SDL2_net[._-]v?(\d+(?:\.\d+)*)/i)
+    regex(/href=.*?SDL2_net[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
 
   bottle do
@@ -19,7 +19,14 @@ class Sdl2Net < Formula
     sha256 cellar: :any, sierra:        "dc2b96762f77dd4d42fea1da4d4c2373692dd0a531f686f00de0dd4a6eed8df9"
     sha256 cellar: :any, el_capitan:    "46d189ebe1f240381a9e8d99a2cb249e577cec98e6399e741e47275735a3471c"
     sha256 cellar: :any, yosemite:      "2e2bcc1e1aac84b37ebb44398e463d9004764aa369489926cd07bb97cb9f60c4"
-    sha256 cellar: :any, mavericks:     "ebabcb8f4df6fdee7855a6e19080aea42d9909205b287312015179bb9b3f472a"
+  end
+
+  head do
+    url "https://github.com/libsdl-org/SDL_net.git", branch: "main"
+
+    depends_on "autoconf" => :build
+    depends_on "automake" => :build
+    depends_on "libtool" => :build
   end
 
   depends_on "pkg-config" => :build
@@ -27,6 +34,8 @@ class Sdl2Net < Formula
 
   def install
     inreplace "SDL2_net.pc.in", "@prefix@", HOMEBREW_PREFIX
+
+    system "./autogen.sh" if build.head?
 
     system "./configure", "--disable-dependency-tracking",
                           "--prefix=#{prefix}", "--disable-sdltest"
@@ -45,7 +54,7 @@ class Sdl2Net < Formula
       }
     EOS
 
-    system ENV.cc, "-L#{lib}", "-lsdl2_net", "test.c", "-o", "test"
+    system ENV.cc, "test.c", "-I#{Formula["sdl2"].opt_include}/SDL2", "-L#{lib}", "-lSDL2_net", "-o", "test"
     system "./test"
   end
 end

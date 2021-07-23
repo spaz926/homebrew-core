@@ -1,17 +1,18 @@
 class Standardese < Formula
   desc "Next-gen documentation generator for C++"
   homepage "https://standardese.github.io"
+  # TODO: use resource blocks for vendored deps
   url "https://github.com/standardese/standardese.git",
-      tag:      "0.5.0",
-      revision: "e7a7fb8f59ba4b1cf59347ac016ec558e5d72ac3"
+      tag:      "0.5.2",
+      revision: "0b23537e235690e01ba7f8362a22d45125e7b675"
   license "MIT"
   head "https://github.com/standardese/standardese.git"
 
   bottle do
-    sha256 arm64_big_sur: "a95f3ade20f806aa6d68048bd636353cbc3031e95c642907bc7a7f9f0fb12674"
-    sha256 big_sur:       "31285e0f92c6c1c81ef37b5b7769b8427c5fc4679201bfacf520d04e7a72e9c5"
-    sha256 catalina:      "40af188953816d174b0c181b4bdb99a3d3d903ccd04790a7c631807e333e8a79"
-    sha256 mojave:        "d86f50330c0a194de9daedf8eb7e673914c23d423dfa5637bb9f4569ea38c7ac"
+    sha256 arm64_big_sur: "541c269d263b5f362e2717dab9697a9428b5bcb5bb29287f99288d3b9478ad1e"
+    sha256 big_sur:       "eb7a0d594647919811f286fa81be6a711540c970d02823faa1fefb5489bf0676"
+    sha256 catalina:      "72677bf1b529d0ce4d9d4e2490a90fa6f83b3ad8ef569b062ced1c10d24586d0"
+    sha256 mojave:        "1749ef2fcdead436a08b9daaa8207b93611a5b08ca56de9fc5049172e77eb9fb"
   end
 
   depends_on "cmake" => :build
@@ -21,21 +22,18 @@ class Standardese < Formula
 
   def install
     system "cmake", "-S", ".", "-B", "build",
-                    "-DCMAKE_INSTALL_RPATH=#{opt_libexec}/lib",
+                    "-DCMAKE_INSTALL_RPATH=#{rpath}",
                     "-DCMARK_LIBRARY=#{Formula["cmark-gfm"].opt_lib/shared_library("libcmark-gfm")}",
                     "-DCMARK_INCLUDE_DIR=#{Formula["cmark-gfm"].opt_include}",
                     *std_cmake_args
-    system "cmake", "--build", "build", "--target", "standardese_tool"
+    system "cmake", "--build", "build"
     system "cmake", "--install", "build"
 
-    cd "build" do
-      (libexec/"lib").install "src/#{shared_library("libstandardese")}"
-      (libexec/"lib").install "external/cppast/#{shared_library("lib_cppast_tiny_process")}"
-      (libexec/"lib").install "external/cppast/src/#{shared_library("libcppast")}"
-    end
-    cd "include" do
-      include.install "standardese"
-    end
+    lib.install "build/src/#{shared_library("libstandardese")}"
+    lib.install "build/external/cppast/external/tpl/#{shared_library("libtiny-process-library")}"
+    lib.install "build/external/cppast/src/#{shared_library("libcppast")}"
+
+    include.install "include/standardese"
     (lib/"cmake/standardese").install "standardese-config.cmake"
   end
 
@@ -71,6 +69,6 @@ class Standardese < Formula
            "--compilation.standard", "c++17",
            "--output.format", "xml",
            testpath/"test.hpp"
-    system "fgrep", "-q", "<subdocument output-name=\"doc_test\" title=\"test.hpp\">", testpath/"doc_test.xml"
+    assert_includes (testpath/"doc_test.xml").read, "<subdocument output-name=\"doc_test\" title=\"test.hpp\">"
   end
 end

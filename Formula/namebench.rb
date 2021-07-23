@@ -14,8 +14,11 @@ class Namebench < Formula
     sha256 cellar: :any_skip_relocation, sierra:        "ae766151284842185ceecf1622a82cf55c949994729536015a42eea38f62309c"
     sha256 cellar: :any_skip_relocation, el_capitan:    "3333ef2615f6fbf294cede389d8545487474779a52c18108feb83a4697530cdc"
     sha256 cellar: :any_skip_relocation, yosemite:      "8d400aed171038f248e9d91718fb42625fc1f278df538b34259f26918b245f66"
-    sha256 cellar: :any_skip_relocation, mavericks:     "ac3d993b71305c18b47fa671ecb4c5875b80fd7ea87a6fff0f123c3c2cfdcb43"
   end
+
+  deprecate! date: "2021-07-05", because: :unmaintained
+
+  depends_on :macos # Due to Python 2
 
   def install
     ENV.prepend_create_path "PYTHONPATH", libexec/"lib/python2.7/site-packages"

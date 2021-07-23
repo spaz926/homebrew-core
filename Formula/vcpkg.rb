@@ -1,18 +1,17 @@
 class Vcpkg < Formula
   desc "C++ Library Manager"
   homepage "https://github.com/microsoft/vcpkg"
-  url "https://github.com/microsoft/vcpkg/archive/2020.11-1.tar.gz"
-  version "2020.11-1"
-  sha256 "dcae747fddfc1540b57d576afd2ad5191611013cce0bf30f184a1535c3d90fbe"
+  url "https://github.com/microsoft/vcpkg/archive/2021.05.12.tar.gz"
+  sha256 "907f26a5357c30e255fda9427f1388a39804f607a11fa4c083cc740cb268f5dc"
   license "MIT"
   head "https://github.com/microsoft/vcpkg.git"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any, arm64_big_sur: "9dcff0e796b3e9b34dd365e79e114a862bc297b289a64703698badf5a9b84cac"
-    sha256 cellar: :any, big_sur:       "b0eeafb5709891c77ab0b05e8b6ce6977b72d30651869dfba98f6b501048fbc3"
-    sha256 cellar: :any, catalina:      "37195113f690360e2e6efd0f4657f5b0e60f4a65e2c37ee25558bf8488d1aeb8"
-    sha256 cellar: :any, mojave:        "f1c8ef840126a72be1ed20a9f032bcfe25fdf4c30f3adb1da0e0905d7075a8d7"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "e58d2e3fbf843883563579ec544828788ca051c9b5bd46edc0e5df71c35b90dc"
+    sha256 cellar: :any_skip_relocation, big_sur:       "d963bef9ed861e8e67c4ef2080f04adf3a91bb971776f60f3f40bd5a6a875e07"
+    sha256 cellar: :any_skip_relocation, catalina:      "143a0c4e50b0d96bdaa7ed913105654188664ac105500c74f66add89fe1cf098"
+    sha256 cellar: :any,                 mojave:        "301a0c5460bebfa3f05fb2ed8d264fce2a9fe9f261853fed991a59d1c1cd58ad"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "aac3ac181306d79ac32984bdfecf34c9fa90703ed11e78044fae8630ca085222"
   end
 
   depends_on "cmake" => :build
@@ -29,13 +28,6 @@ class Vcpkg < Formula
     fails_with :clang do
       cause "'file_status' is unavailable: introduced in macOS 10.15"
     end
-  end
-
-  # build fix for arm
-  # remove in next release
-  patch do
-    url "https://github.com/microsoft/vcpkg/commit/7f328aa.patch?full_index=1"
-    sha256 "afe40ee3c294b85f062dc1598ff0cd7ae4f550336ac0b13f2a4f0226c50c501e"
   end
 
   def install

@@ -10,16 +10,19 @@
   "gcc@7",
   "gcc@8",
   "gcc@9",
+  "gcc@10",
   "glibmm@2.66",
   "gnupg@1.4",
   "libsigc++@2",
   "libxml++@4",
   "libxml++@5",
+  "linux-headers@4.4",
   "lua@5.1",
   "numpy@1.16",
   "openssl@1.1",
   "pangomm@2.46",
   "pyqt@5",
   "python@3.9",
-  "python-tk@3.9"
+  "python-tk@3.9",
+  "wxmac@3.0"
 ]

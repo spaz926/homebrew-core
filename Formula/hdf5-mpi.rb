@@ -1,16 +1,24 @@
 class Hdf5Mpi < Formula
   desc "File format designed to store large amounts of data"
   homepage "https://www.hdfgroup.org/HDF5"
-  url "https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.12/hdf5-1.12.0/src/hdf5-1.12.0.tar.bz2"
-  sha256 "97906268640a6e9ce0cde703d5a71c9ac3092eded729591279bf2e3ca9765f61"
-  revision 1
+  url "https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.12/hdf5-1.12.1/src/hdf5-1.12.1.tar.bz2"
+  sha256 "aaf9f532b3eda83d3d3adc9f8b40a9b763152218fa45349c3bc77502ca1f8f1c"
+  license "BSD-3-Clause"
+
+  # This regex isn't matching filenames within href attributes (as we normally
+  # do on HTML pages) because this page uses JavaScript to handle the download
+  # buttons and the HTML doesn't contain the related URLs.
+  livecheck do
+    url "https://www.hdfgroup.org/downloads/hdf5/source-code/"
+    regex(/>\s*hdf5[._-]v?(\d+(?:\.\d+)+)\.t/i)
+  end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "483dd167599e83c428e8dd159fa2bbf44a217edf85c61978e2bfd19bda025a39"
-    sha256 cellar: :any, big_sur:       "2566ec49e96b8bf99b97962f65daaa541256ec59c9ffcf671557bfd7d7348764"
-    sha256 cellar: :any, catalina:      "ba61a9e5993f15c7b339a17afa405422abf89a908f890cd60aead67d2114f310"
-    sha256 cellar: :any, mojave:        "f39b0f908ba1cb1c74aff7a36cb54cf04bc417defd5641752dffb2902866bd0c"
-    sha256 cellar: :any, high_sierra:   "7be5d7e51464129cd531f124efec310affc716d2e810a224d238bba1659aea53"
+    sha256 cellar: :any,                 arm64_big_sur: "72ec20ce7203674eeb2e5b3477eed01c97c948f46a113f979570f53750505b5a"
+    sha256 cellar: :any,                 big_sur:       "43acfcf1924cfdaede8087ab4e3e6dbbb1d9926da8dfd53d0b00484b843284f1"
+    sha256 cellar: :any,                 catalina:      "712c156c2c7d729763eec361d8b43c6c719ecfc66edddaf6e1f17357acad25de"
+    sha256 cellar: :any,                 mojave:        "0bb94bd58813ee1f3176175cb9278ca28bf70dd13e134cf5b422ff5f17eee992"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a451afc0161ef8f76cf77af609f35da050679701d64ffa9e1aac5c73a4ba5762"
   end
 
   depends_on "autoconf" => :build
@@ -33,7 +41,13 @@ class Hdf5Mpi < Formula
               "settingsdir=$(libdir)",
               "settingsdir=#{pkgshare}"
 
-    system "autoreconf", "-fiv"
+    on_macos do
+      system "autoreconf", "-fiv"
+    end
+
+    on_linux do
+      system "./autogen.sh"
+    end
 
     args = %W[
       --disable-dependency-tracking
@@ -49,6 +63,10 @@ class Hdf5Mpi < Formula
       F77=mpif77
       F90=mpif90
     ]
+
+    on_linux do
+      args << "--with-zlib=#{Formula["zlib"].opt_prefix}"
+    end
 
     system "./configure", *args
     system "make", "install"

@@ -1,10 +1,9 @@
 class Yaz < Formula
   desc "Toolkit for Z39.50/SRW/SRU clients/servers"
   homepage "https://www.indexdata.com/yaz"
-  url "http://ftp.indexdata.dk/pub/yaz/yaz-5.30.3.tar.gz"
-  sha256 "f0497fd8420574efab4e5738ea3b70787a6e8042f585156baa30bdc1911ba552"
+  url "http://ftp.indexdata.dk/pub/yaz/yaz-5.31.0.tar.gz"
+  sha256 "864d4476d1578ac132782b3d4e2eb96391bd88f7ae3040ddcb1556aba6fe0d15"
   license "BSD-3-Clause"
-  revision 1
 
   livecheck do
     url "http://ftp.indexdata.dk/pub/yaz/"
@@ -12,10 +11,11 @@ class Yaz < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "b906d9bcb2853341532644ae7267407cd6ccb90a8c4027ba8d8a7c967c49c221"
-    sha256 cellar: :any, big_sur:       "b76b437a0ebd9ec194f7a21e76ed19e89cb0e3d4c2bfb3ef28f8ebfd97894d2b"
-    sha256 cellar: :any, catalina:      "e8d4407c1ccc973908464faa9c2f3d91f8f7a55cba8d3cadba2875d1bcc977db"
-    sha256 cellar: :any, mojave:        "415ffe9254272f056f57b9860c6785f8d7b2ebaa5ac962c0e9e74ddacb388a33"
+    sha256 cellar: :any,                 arm64_big_sur: "88e9c78b500a5bf61ef7996e873a08508725edeb3d4e2ff364c4c18b9f55fb16"
+    sha256 cellar: :any,                 big_sur:       "968de6c53096f9f0accf06488de7e4ab76428a33eb1bcd27866ae34376b82996"
+    sha256 cellar: :any,                 catalina:      "5a2ead8e67e33724130ae46cfcdd880488f99715816ef803f5b30b64cb3cf898"
+    sha256 cellar: :any,                 mojave:        "2e9e5037cc90d375556fd203e8316e81b0df113a48509bf25df6f581c2dc2f9d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1df089100f75e362967e449c15abef1b9ce18f6b38421975614ee19b270609db"
   end
 
   head do

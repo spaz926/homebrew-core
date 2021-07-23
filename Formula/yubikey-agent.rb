@@ -1,16 +1,16 @@
 class YubikeyAgent < Formula
   desc "Seamless ssh-agent for YubiKeys and other PIV tokens"
   homepage "https://filippo.io/yubikey-agent"
-  url "https://github.com/FiloSottile/yubikey-agent/archive/v0.1.3.tar.gz"
-  sha256 "58c597551daf0c429d7ea63f53e72b464f8017f5d7f88965d4dae397ce2cb70a"
+  url "https://github.com/FiloSottile/yubikey-agent/archive/v0.1.4.tar.gz"
+  sha256 "797377b0781ccd4acf390cb13814d5fab653afd7b5a7eff226137f5f1503709b"
   license "BSD-3-Clause"
   head "https://filippo.io/yubikey-agent", using: :git
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "05f61b09bdb5f3a2b3b52bb2a72cee1e017ec41995213fb498f4adb13138b6ff"
-    sha256 cellar: :any_skip_relocation, big_sur:       "9304499290bd9b92e7381000785135fce3a1cc954b4eeb0a399cba49ff42b7c1"
-    sha256 cellar: :any_skip_relocation, catalina:      "3e94f31622246f6fe44dfc5c82d2c2637e9f1bf86bc2bf4a5712e46ac7aaa155"
-    sha256 cellar: :any_skip_relocation, mojave:        "cebabe028d63117d92e7eebbcc9c7f0661e5f624bbadb568782b29b11a147939"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "950c6257f3a78028a23798ec38fc13b21b70c7995246d6bce8ab142b0467014f"
+    sha256 cellar: :any_skip_relocation, big_sur:       "c039d2e64526ae2c7e488cdcf5c104579fecd447886cc857892c1efd28bf7b63"
+    sha256 cellar: :any_skip_relocation, catalina:      "41bfe241c1ee1424ccee14ba04b583c71cb0dbf481db311fd1f12f552258f941"
+    sha256 cellar: :any_skip_relocation, mojave:        "4ec8a15bca487e38310100533e787d8e7bcc80ab9f6d4285f49f9df58fbee5b3"
   end
 
   depends_on "go" => :build

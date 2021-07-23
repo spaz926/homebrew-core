@@ -5,6 +5,11 @@ class Tofrodos < Formula
   sha256 "3457f6f3e47dd8c6704049cef81cb0c5a35cc32df9fe800b5fbb470804f0885f"
   license "GPL-2.0"
 
+  livecheck do
+    url :homepage
+    regex(/href=.*?tofrodos[._-]v?(\d+(?:\.\d+)+)\.t/i)
+  end
+
   bottle do
     sha256 cellar: :any_skip_relocation, arm64_big_sur: "abd0c2470073c169d8fdbca2f0f65fe458da25456a8ace5758d394988d0f5ed7"
     sha256 cellar: :any_skip_relocation, big_sur:       "11f0293ead8b99af5173c84b0e80cb63b3aefbddc6b411ce222f841383e8a4d8"
@@ -14,7 +19,7 @@ class Tofrodos < Formula
     sha256 cellar: :any_skip_relocation, sierra:        "3d5363cda2170ce2fbcb7e03c84f715b62ead1e5646000dd06395f5677fd2269"
     sha256 cellar: :any_skip_relocation, el_capitan:    "4a2b22ff08d0fb65c80be7359be2f04d12b70f4e6d490b96cb819ea69b3e3d88"
     sha256 cellar: :any_skip_relocation, yosemite:      "4a5427c6870c3d4822ef4da3ddd8d79c18b91e5b7f14edb4aa449a53da70114e"
-    sha256 cellar: :any_skip_relocation, mavericks:     "c9759ec570e6a284b250563b8d66076401641f40c1836e293f4eab82cc9fe4ff"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b0f32616234ccfd1984a590ef37cd25cf15ba64fe0316f1f0a2d8fdea2cfc6f3"
   end
 
   def install

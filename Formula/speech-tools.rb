@@ -13,9 +13,10 @@ class SpeechTools < Formula
 
   bottle do
     rebuild 1
-    sha256 cellar: :any, big_sur:  "cabb028b487d5baa5c9c1bb67a982a285ab2af2194ac429fb80f0675e2bd9f6e"
-    sha256 cellar: :any, catalina: "e25823939149f50f343c2e6bd8521b302067a0eb3106df6b40ff96b2d1a70c21"
-    sha256 cellar: :any, mojave:   "3ede4e21772a17e0c0a109151406ad82943ba77b0cad2249c0cac51e063d24ea"
+    sha256 cellar: :any,                 big_sur:      "cabb028b487d5baa5c9c1bb67a982a285ab2af2194ac429fb80f0675e2bd9f6e"
+    sha256 cellar: :any,                 catalina:     "e25823939149f50f343c2e6bd8521b302067a0eb3106df6b40ff96b2d1a70c21"
+    sha256 cellar: :any,                 mojave:       "3ede4e21772a17e0c0a109151406ad82943ba77b0cad2249c0cac51e063d24ea"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "367d922ef74f4977cd3fca29461b4814af733073cbba6cc066d5b85a729daf26"
   end
 
   depends_on "libomp"
@@ -70,8 +71,8 @@ class SpeechTools < Formula
       "-otype", "est"
 
     # extract one frame from the middle using ch_track, capturing stdout
-    pitch = shell_output("#{bin}/ch_track #{ptcfile} -from #{frequency_hz * duration_secs / 2} " \
-                                                    "-to #{frequency_hz * duration_secs / 2}")
+    value = frequency_hz * duration_secs / 2
+    pitch = shell_output("#{bin}/ch_track #{ptcfile} -from #{value} -to #{value}")
 
     # should be 100 (Hz)
     assert_equal frequency_hz, pitch.to_i

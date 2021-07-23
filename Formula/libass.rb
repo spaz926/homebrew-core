@@ -1,16 +1,16 @@
 class Libass < Formula
   desc "Subtitle renderer for the ASS/SSA subtitle format"
   homepage "https://github.com/libass/libass"
-  url "https://github.com/libass/libass/releases/download/0.15.0/libass-0.15.0.tar.xz"
-  sha256 "9f09230c9a0aa68ef7aa6a9e2ab709ca957020f842e52c5b2e52b801a7d9e833"
+  url "https://github.com/libass/libass/releases/download/0.15.1/libass-0.15.1.tar.xz"
+  sha256 "1cdd39c9d007b06e737e7738004d7f38cf9b1e92843f37307b24e7ff63ab8e53"
   license "ISC"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "7b5bbe38be42f70ee92bc06d2dc69680717c8f3bf33c3442f4cdd6bc328eb605"
-    sha256 cellar: :any, big_sur:       "e95df755d6236cb7a56140c4bc12faad1d87023d23412b9f245bbda60073bf00"
-    sha256 cellar: :any, catalina:      "427b18a8c9c8c5331553c0e814bf4e4c6f965cc53715d89a0ad3ba66b8e231c4"
-    sha256 cellar: :any, mojave:        "64f2a67f35510fe088f3e6e18075d5e08e93081d958fcee6b65ee29ab3b730ad"
-    sha256 cellar: :any, high_sierra:   "881db49f437027abdae60f4c849097b720216bcfa197589aea373b5f3451f9ef"
+    sha256 cellar: :any,                 arm64_big_sur: "6eb8abbcbba5ca09e35b9ff4c6fac078fbef383392677f42cc28ef735188165c"
+    sha256 cellar: :any,                 big_sur:       "4545a55482e45e533c212e57c8a14660c547456072d68c2d2ed13c819f1300c5"
+    sha256 cellar: :any,                 catalina:      "814ec97150e4fc19142f50a72ad366d6d46857520b20b5d7c20678af440b8dcf"
+    sha256 cellar: :any,                 mojave:        "5178eda1fef01d6ab29af84953a29f00d13bf6cc1ceec05940da017891628970"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e9596147358f8e3d2b7f28b2668a577a17e294325cbe6fd39926a5d08a53a76f"
   end
 
   head do

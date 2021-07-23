@@ -2,18 +2,18 @@ class AnimeDownloader < Formula
   include Language::Python::Virtualenv
 
   desc "Download your favourite anime"
-  homepage "https://github.com/vn-ki/anime-downloader"
-  url "https://files.pythonhosted.org/packages/06/4f/5290202545ec964b442458410dd9623cde0327ee164036553f976b9ea601/anime-downloader-5.0.7.tar.gz"
-  sha256 "04fe167f679f53545493a23ef36ac572f11dc4348aa274ce2198e6dc1d31ec48"
+  homepage "https://github.com/anime-dl/anime-downloader"
+  url "https://files.pythonhosted.org/packages/00/8b/2f354c0c2e56f1fe45e805698bd6a81c472473a48b814c44aaed2d41016d/anime-downloader-5.0.9.tar.gz"
+  sha256 "40eaded9508a30f35993b2fc0f436c357d9939d58625a10bd595bfc11816ead4"
   license "Unlicense"
-  revision 1
-  head "https://github.com/vn-ki/anime-downloader.git"
+  head "https://github.com/anime-dl/anime-downloader.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "e29856982e4dda0beffac1302df093fe1aba0cdf588dc87728a4c8a4c863dce9"
-    sha256 cellar: :any_skip_relocation, big_sur:       "33549b9969e534604540fb413f7b3774cb9a2f8184528537069478141eaac808"
-    sha256 cellar: :any_skip_relocation, catalina:      "831ca154b2339fa4f3452450d2861f495b8111541eed7bde94bbf3c860b9c857"
-    sha256 cellar: :any_skip_relocation, mojave:        "dde85947e12a9b53c8ae101daa4b7f6f5503a04c4c9fada4e8e721edc307b34c"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "51528ac11b71b803cec6866244164cc4b5e837fbc189c38cdb054bf189ef59f7"
+    sha256 cellar: :any_skip_relocation, big_sur:       "4b7f8ef5058b22b72b3f5bda4ad9110c9d4ab4e7bc9aa5cf9691ca5f0c5ea558"
+    sha256 cellar: :any_skip_relocation, catalina:      "ca0111a1386a2269340b3ce8b7d7a24766975cc680ab60e4c045cadae989e106"
+    sha256 cellar: :any_skip_relocation, mojave:        "b561d3e6d9c25da1d6088154ce894985d5e6d0b08d317566e31ee9a970dc1754"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a0f571445d312cada1fb7ce349655e378ef21cfd7e227780a8dad74a58671f7d"
   end
 
   depends_on "aria2"
@@ -87,8 +87,8 @@ class AnimeDownloader < Formula
   end
 
   resource "soupsieve" do
-    url "https://files.pythonhosted.org/packages/54/b9/1584ee0cd971ea935447c87bbc9d195d981feec446dd0af799d9d95c9d86/soupsieve-2.2.tar.gz"
-    sha256 "407fa1e8eb3458d1b5614df51d9651a1180ea5fedf07feb46e45d7e25e6d6cdd"
+    url "https://files.pythonhosted.org/packages/c8/3f/e71d92e90771ac2d69986aa0e81cf0dfda6271e8483698f4847b861dd449/soupsieve-2.2.1.tar.gz"
+    sha256 "052774848f448cf19c7e959adf5566904d525f33a3f8b6ba6f6f8f26ec7de0cc"
   end
 
   resource "urllib3" do

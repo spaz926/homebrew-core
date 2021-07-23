@@ -3,20 +3,25 @@ class Liquidctl < Formula
 
   desc "Cross-platform tool and drivers for liquid coolers and other devices"
   homepage "https://github.com/jonasmalacofilho/liquidctl"
-  url "https://files.pythonhosted.org/packages/2b/08/7e2ef5744d6c56a5ceb79fdc1bf280fff53111859a554f41ecb56f80e77c/liquidctl-1.5.1.tar.gz"
-  sha256 "9480e2dfbb0406fa8d57601a43a0f7c7573de1f5f24920b0e4000786ed236a8b"
+  url "https://files.pythonhosted.org/packages/cb/53/6edf9da254d2e80580b116c45a7c50edaf055917bf6d771185a5adf52d2a/liquidctl-1.7.1.tar.gz"
+  sha256 "10f650b9486ddac184330940550433685ae0abc70b66fe92d994042491aab356"
   license "GPL-3.0-or-later"
   head "https://github.com/jonasmalacofilho/liquidctl.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "fc9a4ef8e0885a8ae2f9bede87dcbfff051361be97aba7d8ca1bf41cb421c368"
-    sha256 cellar: :any_skip_relocation, big_sur:       "3618276b06bacdabe57f01680b21bbfb92378810ddac5c0386b84b4a9e7153c0"
-    sha256 cellar: :any_skip_relocation, catalina:      "e2ef12a11773067a7629d1fd8f6895b1333cb6982823cf665caa60a5e777f07d"
-    sha256 cellar: :any_skip_relocation, mojave:        "0093e4e5ab94017f3d9267a3a0ade3fab7261e803ef62e27851dce25d921b83a"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "bdb9efa7b382210874c57fe35f67213f3f6ec1355aae12d5190c1b39dd412814"
+    sha256 cellar: :any_skip_relocation, big_sur:       "2cdcae7267fc4c05a9a0b5eee169119c2855079902999c478993dddee9978a03"
+    sha256 cellar: :any_skip_relocation, catalina:      "fd8b5434525b5beda15e6fe1eea5c3259f1c8551a2727f5067803aed5d36aecb"
+    sha256 cellar: :any_skip_relocation, mojave:        "183f8183b103bab0039f9fc4e6037fba950551ffbf66ce770a4231538c520e75"
   end
 
   depends_on "libusb"
   depends_on "python@3.9"
+
+  resource "colorlog" do
+    url "https://files.pythonhosted.org/packages/07/d4/ac5127f7d7e022caf740b9f624e5b9fe9a69fefc0f4f9c047b1e9298c87a/colorlog-5.0.1.tar.gz"
+    sha256 "f17c013a06962b02f4449ee07cfdbe6b287df29efc2c9a1515b4a376f4e588ea"
+  end
 
   resource "docopt" do
     url "https://files.pythonhosted.org/packages/a2/55/8f8cab2afd404cf578136ef2cc5dfb50baa1761b68c9da1fb1e4eed343c9/docopt-0.6.2.tar.gz"
@@ -29,8 +34,8 @@ class Liquidctl < Formula
   end
 
   resource "pyusb" do
-    url "https://files.pythonhosted.org/packages/b9/8d/25c4e446a07e918eb39b5af25c4a83a89db95ae44e4ed5a46c3c53b0a4d6/pyusb-1.1.1.tar.gz"
-    sha256 "7d449ad916ce58aff60b89aae0b65ac130f289c24d6a5b7b317742eccffafc38"
+    url "https://files.pythonhosted.org/packages/d9/6e/433a5614132576289b8643fe598dd5d51b16e130fd591564be952e15bb45/pyusb-1.2.1.tar.gz"
+    sha256 "a4cc7404a203144754164b8b40994e2849fde1cfff06b08492f12fff9d9de7b9"
   end
 
   def install

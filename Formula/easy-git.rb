@@ -9,7 +9,9 @@ class EasyGit < Formula
     regex(%r{href=.*?(\d+(?:\.\d+)+)/eg["' >]}i)
   end
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "d32fde25bfa6487f1ed7b4ca157b3d38cf64100b77d20c3ec35a0bf9b88894b9"
+  end
 
   def install
     bin.install "eg"

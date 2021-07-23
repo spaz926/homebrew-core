@@ -1,8 +1,8 @@
 class GnomeAutoar < Formula
   desc "GNOME library for archive handling"
   homepage "https://github.com/GNOME/gnome-autoar"
-  url "https://download.gnome.org/sources/gnome-autoar/0.3/gnome-autoar-0.3.1.tar.xz"
-  sha256 "0e78713e6f0de339fdee16bab82753ae290fe80fa7b4ba6e3db8c1465b81d0f8"
+  url "https://download.gnome.org/sources/gnome-autoar/0.3/gnome-autoar-0.3.3.tar.xz"
+  sha256 "272400f73a375a7e88fdf1e12591bfb8f3f03edf01780cadcd74f70b613e5c04"
   license "LGPL-2.1-or-later"
 
   # gnome-autoar doesn't seem to follow the typical GNOME version format where
@@ -14,10 +14,10 @@ class GnomeAutoar < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "bce66e3b2f1bf7e89cf91260a60a2ee50761fad6ac4313433a04b29e7fc84334"
-    sha256 big_sur:       "0b356bb42d02fd282554b943216524156835d9d294693ec4228eec830d742074"
-    sha256 catalina:      "637dabc9403bb4a841a4ad1a37913c8f5408919536962d0933863c73b36265a1"
-    sha256 mojave:        "dd4d6a2cac634191e73cd0423e444c89694838569d65f062fa9d21373ca782ca"
+    sha256 arm64_big_sur: "f807cdbfa1846ce767f5da3f9963d23ad06cc76265d513826bbae251d1640f36"
+    sha256 big_sur:       "6d3385e2abadeed4cb9eee7cd106fe2606d34283a1b377898f0ca5bb8581c473"
+    sha256 catalina:      "68285e5d4bb577d383397ea433eb689d2056a1a8ca2802afbf9c259989c19fc9"
+    sha256 mojave:        "81cf65e7c5a708728565785c9ebb3cb9fb3558a3031964e37657961b613fd184"
   end
 
   depends_on "pkg-config" => :build

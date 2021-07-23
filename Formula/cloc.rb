@@ -1,17 +1,17 @@
 class Cloc < Formula
   desc "Statistics utility to count lines of code"
   homepage "https://github.com/AlDanial/cloc/"
-  url "https://github.com/AlDanial/cloc/archive/1.88.tar.gz"
-  sha256 "e85c2d1b3ec389d892955cf20b3fa5c797e81136e231d9a09e4f4c62e272f8cd"
+  url "https://github.com/AlDanial/cloc/archive/v1.90.tar.gz"
+  sha256 "60b429dd2aa5cd65707b359dcbcbeb710c8e4db880886528ced0962c67e52548"
   license "GPL-2.0-or-later"
-  revision 2
   head "https://github.com/AlDanial/cloc.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "3638341e5639b04660af751d3646c698404636f12903fc7c90cf394d0069dfdb"
-    sha256 cellar: :any_skip_relocation, big_sur:       "6692daba03124d954e7dfd5455df6bda3fd7ba7a847b79f3510ddc03fb739aed"
-    sha256 cellar: :any_skip_relocation, catalina:      "8a91568128c7b0a952688e786eb16c3e7d1f4aecd73bef02ca4e7bc0f155fbae"
-    sha256 cellar: :any_skip_relocation, mojave:        "6db6825b40d19e3df273e692da859cd183284308ca57291a37fb4c59ed89436c"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "83f761b258052b7cc8ef375d5b7affa4d17afc372833b09b20695a9168ac6b9f"
+    sha256 cellar: :any_skip_relocation, big_sur:       "bcc059446f6a3c112e4eecf2d5da94531124ca7572cd953138bd9bb636dbd760"
+    sha256 cellar: :any_skip_relocation, catalina:      "62e4eba4fd24d200fea078702f429acd303edfd8211a534362081c9d32283272"
+    sha256 cellar: :any_skip_relocation, mojave:        "31d38191d5377740453d8eee73aaf287df8026bae490297179126a4016665d31"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0d229ef534159ffc17ed62d294abcb7a4b68702bfceaf17c0f4fd2504afeecf5"
   end
 
   uses_from_macos "perl"
@@ -22,8 +22,8 @@ class Cloc < Formula
   end
 
   resource "Algorithm::Diff" do
-    url "https://cpan.metacpan.org/authors/id/T/TY/TYEMQ/Algorithm-Diff-1.1903.tar.gz"
-    sha256 "30e84ac4b31d40b66293f7b1221331c5a50561a39d580d85004d9c1fff991751"
+    url "https://cpan.metacpan.org/authors/id/R/RJ/RJBS/Algorithm-Diff-1.201.tar.gz"
+    sha256 "0022da5982645d9ef0207f3eb9ef63e70e9713ed2340ed7b3850779b0d842a7d"
   end
 
   resource "Parallel::ForkManager" do
@@ -37,8 +37,8 @@ class Cloc < Formula
   end
 
   resource "Moo::Role" do
-    url "https://cpan.metacpan.org/authors/id/H/HA/HAARG/Moo-2.004000.tar.gz"
-    sha256 "323240d000394cf38ec42e865b05cb8928f625c82c9391cd2cdc72b33c51b834"
+    url "https://cpan.metacpan.org/authors/id/H/HA/HAARG/Moo-2.005004.tar.gz"
+    sha256 "e3030b80bd554a66f6b3c27fd53b1b5909d12af05c4c11ece9a58f8d1e478928"
   end
 
   resource "Module::Runtime" do
@@ -47,8 +47,8 @@ class Cloc < Formula
   end
 
   resource "Role::Tiny" do
-    url "https://cpan.metacpan.org/authors/id/H/HA/HAARG/Role-Tiny-2.001004.tar.gz"
-    sha256 "92ba5712850a74102c93c942eb6e7f62f7a4f8f483734ed289d08b324c281687"
+    url "https://cpan.metacpan.org/authors/id/H/HA/HAARG/Role-Tiny-2.002004.tar.gz"
+    sha256 "d7bdee9e138a4f83aa52d0a981625644bda87ff16642dfa845dcb44d9a242b45"
   end
 
   resource "Devel::GlobalDestruction" do
@@ -63,12 +63,6 @@ class Cloc < Formula
       url "https://cpan.metacpan.org/authors/id/F/FR/FREW/Sub-Exporter-Progressive-0.001013.tar.gz"
       sha256 "d535b7954d64da1ac1305b1fadf98202769e3599376854b2ced90c382beac056"
     end
-  end
-
-  # Needed to fix https://github.com/AlDanial/cloc/issues/571 in 1.88
-  patch do
-    url "https://github.com/AlDanial/cloc/commit/32d0a28f44fc8687fd5dbfc94e9b197cc68b7f60.patch?full_index=1"
-    sha256 "eee7e728802b6e95768e6290e2d8f5f9b63242186b35b8c94a2ef405f911e63d"
   end
 
   def install

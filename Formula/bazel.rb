@@ -1,15 +1,20 @@
 class Bazel < Formula
   desc "Google's own build tool"
   homepage "https://bazel.build/"
-  url "https://github.com/bazelbuild/bazel/releases/download/4.0.0/bazel-4.0.0-dist.zip"
-  sha256 "d350f80e70654932db252db380d2ec0144a00e86f8d9f2b4c799ffdb48e9cdd1"
+  url "https://github.com/bazelbuild/bazel/releases/download/4.1.0/bazel-4.1.0-dist.zip"
+  sha256 "f377d755c96a50f6bd2f423562598d822f43356783330a0b780ad442864d6eeb"
   license "Apache-2.0"
 
+  livecheck do
+    url :stable
+    regex(/^v?(\d+(?:\.\d+)+)$/i)
+  end
+
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "03d9bae72a88eb463ca7fc05edd799d2b33193982a31368e5ea347bbdbfe4468"
-    sha256 cellar: :any_skip_relocation, big_sur:       "f8d9221e1fac2cc9b732ecaeffe8e5d83e2cd7bb4083006697d1828891e5777c"
-    sha256 cellar: :any_skip_relocation, catalina:      "5f98dfeab044d1178e7466334c3d5a90338bd1d2907a9f9797f0fc6ba6ed4490"
-    sha256 cellar: :any_skip_relocation, mojave:        "6d62c70b69b6275216a182a5dc5fa10c8c73e5876367557e8a9f01465b48f649"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "c823b4c4e41a2aa9b36c25ae8c4c2983cb06c29f1b8198974815c24edd19712c"
+    sha256 cellar: :any_skip_relocation, big_sur:       "68ba1b9ef6eb74c9d64d4c71ecfef8008585deba136a86afa9ffa488c322646e"
+    sha256 cellar: :any_skip_relocation, catalina:      "37cb81e7d6d5b60b5866a5eb57fbff26fa2dc9e37accab99d862a298adea3204"
+    sha256 cellar: :any_skip_relocation, mojave:        "dbd4edf845b075e517442522bc2dd12f993d16d3b895f06dbf2024bd933754cf"
   end
 
   depends_on "python@3.9" => :build
@@ -17,13 +22,7 @@ class Bazel < Formula
 
   uses_from_macos "zip"
 
-  # Fix compilation on macOS 10.14 Mojave
-  # Remove in the next release
-  # See https://github.com/bazelbuild/bazel/pull/12882
-  patch do
-    url "https://github.com/bazelbuild/bazel/commit/092b4c10fa2a2552dc3a98544d637c02ea2865c7.patch?full_index=1"
-    sha256 "273cf54bf4c0fe42fe8da959dc76fc1a3e768f3f3d4108bfd280728db022a308"
-  end
+  conflicts_with "bazelisk", because: "Bazelisk replaces the bazel binary"
 
   def install
     ENV["EMBED_LABEL"] = "#{version}-homebrew"
@@ -51,8 +50,6 @@ class Bazel < Formula
 
       bash_completion.install "bazel-bin/scripts/bazel-complete.bash"
       zsh_completion.install "scripts/zsh_completion/_bazel"
-
-      prefix.install_metafiles
     end
   end
 

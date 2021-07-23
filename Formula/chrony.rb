@@ -1,16 +1,21 @@
 class Chrony < Formula
   desc "Versatile implementation of the Network Time Protocol (NTP)"
   homepage "https://chrony.tuxfamily.org"
-  url "https://download.tuxfamily.org/chrony/chrony-4.0.tar.gz"
-  sha256 "be27ea14c55e7a4434b2fa51d53018c7051c42fa6a3198c9aa6a1658bae0c625"
+  url "https://download.tuxfamily.org/chrony/chrony-4.1.tar.gz"
+  sha256 "ed76f2d3f9347ac6221a91ad4bd553dd0565ac188cd7490d0801d08f7171164c"
   license "GPL-2.0-only"
 
+  livecheck do
+    url "https://chrony.tuxfamily.org/download.html"
+    regex(/href=.*?chrony[._-]v?(\d+(?:\.\d+)+)\.t/i)
+  end
+
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "9b985414e3e8987475a318069ef5c23817e1a9cb824c25f361ba815d708fcb5f"
-    sha256 cellar: :any_skip_relocation, big_sur:       "66ae96878def0abda5c946891877604bae3490d5d5f98d9f31a234c77f705bf0"
-    sha256 cellar: :any_skip_relocation, catalina:      "18080256097344abcf595e69bc8e0b15faefbe5e9d5e36f1326e0bae8e089d5d"
-    sha256 cellar: :any_skip_relocation, mojave:        "5227442d8a26057125ac087fb30520dc65d65ee287ce56362d08b2f12e5e6f7c"
-    sha256 cellar: :any_skip_relocation, high_sierra:   "c92b075e3cfd4419cf2339b2bfd779e2df4479ab58c23b19b396c4e85bdeb300"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "90fcce18cd0b68629e37023124cb961ac67c2f36da2bdfaeeeb2f6b146a49b9c"
+    sha256 cellar: :any_skip_relocation, big_sur:       "ecba024c1c74b0f2d8094b06043a6ceafbc4bcd4cba944e3600792789adcfb4b"
+    sha256 cellar: :any_skip_relocation, catalina:      "dfe728a9f5ecc085ba6582a2791e1e6a2f5d2ef609ee4f3da237e4442d016dbe"
+    sha256 cellar: :any_skip_relocation, mojave:        "b908fae19168cb50d7d1fe33e2885ad19ff8bb1e190442aa3ee6ea6c47f4c72f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d7f08010b437e23b4debb9f0d278adf3eb84972a6810f2cb6daa0b81077084cc"
   end
 
   depends_on "nettle"

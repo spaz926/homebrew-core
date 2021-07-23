@@ -1,10 +1,9 @@
 class Perl < Formula
   desc "Highly capable, feature-rich programming language"
   homepage "https://www.perl.org/"
-  url "https://www.cpan.org/src/5.0/perl-5.32.1.tar.xz"
-  sha256 "57cc47c735c8300a8ce2fa0643507b44c4ae59012bfdad0121313db639e02309"
+  url "https://www.cpan.org/src/5.0/perl-5.34.0.tar.xz"
+  sha256 "82c2e5e5c71b0e10487a80d79140469ab1f8056349ca8545140a224dbbed7ded"
   license any_of: ["Artistic-1.0-Perl", "GPL-1.0-or-later"]
-  revision 1
   head "https://github.com/perl/perl5.git", branch: "blead"
 
   livecheck do
@@ -13,10 +12,11 @@ class Perl < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "900ac321ecfc07d89588b203a6860fe3f3ba056a3565225d77115c99d651aed0"
-    sha256 big_sur:       "5178a634bfb37437ee40d836c3bacb1adb89516a553ef6a8c2d40cee9eea608b"
-    sha256 catalina:      "7ac87157d98223abcc2b25e35811c9dfd016f807454ec8fc219a910b4a9cdacc"
-    sha256 mojave:        "2663e8ce52b4fb4fab170e19fff638e0b65688a933a3cddd86696403323be88d"
+    sha256 arm64_big_sur: "8b55cc95c9de8bdcf628ae6d6f631057952fa8b0218da8ac61eafe4da65a8761"
+    sha256 big_sur:       "5f86afbccd065524f92080bd7f35ffe6398b7dd40a8fef6f0a2a7982fd276dae"
+    sha256 catalina:      "de0127c56612bbadc3621217b586571cab897c001344b7a1d63302a4f8f74a8e"
+    sha256 mojave:        "2222c3f09bdcd10640720d2f52ba71e09408ead129bc77853b2fdf88fc381061"
+    sha256 x86_64_linux:  "cfd7c32f4076b6d9fbfb894bb6dc30cb14305a13e9b0fee93cd9b1ec2a768c92"
   end
 
   depends_on "berkeley-db"

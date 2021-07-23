@@ -4,13 +4,15 @@ class Adios2 < Formula
   url "https://github.com/ornladios/ADIOS2/archive/v2.7.1.tar.gz"
   sha256 "c8e237fd51f49d8a62a0660db12b72ea5067512aa7970f3fcf80b70e3f87ca3e"
   license "Apache-2.0"
+  revision 1
   head "https://github.com/ornladios/ADIOS2.git", branch: "master"
 
   bottle do
-    sha256 arm64_big_sur: "45f03b63524dd098dc18e621e21542a5431a5d3858c3e65f97c769a508c3e88c"
-    sha256 big_sur:       "ca61ed8e82057e3b952b2125800e1b8b3c42c2ecac2abcc53461d27e987af6cc"
-    sha256 catalina:      "191c4f460c24c7c49c77f6df9140278ad81ba408de2790cb54b1b8f67bad298b"
-    sha256 mojave:        "9fad0bbce1586a831472610367548ac4007d12ae9510b3bc10bc374cb54c2abe"
+    sha256 arm64_big_sur: "b6b6dbcbe7d3d1ad478d47b4004d9ac932707a2503f810439680672a87b89e2b"
+    sha256 big_sur:       "7d1abe16be0173d2c1e645c51641b59fea8983c140c5caef132016d4e1416568"
+    sha256 catalina:      "6826ba1d0cf70bd775a97a152fa2423b0091dfb196500d5a1eef0884f6e9d2f8"
+    sha256 mojave:        "ec0da5f5869f0473b3c7b906cb4ea86d7673f4ff3bb479d6cf88621beb990507"
+    sha256 x86_64_linux:  "1ff13a5c092bdbecb0ae8e3b5ec7a0b7910550c22ac7376c41ec92708138b67e"
   end
 
   depends_on "cmake" => :build
@@ -28,8 +30,8 @@ class Adios2 < Formula
   def install
     # fix `include/adios2/common/ADIOSConfig.h` file audit failure
     inreplace "source/adios2/common/ADIOSConfig.h.in" do |s|
-      s.gsub! ": @CMAKE_C_COMPILER@", ": /usr/bin/clang"
-      s.gsub! ": @CMAKE_CXX_COMPILER@", ": /usr/bin/clang++"
+      s.gsub! ": @CMAKE_C_COMPILER@", ": #{ENV.cc}"
+      s.gsub! ": @CMAKE_CXX_COMPILER@", ": #{ENV.cxx}"
     end
 
     args = std_cmake_args + %W[
@@ -51,7 +53,8 @@ class Adios2 < Formula
       -DCMAKE_DISABLE_FIND_PACKAGE_FLEX=TRUE
       -DCMAKE_DISABLE_FIND_PACKAGE_LibFFI=TRUE
       -DCMAKE_DISABLE_FIND_PACKAGE_NVSTREAM=TRUE
-      -DPYTHON_EXECUTABLE=#{Formula["python@3.9"].opt_bin}/python3
+      -DPython_EXECUTABLE=#{Formula["python@3.9"].opt_bin}/python3
+      -DCMAKE_INSTALL_PYTHONDIR=#{prefix/Language::Python.site_packages("python3")}
       -DADIOS2_BUILD_TESTING=OFF
       -DADIOS2_BUILD_EXAMPLES=OFF
     ]

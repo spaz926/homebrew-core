@@ -1,16 +1,22 @@
 class Goredo < Formula
   desc "Go implementation of djb's redo, a Makefile replacement that sucks less"
   homepage "http://www.goredo.cypherpunks.ru/"
-  url "http://www.goredo.cypherpunks.ru/download/goredo-1.3.0.tar.zst"
-  version "1.3.0"
-  sha256 "e9d05149779f29c825d4cf3c9cf2b0c51eedbd626f57388bd7095d0b6c7956b1"
+  url "http://www.goredo.cypherpunks.ru/download/goredo-1.8.0.tar.zst"
+  version "1.8.0"
+  sha256 "dd8f2c4121b318f655132d142e5e70dbf25a689514b461be5605a7c594693e98"
   license "GPL-3.0-only"
 
+  livecheck do
+    url "http://www.goredo.cypherpunks.ru/Install.html"
+    regex(/href=.*?goredo[._-]v?(\d+(?:\.\d+)+)\.t/i)
+  end
+
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "9d50fdd15a673d6ca108025518aea07177d4820aed0e0a5f4300a86d84447c71"
-    sha256 cellar: :any_skip_relocation, big_sur:       "0fcc3fc1c0af0ea05c96284f6db82379dd843689e75bcded1fc8527b49da049d"
-    sha256 cellar: :any_skip_relocation, catalina:      "9e03c6cb942991c25a1ca78e6a09dafc795bd19a65a498e14541a3116b709eab"
-    sha256 cellar: :any_skip_relocation, mojave:        "d953588f9a8511c9f6eac5c6b9f9c6e51bb8776123d5e7a00eee39dd9e77c9e5"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "f5591f31fa6cf9fd036cacecf703735ccd514227bf5a90e9a18cf89bcef0675f"
+    sha256 cellar: :any_skip_relocation, big_sur:       "d1ba799b062e11148e0c15023fd52477d7f98cb0c68b440536e2c289f18f5434"
+    sha256 cellar: :any_skip_relocation, catalina:      "d1ba799b062e11148e0c15023fd52477d7f98cb0c68b440536e2c289f18f5434"
+    sha256 cellar: :any_skip_relocation, mojave:        "d1ba799b062e11148e0c15023fd52477d7f98cb0c68b440536e2c289f18f5434"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1822dc36d9fb266b281c3ac9630855b3a54dbd22119e22d586808683d2674eb7"
   end
 
   depends_on "go" => :build

@@ -2,24 +2,30 @@ class Goreleaser < Formula
   desc "Deliver Go binaries as fast and easily as possible"
   homepage "https://goreleaser.com/"
   url "https://github.com/goreleaser/goreleaser.git",
-      tag:      "v0.161.1",
-      revision: "00bf7455340c3b6dcba7c02fef3839b0778ea18f"
+      tag:      "v0.173.2",
+      revision: "5bcfa9042d0efd419b660a3b63c815a13d919e30"
   license "MIT"
   head "https://github.com/goreleaser/goreleaser.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "e6820efe0f661622ab12dacd2f33e1d238258776da468ce4714cc172db6debe9"
-    sha256 cellar: :any_skip_relocation, big_sur:       "bc3d5c2d12082238992cd6cd11de0abef6386c6fe5ec1f35d779a7e22a2f8e05"
-    sha256 cellar: :any_skip_relocation, catalina:      "b324a8baccfa0cef4257fb62ee066bfc1dcda4b34a8d3c1206b2b1a1bf999419"
-    sha256 cellar: :any_skip_relocation, mojave:        "afd4f5feb9399cc2697e6fbb3ab9407cf2b072b5ecdb5c9cd5f12bd776a5c0b4"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "e614d3181eefcafa59ed0ffcf284eb6a0167aa8d3093f174d2c0898a97714917"
+    sha256 cellar: :any_skip_relocation, big_sur:       "57f04caf7f03244520160f6523d651ebf286a121f37039d6b5a1c5741f17c79f"
+    sha256 cellar: :any_skip_relocation, catalina:      "59d336f7b3ecfb31c588ec8ca68da2dd36042bf5cbe1276a44e6434b0036b120"
+    sha256 cellar: :any_skip_relocation, mojave:        "51322565423f29f601cd5db88a3fa3204e32e9b73825e792efa135099593cd31"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "cb6e7fd630389679efe463d613254dd1fa14593660504a4495217308dd8b42ae"
   end
 
   depends_on "go" => :build
 
   def install
-    system "go", "build", "-ldflags",
-             "-s -w -X main.version=#{version} -X main.commit=#{Utils.git_head} -X main.builtBy=homebrew",
-             *std_go_args
+    ldflags = %W[
+      -s -w
+      -X main.version=#{version}
+      -X main.commit=#{Utils.git_head}
+      -X main.builtBy=homebrew
+    ].join(" ")
+
+    system "go", "build", *std_go_args(ldflags: ldflags)
 
     # Install shell completions
     output = Utils.safe_popen_read("#{bin}/goreleaser", "completion", "bash")

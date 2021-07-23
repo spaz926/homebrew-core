@@ -2,16 +2,16 @@ class Mftrace < Formula
   desc "Trace TeX bitmap font to PFA, PFB, or TTF font"
   homepage "https://lilypond.org/mftrace/"
   url "https://lilypond.org/downloads/sources/mftrace/mftrace-1.2.20.tar.gz"
-  mirror "https://dl.bintray.com/homebrew/mirror/mftrace-1.2.20.tar.gz"
   sha256 "626b7a9945a768c086195ba392632a68d6af5ea24ef525dcd0a4a8b199ea5f6f"
   license "GPL-2.0"
   revision 1
 
   bottle do
-    sha256 cellar: :any_skip_relocation, big_sur:     "09ca3daeb696824e12655d6dbd0c768a0dcc07306c35001bc7b90417fb2b38c6"
-    sha256 cellar: :any_skip_relocation, catalina:    "da5fc2002936d2260121ce8134472bce14e8bccfb406fe9e1e56591037aa9751"
-    sha256 cellar: :any_skip_relocation, mojave:      "d4b3535bdd69a89c59c4b7d7011ccb06544108c376e6313f62062c32991dece2"
-    sha256 cellar: :any_skip_relocation, high_sierra: "e1d8b241eb03982520cf2b4b2f8794fe74afb240247e4ea7c8164b1c9a22e974"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "56cae4038a59d4803c0a084c21c34da9564c2a4cb423b73608d74735edf03ace"
+    sha256 cellar: :any_skip_relocation, big_sur:       "09ca3daeb696824e12655d6dbd0c768a0dcc07306c35001bc7b90417fb2b38c6"
+    sha256 cellar: :any_skip_relocation, catalina:      "da5fc2002936d2260121ce8134472bce14e8bccfb406fe9e1e56591037aa9751"
+    sha256 cellar: :any_skip_relocation, mojave:        "d4b3535bdd69a89c59c4b7d7011ccb06544108c376e6313f62062c32991dece2"
+    sha256 cellar: :any_skip_relocation, high_sierra:   "e1d8b241eb03982520cf2b4b2f8794fe74afb240247e4ea7c8164b1c9a22e974"
   end
 
   head do

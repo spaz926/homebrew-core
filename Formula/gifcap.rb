@@ -6,7 +6,9 @@ class Gifcap < Formula
   license "MIT"
   head "https://github.com/outlook/gifcap.git"
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "9500bb5f91761d490a3c522a0fc93b37108e125a74d1ae158947dc79c97b279a"
+  end
 
   depends_on "ffmpeg"
 

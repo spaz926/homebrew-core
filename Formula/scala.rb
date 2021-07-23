@@ -1,10 +1,10 @@
 class Scala < Formula
   desc "JVM-based programming language"
   homepage "https://www.scala-lang.org/"
-  url "https://downloads.lightbend.com/scala/2.13.5/scala-2.13.5.tgz"
-  mirror "https://www.scala-lang.org/files/archive/scala-2.13.5.tgz"
-  mirror "https://downloads.typesafe.com/scala/2.13.5/scala-2.13.5.tgz"
-  sha256 "ed2c21c11fc7bc3a85fd50471ac3c1c124e7d81db9a458a257514fdc0dcf05aa"
+  url "https://downloads.lightbend.com/scala/2.13.6/scala-2.13.6.tgz"
+  mirror "https://www.scala-lang.org/files/archive/scala-2.13.6.tgz"
+  mirror "https://downloads.typesafe.com/scala/2.13.6/scala-2.13.6.tgz"
+  sha256 "49df92503cd11cc3c649683db368e5878b7e792e40156d2377e52326e935ed43"
   license "Apache-2.0"
 
   livecheck do
@@ -12,11 +12,15 @@ class Scala < Formula
     regex(/href=.*?scala[._-]v?(\d+(?:\.\d+)+)(?:[._-]final)?\.t/i)
   end
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "1fe2aea3424b7485a189895d56f5fa85b21a535a9375c045e2461bacc2a05fff"
+  end
 
   depends_on "openjdk"
 
   def install
+    # Replace `/usr/local` references for uniform bottles
+    inreplace Dir["man/man1/scala{,c}.1"], "/usr/local", HOMEBREW_PREFIX
     rm_f Dir["bin/*.bat"]
     doc.install Dir["doc/*"]
     share.install "man"

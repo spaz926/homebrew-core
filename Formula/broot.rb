@@ -1,16 +1,17 @@
 class Broot < Formula
   desc "New way to see and navigate directory trees"
   homepage "https://dystroy.org/broot/"
-  url "https://github.com/Canop/broot/archive/v1.2.9.tar.gz"
-  sha256 "b682aa1a44ac48bca5677d2abbc0333a17c265a11d3809d8d6c07703d6217cac"
+  url "https://github.com/Canop/broot/archive/v1.6.1.tar.gz"
+  sha256 "5f97d876aa554be4c67bfd161ef762425f6083da583775c13cc75bf9882f1085"
   license "MIT"
   head "https://github.com/Canop/broot.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "ac30924fb88afcd29c565499a8fe50fc01b1831f102ba649a50702358f065a08"
-    sha256 cellar: :any_skip_relocation, big_sur:       "621c6e2d19f890acde496cf21eff476fd2c879df2d08f5bbbf156bb7674bd527"
-    sha256 cellar: :any_skip_relocation, catalina:      "8b0ac32fa1b2c6563c432c363037733f51d6f56763589c7ff9e06f53420398c2"
-    sha256 cellar: :any_skip_relocation, mojave:        "f34b626d9f1d867c3de9dca8610a37aa9020bc088a95714d067472dbb9befbb8"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "c92f48f3b8e4e9d7c81389263c6be05ce6976129e3582173580b2f7ea37e9758"
+    sha256 cellar: :any_skip_relocation, big_sur:       "b26055e7a5ba7759e05d5964c7f1cafb3d57d5e2d4ee695c77dc7e764a087f36"
+    sha256 cellar: :any_skip_relocation, catalina:      "15189da6c77fff1a516b46771b2c54400a7e570e22dc9abd853e5c9a47c443fd"
+    sha256 cellar: :any_skip_relocation, mojave:        "e54a687ab10f4a4cec43ee6ef7b63a0273a1b38e12b92744d91c98e756e8fc3a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7672fd69a560f3403a3e40740928f8c1a31daf5d7e8c656377d371d296de4d83"
   end
 
   depends_on "rust" => :build
@@ -23,7 +24,7 @@ class Broot < Formula
     # Replace man page "#version" and "#date" based on logic in release.sh
     inreplace "man/page" do |s|
       s.gsub! "#version", version
-      s.gsub! "#date", Time.now.utc.strftime("%Y/%m/%d")
+      s.gsub! "#date", time.strftime("%Y/%m/%d")
     end
     man1.install "man/page" => "broot.1"
 
@@ -39,11 +40,15 @@ class Broot < Formula
   end
 
   test do
+    on_linux do
+      return if ENV["HOMEBREW_GITHUB_ACTIONS"]
+    end
+
     assert_match "A tree explorer and a customizable launcher", shell_output("#{bin}/broot --help 2>&1")
 
     require "pty"
     require "io/console"
-    PTY.spawn(bin/"broot", "--cmd", ":pt", "--no-style", "--out", testpath/"output.txt", err: :out) do |r, w, pid|
+    PTY.spawn(bin/"broot", "--cmd", ":pt", "--color", "no", "--out", testpath/"output.txt", err: :out) do |r, w, pid|
       r.winsize = [20, 80] # broot dependency termimad requires width > 2
       w.write "n\r"
       assert_match "New Configuration file written in", r.read

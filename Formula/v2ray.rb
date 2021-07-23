@@ -1,8 +1,8 @@
 class V2ray < Formula
   desc "Platform for building proxies to bypass network restrictions"
   homepage "https://v2fly.org/"
-  url "https://github.com/v2fly/v2ray-core/archive/v4.36.2.tar.gz"
-  sha256 "e7f7ceefd4cd9d2e57d18cecf55228a5a126c6ed5ee53767660601c35e70535c"
+  url "https://github.com/v2fly/v2ray-core/archive/v4.40.1.tar.gz"
+  sha256 "75b599cb9866c2469056b71f2c0c69cbdab08cf15f6bd2273c893cd0bd16f175"
   license all_of: ["MIT", "CC-BY-SA-4.0"]
   head "https://github.com/v2fly/v2ray-core.git"
 
@@ -12,13 +12,24 @@ class V2ray < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "b1d7c8aac5a4b0414a52cc39fb2bd1db36dac123e9641118c94019a93ae24736"
-    sha256 cellar: :any_skip_relocation, big_sur:       "c22a86596d2b29a371c08339c476ef3c0384dcc14acba089d16e942b1e3b90a1"
-    sha256 cellar: :any_skip_relocation, catalina:      "0d9a98777109bbc9b80be013586e9db4629496f4bc17f64cc8c734565e961ca8"
-    sha256 cellar: :any_skip_relocation, mojave:        "6907b7aaa66415792d842edf2a719cbe9ec312578a905fdb56d0117ac4f2c0a6"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "aab16537aac1687d7ba359fa7ea3e178d629672805d9d9cb3bdb6f850a62e94b"
+    sha256 cellar: :any_skip_relocation, big_sur:       "f7578b50924a4a106828878be8bbe152ea745322068e63863e855e5b65491593"
+    sha256 cellar: :any_skip_relocation, catalina:      "3be2f3867d44219f779b869f2698d64b99e76b14feccf74a55b5434a244410bd"
+    sha256 cellar: :any_skip_relocation, mojave:        "21edec4cbfec0cc8327f39fbb1fd95f8b1eb3db6acdc29c38bda421ebcfe9e02"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "26e9f61091546464b5ae08d301a679ee16f70e71595dc230a4e086d3aa0c0637"
   end
 
   depends_on "go" => :build
+
+  resource "geoip" do
+    url "https://github.com/v2fly/geoip/releases/download/202106170022/geoip.dat"
+    sha256 "af7b0e6b92fa7b1d55b2b9d8155e9a2372b6b0be0e1b9e09353d9859680f6bb1"
+  end
+
+  resource "geosite" do
+    url "https://github.com/v2fly/domain-list-community/releases/download/20210621183458/dlc.dat"
+    sha256 "b78075874cb24c82fd2096e521452ff673fadb3d4d8048da73681f9b4722d0e2"
+  end
 
   def install
     ldflags = "-s -w -buildid="
@@ -35,8 +46,14 @@ class V2ray < Formula
       V2RAY_LOCATION_ASSET: "${V2RAY_LOCATION_ASSET:-#{pkgshare}}"
 
     pkgetc.install "release/config/config.json"
-    pkgshare.install "release/config/geoip.dat"
-    pkgshare.install "release/config/geosite.dat"
+
+    resource("geoip").stage do
+      pkgshare.install "geoip.dat"
+    end
+
+    resource("geosite").stage do
+      pkgshare.install "dlc.dat" => "geosite.dat"
+    end
   end
 
   plist_options manual: "v2ray -config=#{HOMEBREW_PREFIX}/etc/v2ray/config.json"

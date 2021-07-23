@@ -11,6 +11,7 @@ class Kondo < Formula
     sha256 cellar: :any_skip_relocation, catalina:      "3bf874b00e0c442d3887e076389c3bca0d1f1d2830713d179d8377ae2a5eb5cb"
     sha256 cellar: :any_skip_relocation, mojave:        "f4cb386aa743645639124f47729afcb5b9a545a97eb3ab6785aa0dfbc432a18f"
     sha256 cellar: :any_skip_relocation, high_sierra:   "1636cef203700859a8bcf48b315325192fe6a3fa0a0fa05df89e23e28833f161"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "cd82521d1ee2a91aa7d388b4659dbef3023ed22690a914cf47b4dfdfcaab54c0"
   end
 
   depends_on "rust" => :build
@@ -43,7 +44,7 @@ class Kondo < Formula
     #
     # We're going to simulate a user pressing "n" for no.
     # The result of this should be that the dummy file still exists after kondo has exited.
-    Open3.popen3("#{bin}/kondo") do |stdin, _stdout, _, wait_thr|
+    Open3.popen3(bin/"kondo") do |stdin, _stdout, _, wait_thr|
       # Simulate a user pressing "n" then pressing return/enter.
       stdin.write("n\n")
 
@@ -56,7 +57,7 @@ class Kondo < Formula
 
     # The concept is the same as the above test, except this time we will simulate pressing "y" for yes.
     # The result of this should be that the dummy file still no longer exists after kondo has exited.
-    Open3.popen3("#{bin}/kondo") do |stdin, _stdout, _, wait_thr|
+    Open3.popen3(bin/"kondo") do |stdin, _stdout, _, wait_thr|
       # Simulate a user pressing "y" then pressing return/enter.
       stdin.write("y\n")
 

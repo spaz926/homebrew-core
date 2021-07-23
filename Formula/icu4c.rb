@@ -1,9 +1,9 @@
 class Icu4c < Formula
   desc "C/C++ and Java libraries for Unicode and globalization"
   homepage "http://site.icu-project.org/home"
-  url "https://github.com/unicode-org/icu/releases/download/release-68-2/icu4c-68_2-src.tgz"
-  version "68.2"
-  sha256 "c79193dee3907a2199b8296a93b52c5cb74332c26f3d167269487680d479d625"
+  url "https://github.com/unicode-org/icu/releases/download/release-69-1/icu4c-69_1-src.tgz"
+  version "69.1"
+  sha256 "4cba7b7acd1d3c42c44bb0c14be6637098c7faf2b330ce876bc5f3b915d09745"
   license "ICU"
 
   livecheck do
@@ -15,10 +15,11 @@ class Icu4c < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "f1a3de6838d7b7676e74dbe97f30bbcb68e6e20d4f5c49380c4cd98b926cdf4b"
-    sha256 cellar: :any, big_sur:       "ba2fd8c7d37025c93db6b03cb831bf414f0859a617c7ef179782a7fbf965a9d9"
-    sha256 cellar: :any, catalina:      "fdc2f15705175478dc16607f2d457c0667758e2580beefd67d4d33feed7f5af7"
-    sha256 cellar: :any, mojave:        "c83bf88927906242e2d7e185619ee3f449c2b1d39adfd74b7449775aa15031dd"
+    sha256 cellar: :any,                 arm64_big_sur: "25a1ec460d422ba5abff15dc5cb60ad36003ad021585fa7be278d1dca6fcd2c4"
+    sha256 cellar: :any,                 big_sur:       "d46b8ec5c3db629e7848e9fd31e5ec99ed952d9c81c8936a2511fae803d831fd"
+    sha256 cellar: :any,                 catalina:      "3f75c907dadc6e7e647920506e740a312e56279369f3c9708cac54b018410120"
+    sha256 cellar: :any,                 mojave:        "e0362362d26379b8c2456de163a148bc4e186d058ea8ed4a38fe41354bea96a8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "781fa2a4d1e2eed1fbea456d8f39770668ef78f922bbab26adeae30c1f5ae760"
   end
 
   keg_only :provided_by_macos, "macOS provides libicucore.dylib (but nothing else)"
@@ -40,6 +41,11 @@ class Icu4c < Formula
   end
 
   test do
-    system "#{bin}/gendict", "--uchars", "/usr/share/dict/words", "dict"
+    if File.exist? "/usr/share/dict/words"
+      system "#{bin}/gendict", "--uchars", "/usr/share/dict/words", "dict"
+    else
+      (testpath/"hello").write "hello\nworld\n"
+      system "#{bin}/gendict", "--uchars", "hello", "dict"
+    end
   end
 end

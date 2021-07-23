@@ -1,8 +1,8 @@
 class PerconaXtrabackup < Formula
   desc "Open source hot backup tool for InnoDB and XtraDB databases"
   homepage "https://www.percona.com/software/mysql-database/percona-xtrabackup"
-  url "https://www.percona.com/downloads/Percona-XtraBackup-LATEST/Percona-XtraBackup-8.0.23-16/source/tarball/percona-xtrabackup-8.0.23-16.tar.gz"
-  sha256 "ca834acf940a79981366eb874d1b71df794e237c8936da86d03415771604be7e"
+  url "https://www.percona.com/downloads/Percona-XtraBackup-LATEST/Percona-XtraBackup-8.0.25-17/source/tarball/percona-xtrabackup-8.0.25-17.tar.gz"
+  sha256 "9f59d6d6a781043291c69c1a14e888f64b32ad95bead2eafc2940e3d984793df"
 
   livecheck do
     url "https://www.percona.com/downloads/Percona-XtraBackup-LATEST/"
@@ -10,21 +10,28 @@ class PerconaXtrabackup < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "d17963278ce32743a922cd8c192faf6222b84da1e7062537bfe4fe8e0a997619"
-    sha256 big_sur:       "a396cce05c7460af0f54db0bd0bcf72381b4d8343091f5a79904809b8f8f6e33"
-    sha256 catalina:      "b1d1808994069850fa9ae61feacd6ef9aef74749ecbcd85cd4cc33dca5cc1378"
-    sha256 mojave:        "87244443e6bac47d36fe2d42d5dba3aae5a52f53bb8bacbdf75dde4e29b26a07"
+    sha256 arm64_big_sur: "45e372cb3dbc06e4598b9730a2d966b7b5acdbf26f1cdd1fec476c9343a76264"
+    sha256 big_sur:       "7678afb4036a12a8a57ecc72544ad01ee8daf1987da5e6b9fd15644e13e163e0"
+    sha256 catalina:      "ac2777de2bced8fc020ef76f1275da999f11cb3c60481d97006f8cbac9403a97"
+    sha256 mojave:        "880abb4be9f118120660818a079cdc4562cc7411a1a9070d3ef005c8aee23f35"
   end
 
   depends_on "cmake" => :build
   depends_on "sphinx-doc" => :build
+  depends_on "icu4c"
   depends_on "libev"
+  depends_on "libevent"
   depends_on "libgcrypt"
+  depends_on "lz4"
   depends_on "mysql-client"
   depends_on "openssl@1.1"
   depends_on "protobuf"
+  depends_on "zstd"
 
+  uses_from_macos "curl"
+  uses_from_macos "libedit"
   uses_from_macos "perl"
+  uses_from_macos "zlib"
 
   # Should be installed before DBD::mysql
   resource "Devel::CheckLib" do
@@ -47,7 +54,7 @@ class PerconaXtrabackup < Formula
 
   # https://github.com/percona/percona-xtrabackup/blob/percona-xtrabackup-#{version}/cmake/boost.cmake
   resource "boost" do
-    url "https://dl.bintray.com/boostorg/release/1.73.0/source/boost_1_73_0.tar.bz2"
+    url "https://boostorg.jfrog.io/artifactory/main/release/1.73.0/source/boost_1_73_0.tar.bz2"
     sha256 "4eb3b8d442b426dc35346235c8733b5ae35ba431690e38c6a8263dce9fcbb402"
   end
 
@@ -59,8 +66,14 @@ class PerconaXtrabackup < Formula
       -DINSTALL_MANDIR=share/man
       -DWITH_MAN_PAGES=ON
       -DINSTALL_MYSQLTESTDIR=
-      -DWITH_SSL=#{Formula["openssl@1.1"].opt_prefix}
+      -DWITH_EDITLINE=system
+      -DWITH_ICU=system
+      -DWITH_LIBEVENT=system
+      -DWITH_LZ4=system
       -DWITH_PROTOBUF=system
+      -DWITH_SSL=#{Formula["openssl@1.1"].opt_prefix}
+      -DWITH_ZLIB=system
+      -DWITH_ZSTD=system
     ]
 
     # macOS has this value empty by default.

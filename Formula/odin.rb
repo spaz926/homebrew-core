@@ -4,21 +4,22 @@ class Odin < Formula
   url "https://github.com/odin-lang/Odin/archive/v0.13.0.tar.gz"
   sha256 "ae88c4dcbb8fdf37f51abc701d94fb4b2a8270f65be71063e0f85a321d54cdf0"
   license "BSD-2-Clause"
+  revision 1
   head "https://github.com/odin-lang/Odin.git"
 
   livecheck do
     url :stable
-    strategy :github_latest
+    regex(/^v?(\d+(?:\.\d+)+[a-z]?)$/i)
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any, big_sur:  "9679cdd8b54d7331d4b8d7e386426402246c8e098e9245397d9fc48fa88c8034"
-    sha256 cellar: :any, catalina: "10b41130ce2877bbbbb44226206170c5d710b81dd72335f22f781120848c295a"
-    sha256 cellar: :any, mojave:   "940a412200b5b40246d9fd5a7775add5ea88e9fe8b8c0f7a4563b89d38c47314"
+    sha256 cellar: :any, big_sur:  "8756628900882ce7b6492cd63a16192c66420c792c4ae6bc625104f10cd4ad91"
+    sha256 cellar: :any, catalina: "a3ae074bcf9f1b096fd0ff73ec3e4169580cbd9c992eaf96df00381fb4bc4aab"
+    sha256 cellar: :any, mojave:   "4f2a22f846642e17dd24a44ec9bd5e00a768facbeba1ea76f2b528f1407c6669"
   end
 
-  depends_on "llvm"
+  # Check if this can be switched to `llvm` at next release
+  depends_on "llvm@11"
 
   uses_from_macos "libiconv"
 
@@ -31,7 +32,7 @@ class Odin < Formula
     libexec.install "odin", "core", "shared"
     (bin/"odin").write <<~EOS
       #!/bin/bash
-      export PATH="#{Formula["llvm"].opt_bin}:$PATH"
+      export PATH="#{Formula["llvm@11"].opt_bin}:$PATH"
       exec -a odin "#{libexec}/odin" "$@"
     EOS
     pkgshare.install "examples"

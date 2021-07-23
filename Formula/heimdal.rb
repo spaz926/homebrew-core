@@ -4,6 +4,7 @@ class Heimdal < Formula
   url "https://github.com/heimdal/heimdal/releases/download/heimdal-7.7.0/heimdal-7.7.0.tar.gz"
   sha256 "f02d3314d634cc55eb9cf04a1eae0d96b293e45a1f837de9d894e800161b7d1b"
   license "BSD-3-Clause"
+  revision 1
 
   livecheck do
     url :stable
@@ -13,13 +14,14 @@ class Heimdal < Formula
 
   bottle do
     rebuild 1
-    sha256 arm64_big_sur: "16cc4ba36dbbc9750c522eefa8da0a6e7685281f00ef611c982d8dd7b5b4bd69"
-    sha256 big_sur:       "95ad69bc1e08ebbd279062632bdf576982fbcba5c34a4ba83c7e91523952b6e6"
-    sha256 catalina:      "6345879296177a9b33c73bbae4749debb92d20cf6fe951d51bb2c592f9d82b3b"
-    sha256 mojave:        "280f713c88dd355d0c385eaa7e3e4e3ae762854259b1edc801821287f132c15a"
+    sha256 arm64_big_sur: "4f9d35b8518b4dc64f3995d55a8afbc532a69d3129723ecda4afcfa874c4f371"
+    sha256 big_sur:       "8908f59611a4a8140e47e938019691611c5e2c168ae0df3060e3729f941dceab"
+    sha256 catalina:      "dc1ffe6fcbf8522c3c1720c44311fb6f183dfc2cf566a7a5ce0bc7064efa5db5"
+    sha256 mojave:        "8458b10c77f8db149e1c6853aa709c65551b2c00033ddc447e67b8d90665faad"
+    sha256 x86_64_linux:  "27274f62e9071aed890bcf71a83a7ecc8362904432e9e04734f9a0d86fa8cf99"
   end
 
-  keg_only :shadowed_by_macos, "macOS provides Kerberos"
+  keg_only "conflicts with Kerberos"
 
   depends_on "bison" => :build
   depends_on "berkeley-db"

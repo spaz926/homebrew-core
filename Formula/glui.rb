@@ -12,6 +12,13 @@ class Glui < Formula
     sha256 cellar: :any_skip_relocation, mojave:        "24c323dbaa5f6f1b01fbf8f837c379ef503d323a448d2bb3d673c31ced622f0d"
     sha256 cellar: :any_skip_relocation, high_sierra:   "7cd9b9d6bffa3b6b6ff806c4041f495d5a7ef40296cb50097db25d17eb616265"
     sha256 cellar: :any_skip_relocation, sierra:        "c087de27b46b86a14d583904e0a9d293428af37d8710b521ae7aeeb5174fc8fd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bf4ce0caa6084beb02f121cf35dc27ea8cc5097fbc6368803e725e9c7aa5c48a"
+  end
+
+  on_linux do
+    depends_on "freeglut"
+    depends_on "mesa"
+    depends_on "mesa-glu"
   end
 
   # Fix compiler warnings in glui.h. Merged into master on November 28, 2016.
@@ -28,17 +35,39 @@ class Glui < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
-      #include <cassert>
-      #include <GL/glui.h>
-      int main() {
-        GLUI *glui = GLUI_Master.create_glui("GLUI");
-        assert(glui != nullptr);
-        return 0;
-      }
-    EOS
-    system ENV.cxx, "-framework", "GLUT", "-framework", "OpenGL", "-I#{include}",
-      "-L#{lib}", "-lglui", "-std=c++11", "test.cpp"
-    system "./a.out"
+    on_macos do
+      (testpath/"test.cpp").write <<~EOS
+        #include <cassert>
+        #include <GL/glui.h>
+        int main() {
+          GLUI *glui = GLUI_Master.create_glui("GLUI");
+          assert(glui != nullptr);
+          return 0;
+        }
+      EOS
+      system ENV.cxx, "-framework", "GLUT", "-framework", "OpenGL", "-I#{include}",
+        "-L#{lib}", "-lglui", "-std=c++11", "test.cpp"
+      system "./a.out"
+    end
+
+    on_linux do
+      (testpath/"test.cpp").write <<~EOS
+        #include <cassert>
+        #include <GL/glui.h>
+        #include <GL/glut.h>
+        int main(int argc, char **argv) {
+          glutInit(&argc, argv);
+          GLUI *glui = GLUI_Master.create_glui("GLUI");
+          assert(glui != nullptr);
+          return 0;
+        }
+      EOS
+      system ENV.cxx, "-I#{include}", "-std=c++11", "test.cpp",
+        "-L#{lib}", "-lglui", "-lglut", "-lGLU", "-lGL"
+      if ENV["DISPLAY"]
+        # Fails without X display: freeglut (./a.out): failed to open display ''
+        system "./a.out"
+      end
+    end
   end
 end

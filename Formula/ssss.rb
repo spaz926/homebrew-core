@@ -3,7 +3,12 @@ class Ssss < Formula
   homepage "http://point-at-infinity.org/ssss/"
   url "http://point-at-infinity.org/ssss/ssss-0.5.tar.gz"
   sha256 "5d165555105606b8b08383e697fc48cf849f51d775f1d9a74817f5709db0f995"
-  license "GPL-2.0"
+  license "GPL-2.0-or-later"
+
+  livecheck do
+    url :homepage
+    regex(/href=.*?ssss[._-]v?(\d+(?:\.\d+)+)\.t/i)
+  end
 
   bottle do
     sha256 cellar: :any, arm64_big_sur: "c1656cbcd114f1e8269d54fa5b525ceababe178d0fddec508fdb568d747035f0"
@@ -14,7 +19,6 @@ class Ssss < Formula
     sha256 cellar: :any, sierra:        "d6c84cc81a0e079f55b32bf3bc35be3a70016226f5cb0e6d1862c9dca22aaa56"
     sha256 cellar: :any, el_capitan:    "ffc9b4c320b50f3d093000f9cde8fff3e4f2869ff4111a7da25b0cf17a2bc065"
     sha256 cellar: :any, yosemite:      "8242a9583ca549f506c107ee1df51c19b04790a8f64605d67ffcd62de34c21ea"
-    sha256 cellar: :any, mavericks:     "695899e6e9fac80f8502362c9bb11811113f33373cfc1d0ea99467ac26035776"
   end
 
   depends_on "gmp"

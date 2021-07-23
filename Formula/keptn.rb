@@ -1,22 +1,29 @@
 class Keptn < Formula
   desc "Is the CLI for keptn.sh a message-driven control-plane for application delivery"
   homepage "https://keptn.sh"
-  url "https://github.com/keptn/keptn/archive/0.8.1.tar.gz"
-  sha256 "d64a39bfad897d8e3016b66768dc7650132028fa9d30abeccadd0f96eaa8e140"
+  url "https://github.com/keptn/keptn/archive/0.8.6.tar.gz"
+  sha256 "6fa94966597b8c9235a8102b941d34dd46b77e18cb75a6a97d051b370067b3c6"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, big_sur:  "e1a0740fe66a3c67c1a4ba6638849cc12c6ebf0686bcfc0db71d6e785ee063a4"
-    sha256 cellar: :any_skip_relocation, catalina: "91b2633183164288ac640fbdff47b8a7bf6a04c8b864cd3c92a13c9aba103da3"
-    sha256 cellar: :any_skip_relocation, mojave:   "c2028545946baf04ed42448fb5594cef24c99b2e33d2364462a33896080a0230"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "96c7544ca4a06821c87009ae8140923ab44d4f4a8580fc3eb61831c0c87b9899"
+    sha256 cellar: :any_skip_relocation, big_sur:       "2a22af9d5abc7f4df621a2573065c5193c324f34a7811b315b387003d587a598"
+    sha256 cellar: :any_skip_relocation, catalina:      "ac5371e6a6969efc0ee4f9a99132fa4662b189ed371e653ea65995ede7c5342b"
+    sha256 cellar: :any_skip_relocation, mojave:        "b451ed110bd0be5523681dfe4475b9c2e8ad15f2f34726b5d5eb1316556eb840"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f165ad55a57d3a034a37e874de8033740340f77ee18bb7d2ee10c5cfab9136b9"
   end
 
   depends_on "go" => :build
 
   def install
-    ENV["GO111MODULE"] = "auto"
+    ldflags = %W[
+      -s -w
+      -X main.Version=#{version}
+      -X main.KubeServerVersionConstraints=""
+    ].join(" ")
+
     cd buildpath/"cli" do
-      system "go", "build", *std_go_args, "-ldflags", "-s -w -X main.Version=#{version} -X main.KubeServerVersionConstraints=\"\""
+      system "go", "build", *std_go_args(ldflags: ldflags)
     end
   end
 

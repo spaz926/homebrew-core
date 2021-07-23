@@ -4,13 +4,15 @@ class Flint < Formula
   url "https://flintlib.org/flint-2.7.1.tar.gz"
   sha256 "186e2fd9ab67df8a05b122fb018269b382e4babcdb17353c4be1fe364dca481e"
   license "LGPL-2.1-or-later"
+  revision 2
   head "https://github.com/wbhart/flint2.git", branch: "trunk"
 
   bottle do
-    sha256 arm64_big_sur: "68bd7a3053ac5e8363ca0128fea147a9866ae9d6af31a0b2876cb29f9f5b96a3"
-    sha256 big_sur:       "c49c7f2e195411a78c7e6d0b29dc2b532be8f501158d53b0c5f32bf270e20794"
-    sha256 catalina:      "09ed48e46ae65d153f1c0014dac7b83436280a7a236bd305b8e82c86762d7777"
-    sha256 mojave:        "f41f76595678bd2f16dc46ceeb1524c089b931f9f65fe6c826272ce703d36283"
+    sha256 cellar: :any,                 arm64_big_sur: "76a41ad303e485cad7795c7668a488945a4aa1e15b31d0cf60aa67417d818ea8"
+    sha256 cellar: :any,                 big_sur:       "6b6b6fe83f4e2827f57c673598791048b364efe8c554dc7293bfc1594d5aa9e9"
+    sha256 cellar: :any,                 catalina:      "a98cb754d82e32e1072548661fe76bf4ba37388a0497ca5ca7466c45679faab4"
+    sha256 cellar: :any,                 mojave:        "6d223d4c47e57d7080d3e9c70aee75256153268cd75682972dcdc43b8a8eda6d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2daf8784bcb28bff46223174582587e1fe712504ca391a1877c3e14c0e898b2e"
   end
 
   depends_on "gmp"

@@ -1,15 +1,16 @@
 class Ffuf < Formula
   desc "Fast web fuzzer written in Go"
   homepage "https://github.com/ffuf/ffuf"
-  url "https://github.com/ffuf/ffuf/archive/v1.2.1.tar.gz"
-  sha256 "ff474b21e192005a2df0f09f942b0370bdcb45d64ee35bd8782eb44a5c636e96"
+  url "https://github.com/ffuf/ffuf/archive/v1.3.1.tar.gz"
+  sha256 "136df36154f17668fb726120f0c93059f696786a34e3c2047d61efc3a065c4ec"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "aa0eb6fbc38d98317bf5bae7ff15578d947fd08a94bcbc4ae46abc2824329ca3"
-    sha256 cellar: :any_skip_relocation, big_sur:       "fc742bf45e81e33b6729e7c8feb93e80c0d53fd9945d781d7011f026326ba084"
-    sha256 cellar: :any_skip_relocation, catalina:      "97de30d099d5ad9f26d8e56c7c8aed529fa12954b80fac9efdab42d7e2684c6f"
-    sha256 cellar: :any_skip_relocation, mojave:        "59efb524bd1557046e971712c83fe23ad970ae36d64f6b07d21c702183441192"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "3bddc7faf7303fc75c6d8aa68969f4f407b0858eb883f6ce770a42066a8d1b9d"
+    sha256 cellar: :any_skip_relocation, big_sur:       "ccb35a18f2cdc4b3b0fe847b1a6fc89fce8744701aaf39fec630454c5e72b285"
+    sha256 cellar: :any_skip_relocation, catalina:      "8d2faa6265f9c7703ad6f8d05abdb0d0a711b8e93db162fb205e46cfe577e920"
+    sha256 cellar: :any_skip_relocation, mojave:        "fa307cbcfc231d2016659b76e8542f109377bfc4e865f1cff04825a608240e66"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e1aacb47fa59ac3de77745e7f23772950818b7f7fd462a8a44d90eb203d0ee27"
   end
 
   depends_on "go" => :build

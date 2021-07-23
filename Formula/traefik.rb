@@ -1,16 +1,17 @@
 class Traefik < Formula
   desc "Modern reverse proxy"
   homepage "https://traefik.io/"
-  url "https://github.com/traefik/traefik/releases/download/v2.4.8/traefik-v2.4.8.src.tar.gz"
-  sha256 "874d22a52b7541b5155db675562ab5db3c99d2530633de3a058c4ae6125c86d1"
+  url "https://github.com/traefik/traefik/releases/download/v2.4.11/traefik-v2.4.11.src.tar.gz"
+  sha256 "76a35f5028ca355bfec42ceb50bd546ac1566d1060b1754cfa6881b8f69fc26c"
   license "MIT"
   head "https://github.com/traefik/traefik.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "aab8b6652d689778ea2287f71d6468ee12370d41431a6be8345730190098c134"
-    sha256 cellar: :any_skip_relocation, big_sur:       "355e8e863ca704a2f40df2c8ac860add614fd1b970780c14be539d1742f03fd0"
-    sha256 cellar: :any_skip_relocation, catalina:      "2e152ebea4b1f2b2f477e8506cecd36fc7d7fc2e3274d72e50c6a3fecc5d4c95"
-    sha256 cellar: :any_skip_relocation, mojave:        "bdf8a9e69a5537ecf156f64a957c4b0784798db2efbf61a11c8574b4d886506d"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "7674d9baadeae9d98c457688f81c9f733825c15f11953b31674278f6099e5b67"
+    sha256 cellar: :any_skip_relocation, big_sur:       "85c140f0271d40a673b5c716ec0ccccbf29bc457b454e06dda955a17a7def50b"
+    sha256 cellar: :any_skip_relocation, catalina:      "37470bee7ddd929cf7e6381cc0af6005d2f2cbee306707917096d2ff9343b46d"
+    sha256 cellar: :any_skip_relocation, mojave:        "1f961cd97f67d2231af311b4416683c25149f97ec5ca13c7b2e2d54b540a5440"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0d7647c436187ebd0bf87e8418603f0e9fa459117edf2fe039c0b0d5ab74e0c9"
   end
 
   depends_on "go" => :build

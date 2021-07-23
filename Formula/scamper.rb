@@ -1,8 +1,8 @@
 class Scamper < Formula
   desc "Advanced traceroute and network measurement utility"
   homepage "https://www.caida.org/tools/measurement/scamper/"
-  url "https://www.caida.org/tools/measurement/scamper/code/scamper-cvs-20200923.tar.gz"
-  sha256 "dc9988d9a696152b5066f9d52dfc24cb898275b5c22a9f420cb901115901c324"
+  url "https://www.caida.org/tools/measurement/scamper/code/scamper-cvs-20210324.tar.gz"
+  sha256 "332dce11a707c03045dd3c3faea4daf8b9d5debb8ac122aea8257f6bd2cf4404"
   license "GPL-2.0-only"
 
   livecheck do
@@ -11,11 +11,11 @@ class Scamper < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "0b528ce300490100119b8e361c9536089340455e22bc9f082c9f78927e8b3cf4"
-    sha256 cellar: :any, big_sur:       "995fe1af6a105618af3ba11d8077df35ee30722f2305a358b88af1b3d56d0a7f"
-    sha256 cellar: :any, catalina:      "827676f41de2c11b0d9919ea6d13048a2b8dbbeb83caf2d65649eb53743e4d45"
-    sha256 cellar: :any, mojave:        "4633578193b5ce06e909adea554360f4baec3b3603634d38804287e74621ed04"
-    sha256 cellar: :any, high_sierra:   "40b74e89b9a55f89761faa19a8c9509ccc81223f82433dee5f7f9a32f0caa502"
+    sha256 cellar: :any,                 arm64_big_sur: "855e3ee08cbf5f3faf38ce9882a50726206ae937b5aaea7e05a0428ebd5a3a98"
+    sha256 cellar: :any,                 big_sur:       "09a4f52a2be595e32ca3fc36a34382c99b81b3dcd100100c2044f7a062fa26f8"
+    sha256 cellar: :any,                 catalina:      "c33b1518d8c66b25952e32d0b52ce8e44b060818056e0d09f5a594bd349fef52"
+    sha256 cellar: :any,                 mojave:        "0ad15790baa3e9045a7d82ecf4a8e40c35f50006c50bd6229ca8b4485ca35071"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3495fd46b0aa2ad9a540d8143f3d0c4b022f3df80e1874016e4edff219099e29"
   end
 
   depends_on "pkg-config" => :build

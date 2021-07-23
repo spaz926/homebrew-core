@@ -1,10 +1,10 @@
 class Ldc < Formula
   desc "Portable D programming language compiler"
   homepage "https://wiki.dlang.org/LDC"
-  url "https://github.com/ldc-developers/ldc/releases/download/v1.25.1/ldc-1.25.1-src.tar.gz"
-  sha256 "0e3716fe9927be91264d1fde5c41071026f6c44262735e9ebda538089b612d40"
+  url "https://github.com/ldc-developers/ldc/releases/download/v1.26.0/ldc-1.26.0-src.tar.gz"
+  sha256 "c18f4c76869f0196b459dcd6196c7eaea1b097cc422cf3771de394f6c0ef7474"
   license "BSD-3-Clause"
-  head "https://github.com/ldc-developers/ldc.git", shallow: false
+  head "https://github.com/ldc-developers/ldc.git"
 
   livecheck do
     url :stable
@@ -12,10 +12,10 @@ class Ldc < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "b77a8eafcd350b25ec3e29a2c768c34f0f3ad322f1d8e60dcee7ea76da923fac"
-    sha256 big_sur:       "e9cdbad72f9d7bf0b9efa3ba7776991f2f6096801d86a0fe4a1a180bf7082e31"
-    sha256 catalina:      "88b4647fb9e5e172205aed2d9173867c1fc8a7421ece26593075b2f537de41ee"
-    sha256 mojave:        "b513d65c9f42d4753dd2e2d15b5b3b5ac7424d33ef037860bea86c55b1d9c7f1"
+    sha256 arm64_big_sur: "9a9096334f694a1dc8fa14239896d756497168f45f1bc1aef9f401f99339713a"
+    sha256 big_sur:       "50995b9707525c112c3251a7a93b2be6ec7c1994b32a76dc3ac3ec84dc197cb3"
+    sha256 catalina:      "951f37a67f5fe47d96baaafb2549d08011244862a7ab6de747c310c11119b26a"
+    sha256 mojave:        "fa6bfcf0d2a2927a3421ebd17443a813655a0b44e2d705dac57e733022f354e6"
   end
 
   depends_on "cmake" => :build
@@ -28,17 +28,17 @@ class Ldc < Formula
   resource "ldc-bootstrap" do
     on_macos do
       if Hardware::CPU.intel?
-        url "https://github.com/ldc-developers/ldc/releases/download/v1.25.1/ldc2-1.25.1-osx-x86_64.tar.xz"
-        sha256 "ebf4ad51959e5845cb56a8b860b6619f44022186b06c28f0942272f5eb3d54c4"
+        url "https://github.com/ldc-developers/ldc/releases/download/v1.26.0/ldc2-1.26.0-osx-x86_64.tar.xz"
+        sha256 "b5af4e96b70b094711659b27a93406572cbd4ecf7003c1c84445c55c739c06a1"
       else
-        url "https://github.com/ldc-developers/ldc/releases/download/v1.25.1/ldc2-1.25.1-osx-arm64.tar.xz"
-        sha256 "bb39aa145f74ff033423f06d43dbc26f9d650fe3794764bc938abef4bf1ca7f5"
+        url "https://github.com/ldc-developers/ldc/releases/download/v1.26.0/ldc2-1.26.0-osx-arm64.tar.xz"
+        sha256 "303930754c819d0f88434813a82122196bf3fe76ea5bd1b0f16d100b540100e6"
       end
     end
 
     on_linux do
-      url "https://github.com/ldc-developers/ldc/releases/download/v1.25.1/ldc2-1.25.1-linux-x86_64.tar.xz"
-      sha256 "d059c853db0313d9cdbc6c5c0f021b60e150f19ae68b4c53251ad0292767c095"
+      url "https://github.com/ldc-developers/ldc/releases/download/v1.26.0/ldc2-1.26.0-linux-x86_64.tar.xz"
+      sha256 "06063a92ab2d6c6eebc10a4a9ed4bef3d0214abc9e314e0cd0546ee0b71b341e"
     end
   end
 

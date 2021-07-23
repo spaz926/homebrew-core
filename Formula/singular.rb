@@ -4,12 +4,14 @@ class Singular < Formula
   url "https://service.mathematik.uni-kl.de/ftp/pub/Math/Singular/src/4-2-0/singular-4.2.0.tar.gz"
   sha256 "5b0f6c036b4a6f58bf620204b004ec6ca3a5007acc8352fec55eade2fc9d63f6"
   license "GPL-2.0"
+  revision 2
 
   bottle do
-    sha256 arm64_big_sur: "51ede0e2a1ab0fbdef4bfd7fd9136865bf10c9378a01a7f2517c469d90bc8ef8"
-    sha256 big_sur:       "26709b976c059b3cd9ebd8b3a5c397d6379503786dbd282a7b25a69af612cb1a"
-    sha256 catalina:      "bcbff484908f20d9677e051686bf44822430a12b18e4f8ec44782977f5ca1d2b"
-    sha256 mojave:        "f3e2e200d751f2b7d39d011388a4b2c7cb59ac67bf7ea3583b200a677ee9938c"
+    sha256 arm64_big_sur: "b3bcbed0cffc2751cb4e7422987dae763c7bb5fefb6da4e172182296f56d3f1d"
+    sha256 big_sur:       "a344fa6e1ecd01461fa59ddb95863581b85749ef9802f3d6f7d79032b26cf9e8"
+    sha256 catalina:      "7b9172e57c84672c1aa97a2a09e075a193a064fa3af3678df79b33e0fb0565ef"
+    sha256 mojave:        "9bfe6a7938e60280130ba2042a6c1a95840dcadaf65832b5aa6906e738263fe3"
+    sha256 x86_64_linux:  "37c4ecf472f68670c963b85fb8271aa8e9baabd274e77872af5aa2aa185ec477"
   end
 
   head do

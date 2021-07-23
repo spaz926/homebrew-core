@@ -1,15 +1,15 @@
 class CodeServer < Formula
   desc "Access VS Code through the browser"
   homepage "https://github.com/cdr/code-server"
-  url "https://registry.npmjs.org/code-server/-/code-server-3.9.2.tgz"
-  sha256 "73bec476696540fc729bd10f0d7cb991e4a0119fdce240b82cb354a928d2acc6"
+  url "https://registry.npmjs.org/code-server/-/code-server-3.11.0.tgz"
+  sha256 "412990d54ab32b6a6d01d84e7441bdd2a3f0d66c1d3dc79db0b60b6042573f30"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "bca57573bf01a1590591bca51d87b750e4639d9fb6a21d33e444296535a313f8"
-    sha256 cellar: :any_skip_relocation, big_sur:       "157e0d945531baadb9c80d12eef5742bf2dee4a7652bcbb6953a5273c9024c4b"
-    sha256 cellar: :any_skip_relocation, catalina:      "13d62df299b519fc6fd706901dac9466c014818fa88670b06ca02b527c0447e2"
-    sha256 cellar: :any_skip_relocation, mojave:        "ff2dfaf66074f87af7788855a824073a6aaa0427aa9b74938663e9d4a1bc6613"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "a290c75a70f56c20b06bba441f86576c9af3d7fe0a616f2f68935a583ba5904a"
+    sha256 cellar: :any_skip_relocation, big_sur:       "19badfca26fe460122acce27cff6111bcc04663125044c03b499880dc61f9250"
+    sha256 cellar: :any_skip_relocation, catalina:      "b22e92f4642485a24c292201c03fb842360e917a3ca26c08ba7871c280009e3c"
+    sha256 cellar: :any_skip_relocation, mojave:        "d9405b5546a725ed18a5b11ba59132ab7980ab75c162526604cd2d9c1404035f"
   end
 
   depends_on "python@3.9" => :build
@@ -37,33 +37,12 @@ class CodeServer < Formula
     EOS
   end
 
-  plist_options manual: "code-server"
-
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-      <dict>
-        <key>KeepAlive</key>
-        <true/>
-        <key>Label</key>
-        <string>#{plist_name}</string>
-        <key>ProgramArguments</key>
-        <array>
-          <string>#{HOMEBREW_PREFIX}/bin/code-server</string>
-        </array>
-        <key>RunAtLoad</key>
-        <true/>
-        <key>WorkingDirectory</key>
-        <string>#{ENV["HOME"]}</string>
-        <key>StandardOutPath</key>
-        <string>#{var}/log/code-server.log</string>
-        <key>StandardErrorPath</key>
-        <string>#{var}/log/code-server.log</string>
-      </dict>
-      </plist>
-    EOS
+  service do
+    run opt_bin/"code-server"
+    keep_alive true
+    error_log_path var/"log/code-server.log"
+    log_path var/"log/code-server.log"
+    working_dir ENV["HOME"]
   end
 
   test do

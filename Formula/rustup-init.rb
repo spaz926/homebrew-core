@@ -1,15 +1,16 @@
 class RustupInit < Formula
   desc "Rust toolchain installer"
   homepage "https://github.com/rust-lang/rustup"
-  url "https://github.com/rust-lang/rustup/archive/1.23.1.tar.gz"
-  sha256 "0203231bfe405ee1c7d5e7e1c013b9b8a2dc87fbd8474e77f500331d8c26365f"
+  url "https://github.com/rust-lang/rustup/archive/1.24.3.tar.gz"
+  sha256 "24a8cede4ccbbf45ab7b8de141d92f47d1881bb546b3b9180d5a51dc0622d0f6"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "f82e459b1ffaf2c3f7d33e0bf3f4044b66a6baecce1e20183009775de549eebf"
-    sha256 cellar: :any_skip_relocation, big_sur:       "3ca4f2a444efa1b2304799b1f2ccc4d835f30b422e1281381d0ef417eecd57ce"
-    sha256 cellar: :any_skip_relocation, catalina:      "bdde9b0a17227a4dbc37c52b66a921f95ac9c760c133c4b401f0abc42c05b1aa"
-    sha256 cellar: :any_skip_relocation, mojave:        "f8501b29816fb534524bd36dc46a679456361a7a0b35e6ebc6f5b0dd75083c00"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "d7de5aa4538303b308d1f136c475fdc83f8fa3b418da46a66cf8146a6f0d6ff2"
+    sha256 cellar: :any_skip_relocation, big_sur:       "d2bae6f97776cee5d796444ceb7c54f46e9dd56e51f9a1f439bbe7c842015572"
+    sha256 cellar: :any_skip_relocation, catalina:      "7807b533709be5c92d7db4bd4189ae81ecf9f881544673591c7acb340d081b68"
+    sha256 cellar: :any_skip_relocation, mojave:        "681169de63d0e8a0dddbbe88388a64c4c15963e9c5b0dbf4029e1f2e75778667"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5057bb4cf8c5c4e314358aad6790c1df9917a096baa010cf9f1de1eeb940f6ef"
   end
 
   depends_on "rust" => :build
@@ -23,10 +24,6 @@ class RustupInit < Formula
   end
 
   def install
-    cargo_home = buildpath/"cargo_home"
-    cargo_home.mkpath
-    ENV["CARGO_HOME"] = cargo_home
-
     system "cargo", "install", "--features", "no-self-update", *std_cargo_args
   end
 

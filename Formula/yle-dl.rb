@@ -1,16 +1,16 @@
 class YleDl < Formula
   desc "Download Yle videos from the command-line"
   homepage "https://aajanki.github.io/yle-dl/index-en.html"
-  url "https://github.com/aajanki/yle-dl/archive/20210212.tar.gz"
-  sha256 "0b2a8a7034d2181bc714769d35c258343d2c9761244877c75c20d8ef21befb6e"
+  url "https://github.com/aajanki/yle-dl/archive/20210704.tar.gz"
+  sha256 "775b6a6650d684f63cee1326e1952fcfa02a683ea656fde00d3ffa8038e8af06"
   license "GPL-3.0-or-later"
   head "https://github.com/aajanki/yle-dl.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "3b8ac46199354be222977452d9327ba4048d08996baa54d937ec08f69ddb0101"
-    sha256 cellar: :any_skip_relocation, big_sur:       "905a9aff686575a766d3ed1cf62d4ad94fabdaae39954d0c32e30b5fbbae13a1"
-    sha256 cellar: :any_skip_relocation, catalina:      "b42f24c8afd188c850cac2708ccd27d7ca3c2d4edbd4cd381305ea565c64558b"
-    sha256 cellar: :any_skip_relocation, mojave:        "3c91fca5131d9fed6faff0a54e809999369f44318eafa990ddec5355dc140299"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "e3706551b2af7e75b25d3f06dba1b5d840d4bb5da67f1f40fe5ebfc8c0fec1df"
+    sha256 cellar: :any_skip_relocation, big_sur:       "12f8f870b0ef3f20154776f751501d2e6e866b3c0ba204813044a07d04287220"
+    sha256 cellar: :any_skip_relocation, catalina:      "3d8b7b36ee5237b21808b87fee85e3635c9663016dfe683c9d8acd75331bb502"
+    sha256 cellar: :any_skip_relocation, mojave:        "ee79a4a209bb0951c3126644a221dc01280046f33ddcf4771eee4bfe5e6ecfc9"
   end
 
   depends_on "ffmpeg"
@@ -34,13 +34,13 @@ class YleDl < Formula
   end
 
   resource "attrs" do
-    url "https://files.pythonhosted.org/packages/f0/cb/80a4a274df7da7b8baf083249b0890a0579374c3d74b5ac0ee9291f912dc/attrs-20.3.0.tar.gz"
-    sha256 "832aa3cde19744e49938b91fea06d69ecb9e649c93ba974535d08ad92164f700"
+    url "https://files.pythonhosted.org/packages/ed/d6/3ebca4ca65157c12bd08a63e20ac0bdc21ac7f3694040711f9fd073c0ffb/attrs-21.2.0.tar.gz"
+    sha256 "ef6aaac3ca6cd92904cdd0d83f629a15f18053ec84e6432106f7a4d04ae4f5fb"
   end
 
   resource "certifi" do
-    url "https://files.pythonhosted.org/packages/06/a9/cd1fd8ee13f73a4d4f491ee219deeeae20afefa914dfb4c130cfc9dc397a/certifi-2020.12.5.tar.gz"
-    sha256 "1a4995114262bffbc2413b159f2a1a480c969de6e6eb13ee966d470af86af59c"
+    url "https://files.pythonhosted.org/packages/6d/78/f8db8d57f520a54f0b8a438319c342c61c22759d8f9a1cd2e2180b5e5ea9/certifi-2021.5.30.tar.gz"
+    sha256 "2bbf76fd432960138b3ef6dda3dde0544f27cbf8546c458e60baf371917ba9ee"
   end
 
   resource "chardet" do
@@ -49,8 +49,8 @@ class YleDl < Formula
   end
 
   resource "ConfigArgParse" do
-    url "https://files.pythonhosted.org/packages/bb/79/3045743bb26ca2e44a1d317c37395462bfed82dbbd38e69a3280b63696ce/ConfigArgParse-1.2.3.tar.gz"
-    sha256 "edd17be986d5c1ba2e307150b8e5f5107aba125f3574dddd02c85d5cdcfd37dc"
+    url "https://files.pythonhosted.org/packages/d9/ad/d82750ad3a9e3419425eeeef7fbb5c8381dc8ec64a9894ddc3854837b10f/ConfigArgParse-1.5.1.tar.gz"
+    sha256 "371f46577e76ec71a183b88378f36dd09f4b946f60fe60712f411b020f26b812"
   end
 
   resource "idna" do
@@ -59,8 +59,8 @@ class YleDl < Formula
   end
 
   resource "lxml" do
-    url "https://files.pythonhosted.org/packages/db/f7/43fecb94d66959c1e23aa53d6161231dca0e93ec500224cf31b3c4073e37/lxml-4.6.2.tar.gz"
-    sha256 "cd11c7e8d21af997ee8079037fff88f16fda188a9776eb4b81c7e4c9c0a7d7fc"
+    url "https://files.pythonhosted.org/packages/e5/21/a2e4517e3d216f0051687eea3d3317557bde68736f038a3b105ac3809247/lxml-4.6.3.tar.gz"
+    sha256 "39b78571b3b30645ac77b95f7c69d1bffc4cf8c3b157c435a34da72e78c82468"
   end
 
   resource "requests" do
@@ -69,8 +69,8 @@ class YleDl < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/d7/8d/7ee68c6b48e1ec8d41198f694ecdc15f7596356f2ff8e6b1420300cf5db3/urllib3-1.26.3.tar.gz"
-    sha256 "de3eedaad74a2683334e282005cd8d7f22f4d55fa690a2a1020a416cb0a47e73"
+    url "https://files.pythonhosted.org/packages/4f/5a/597ef5911cb8919efe4d86206aa8b2658616d676a7088f0825ca08bd7cb8/urllib3-1.26.6.tar.gz"
+    sha256 "f57b4c16c62fa2760b7e3d97c35b255512fb6b59a259730f36ba32ce9f8e342f"
   end
 
   def install

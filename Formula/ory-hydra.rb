@@ -1,8 +1,8 @@
 class OryHydra < Formula
   desc "OpenID Certified OAuth 2.0 Server and OpenID Connect Provider"
   homepage "https://www.ory.sh/hydra/"
-  url "https://github.com/ory/hydra/archive/v1.9.2.tar.gz"
-  sha256 "717d27efdb302cae2a57b0664b8cf3cb493d10ac7750a25162778cc256b1c006"
+  url "https://github.com/ory/hydra/archive/v1.10.3.tar.gz"
+  sha256 "5922307e85895c0058d3af366f2b3f279d225bb311b07527364357801e0a2c91"
   license "Apache-2.0"
 
   livecheck do
@@ -11,10 +11,11 @@ class OryHydra < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "4992f21e72a0ee88749ad9d0c72064406b12ebffc020db178fda8617e199187e"
-    sha256 cellar: :any_skip_relocation, big_sur:       "3f43c551ba78d8ed1b2c631c56953d160dafafd77c186cfff39471f8da7b156d"
-    sha256 cellar: :any_skip_relocation, catalina:      "af687d0144096dd9baa3031dfc2e69fd5aa8fe95133e4eb8f4344738aaf374db"
-    sha256 cellar: :any_skip_relocation, mojave:        "41a058f5adaf40bd23f206e9a2cb617df92dd30f4fbb841b099afead92e3987a"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "ba879bc22ba2d3782990c6c9d8145c7b37709c9cab99d36c15b8ae2cae08cb0d"
+    sha256 cellar: :any_skip_relocation, big_sur:       "1a1c64b5f91606768b4936dff612e82cec33b61a4ffeeb7ec2482a409d41c19f"
+    sha256 cellar: :any_skip_relocation, catalina:      "d946e68b627af085c42aec6a4466cfcee394e5db905a1c1191732729241319f9"
+    sha256 cellar: :any_skip_relocation, mojave:        "70f7583e99d4cd3f0c0b88c6498351bfab099f8a58b7c6856ec003582bff176e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b5f185f604a0a7d563cf645f49ec21a4d98293cc6e1a9c8c63678824b10a4039"
   end
 
   depends_on "go" => :build
@@ -37,8 +38,8 @@ class OryHydra < Formula
           port: #{admin_port}
     EOS
 
-    fork { exec bin/"hydra", "serve", "all", "--config", "config.yaml" }
-    sleep 5
+    fork { exec bin/"hydra", "serve", "all", "--config", "#{testpath}/config.yaml" }
+    sleep 20
 
     endpoint = "https://127.0.0.1:#{admin_port}/"
     output = shell_output("#{bin}/hydra clients list --endpoint #{endpoint} --skip-tls-verify")

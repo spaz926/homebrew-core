@@ -6,7 +6,9 @@ class Emojify < Formula
   license "MIT"
   head "https://github.com/mrowa44/emojify.git"
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "525c599c9e16d63627d5b4afca9f43d22e456d21a8e00a05b5e4a4e2acded629"
+  end
 
   def install
     bin.install "emojify"

@@ -1,8 +1,8 @@
 class Pypy3 < Formula
   desc "Implementation of Python 3 in Python"
   homepage "https://pypy.org/"
-  url "https://downloads.python.org/pypy/pypy3.7-v7.3.3-src.tar.bz2"
-  sha256 "f6c96401f76331e474cca2d14437eb3b2f68a0f27220a6dcbc537445fe9d5b78"
+  url "https://downloads.python.org/pypy/pypy3.7-v7.3.5-src.tar.bz2"
+  sha256 "d920fe409a9ecad9d074aa8568ca5f3ed3581be66f66e5d8988b7ec66e6d99a2"
   license "MIT"
   head "https://foss.heptapod.net/pypy/pypy", using: :hg, branch: "py3.7"
 
@@ -12,17 +12,15 @@ class Pypy3 < Formula
   end
 
   bottle do
-    sha256 catalina: "856c421f1051e802767e23bdfd58727fb168dcffff904ab1eb486a57fc614f47"
-    sha256 mojave:   "a2f43940fe3fb2604aa01c9f7720c26c74b3cb9e09b7bf0846f4341ded919e17"
+    sha256 big_sur:  "d4418b56638adb2209c97f87dd338ea6e53e1457fc83ef7999e3c4e9315e4572"
+    sha256 catalina: "25b53534dfd782e1c7027bc9161bdad7517fd8ab7b5c497f6e29564f90ee1098"
+    sha256 mojave:   "8fee0f7ea2aa52ada5ef590167670110a3fc459dcac60de4142eb5c0ac684a40"
   end
 
   depends_on "pkg-config" => :build
   depends_on "pypy" => :build
   depends_on arch: :x86_64
   depends_on "gdbm"
-  # pypy does not find system libffi, and its location cannot be given
-  # as a build option
-  depends_on "libffi" if DevelopmentTools.clang_build_version >= 1000
   depends_on "openssl@1.1"
   depends_on "sqlite"
   depends_on "tcl-tk"
@@ -34,13 +32,13 @@ class Pypy3 < Formula
   uses_from_macos "zlib"
 
   resource "setuptools" do
-    url "https://files.pythonhosted.org/packages/94/23/e9e3d96500c063129a19feb854efbb01e6ffe7d913f1da8176692418ab8e/setuptools-51.1.1.tar.gz"
-    sha256 "0b43d1e0e0ac1467185581c2ceaf86b5c1a1bc408f8f6407687b0856302d1850"
+    url "https://files.pythonhosted.org/packages/cf/79/1a19c2f792da00cbead7b6caa176afdddf517522cb9163ce39576025b050/setuptools-57.1.0.tar.gz"
+    sha256 "cfca9c97e7eebbc8abe18d5e5e962a08dcad55bb63afddd82d681de4d22a597b"
   end
 
   resource "pip" do
-    url "https://files.pythonhosted.org/packages/ca/1e/d91d7aae44d00cd5001957a1473e4e4b7d1d0f072d1af7c34b5899c9ccdf/pip-20.3.3.tar.gz"
-    sha256 "79c1ac8a9dccbec8752761cb5a2df833224263ca661477a2a9ed03ddf4e0e3ba"
+    url "https://files.pythonhosted.org/packages/4d/0c/3b63fe024414a8a48661cf04f0993d4b2b8ef92daed45636474c018cd5b7/pip-21.1.3.tar.gz"
+    sha256 "b5b1eb91b36894bd01b8e5a56a422c2f3838573da0b0a1c63a096bb454e3b23f"
   end
 
   def install
@@ -65,11 +63,13 @@ class Pypy3 < Formula
 
     (libexec/"lib").install libexec/"bin/#{shared_library("libpypy3-c")}" => shared_library("libpypy3-c")
 
-    MachO::Tools.change_install_name("#{libexec}/bin/pypy3",
-                                     "@rpath/libpypy3-c.dylib",
-                                     "#{libexec}/lib/libpypy3-c.dylib")
-    MachO::Tools.change_dylib_id("#{libexec}/lib/libpypy3-c.dylib",
-                                 "#{opt_libexec}/lib/libpypy3-c.dylib")
+    on_macos do
+      MachO::Tools.change_install_name("#{libexec}/bin/pypy3",
+                                       "@rpath/libpypy3-c.dylib",
+                                       "#{libexec}/lib/libpypy3-c.dylib")
+      MachO::Tools.change_dylib_id("#{libexec}/lib/libpypy3-c.dylib",
+                                   "#{opt_libexec}/lib/libpypy3-c.dylib")
+    end
 
     (libexec/"lib-python").install "lib-python/3"
     libexec.install %w[include lib_pypy]
@@ -81,6 +81,13 @@ class Pypy3 < Formula
     bin.install_symlink libexec/"bin/pypy3"
     bin.install_symlink libexec/"bin/pypy" => "pypy3.7"
     lib.install_symlink libexec/"lib/#{shared_library("libpypy3-c")}"
+
+    # Delete two files shipped which we do not want to deliver
+    # These files make patchelf fail
+    on_linux do
+      rm_f libexec/"bin/libpypy3-c.so.debug"
+      rm_f libexec/"bin/pypy3.debug"
+    end
   end
 
   def post_install

@@ -12,6 +12,7 @@ class Libhttpseverywhere < Formula
     sha256 cellar: :any, catalina:      "c8cc1d294949af9676e54f9a32c4dbe782dfc5d103f92bbee68acd2ccb5ff728"
     sha256 cellar: :any, mojave:        "2835c48e21e0a96730893f96319736e55d29d8b224fcc0915e319bcbc3b521c2"
     sha256 cellar: :any, high_sierra:   "9c7c9397a0ebe56b82ffa6d8daeb9e645e94d14ed4fd25aedbe313c603e0b9b5"
+    sha256               x86_64_linux:  "e3e753458877d02da2c1d83c10f70ba493198f799026225ea2d250214311af55"
   end
 
   depends_on "gobject-introspection" => :build
@@ -28,8 +29,8 @@ class Libhttpseverywhere < Formula
   # see https://gitlab.gnome.org/GNOME/libhttpseverywhere/issues/1
   # remove when next version is released
   patch do
-    url "https://gitlab.gnome.org/GNOME/libhttpseverywhere/commit/6da08ef1ade9ea267cecf14dd5cb2c3e6e5e50cb.patch"
-    sha256 "511c5aa10f466e879e04e794e09716de6bb18413bd23a72cffb323be5a982919"
+    url "https://gitlab.gnome.org/GNOME/libhttpseverywhere/commit/6da08ef1ade9ea267cecf14dd5cb2c3e6e5e50cb.diff"
+    sha256 "e5499c290c5b48b243f67763a2c710acc5bd52b90541eb8da3f8b24b516f7430"
   end
 
   def install
@@ -82,11 +83,13 @@ class Libhttpseverywhere < Formula
       -lglib-2.0
       -lgobject-2.0
       -lhttpseverywhere-0.8
-      -lintl
       -ljson-glib-1.0
       -lsoup-2.4
       -lxml2
     ]
+    on_macos do
+      flags << "-lintl"
+    end
     system ENV.cc, "test.c", "-o", "test", *flags
     system "./test"
   end

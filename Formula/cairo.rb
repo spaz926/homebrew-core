@@ -16,6 +16,7 @@ class Cairo < Formula
     sha256 big_sur:       "cb16c1bb070a7cdca7aaf8899a70e407d73636116d62225626b2c8d31aa8d2ff"
     sha256 catalina:      "4a117545953b9784f78db8261c03d71a1ae7af836dcd995abe7e6d710cdfd39c"
     sha256 mojave:        "38c7b7b0f6266632a5f04df12180dc36a1ce218a1c54b13cdca18ad024067311"
+    sha256 x86_64_linux:  "678c795a11134b3455002969fc41b8e2512e97cdaa084f792724ace7549a3407"
   end
 
   head do
@@ -42,8 +43,8 @@ class Cairo < Formula
   # Avoid segfaults on Big Sur. Remove at version bump.
   # https://gitlab.freedesktop.org/cairo/cairo/-/issues/420
   patch do
-    url "https://gitlab.freedesktop.org/cairo/cairo/-/commit/e22d7212acb454daccc088619ee147af03883974.patch"
-    sha256 "363a6018efc52721e2eace8df3aa319c93f3ad765ef7e3ea04e2ddd4ee94d0e1"
+    url "https://gitlab.freedesktop.org/cairo/cairo/-/commit/e22d7212acb454daccc088619ee147af03883974.diff"
+    sha256 "3b98004d7321c06d294fa901ac91964b6a4277ce4e53ef0cf98bf89e00d93332"
   end
 
   def install

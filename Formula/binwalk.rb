@@ -3,16 +3,22 @@ class Binwalk < Formula
 
   desc "Searches a binary image for embedded files and executable code"
   homepage "https://github.com/ReFirmLabs/binwalk"
-  url "https://github.com/ReFirmLabs/binwalk/archive/v2.3.0.tar.gz"
-  sha256 "62bc314380fc017ffe747e7cbfd7b56103eadaf1730ab499ba8bb5d319025cf9"
+  url "https://github.com/ReFirmLabs/binwalk/archive/v2.3.1.tar.gz"
+  sha256 "7ec9d8fcb8686f4060d37e1096669e3ed8ce1194c91ad80199622448bcc01b19"
   license "MIT"
   head "https://github.com/ReFirmLabs/binwalk.git"
 
+  livecheck do
+    url :stable
+    strategy :github_latest
+  end
+
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "3525c10bf90ca591de19315531f94b42a1b3695f589c7e1e915a40fa40ff25e1"
-    sha256 cellar: :any, big_sur:       "40d971563b20923c12f82a29d4ce0fd4cc5ccaaff4783bbc7640795431329534"
-    sha256 cellar: :any, catalina:      "1178182237e14483c3107b7eee8d8997c2680c75868425a81c4364da9dab65d9"
-    sha256 cellar: :any, mojave:        "f101aef4fd465811b81fbb1f1e3015ded3309bfa293d18398fe8fa90a010c5a4"
+    sha256 cellar: :any,                 arm64_big_sur: "de845e209f61f7d53daec264962ce1aeb2fb72b5385ea6b8c9ac2188d0427bff"
+    sha256 cellar: :any,                 big_sur:       "1d408cfd054c7f7e7d1035fae12f1ed22951c99ae2037e12d26a274e97ef3335"
+    sha256 cellar: :any,                 catalina:      "81908a0bc129aade679fcb65b0455ce349288e4ed4239bf48ef68a4fde363f8f"
+    sha256 cellar: :any,                 mojave:        "6d71751e65e4c7f368018a13f38fc7ae56db3174e567e353073aead6bfd6fb76"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5dd669f1fdc0dbf293fbd42dc02a28caaa75c5d699b671fcd87d1a5a10be72d2"
   end
 
   depends_on "pkg-config" => :build

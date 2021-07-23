@@ -2,18 +2,19 @@ class Filebeat < Formula
   desc "File harvester to ship log files to Elasticsearch or Logstash"
   homepage "https://www.elastic.co/products/beats/filebeat"
   url "https://github.com/elastic/beats.git",
-      tag:      "v7.12.0",
-      revision: "08e20483a651ea5ad60115f68ff0e53e6360573a"
+      tag:      "v7.13.4",
+      revision: "1907c246c8b0d23ae4027699c44bf3fbef57f4a4"
   # Outside of the "x-pack" folder, source code in a given file is licensed
   # under the Apache License Version 2.0
   license "Apache-2.0"
   head "https://github.com/elastic/beats.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "fa194fe1b211cc45f06997777ec27c0158ac220d0166f8a424d9dcefe5810a4b"
-    sha256 cellar: :any_skip_relocation, big_sur:       "4e9b93996330664d7db6eb47cc60b3eeb888442106cb3f8d482506d01bbd43fe"
-    sha256 cellar: :any_skip_relocation, catalina:      "a1c421d2750ec1af7b1bf894e196d78c0faa989462c37f04098ea8bdd7b7d443"
-    sha256 cellar: :any_skip_relocation, mojave:        "fcf45b1eed0a0f57fc061ff77853c8e6010cd6e6275bd1063e96c928ba9045e6"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "92cf01a43c8dae5de09b269534e930318bd1af3359b3434a9553b13d4580d990"
+    sha256 cellar: :any_skip_relocation, big_sur:       "a2ebe3f52e2037eb851e60f9aba3736010a77b0f6f205e7284a83dd4834cb8d3"
+    sha256 cellar: :any_skip_relocation, catalina:      "3212458e18020086adca80615e443f400d16c6a05f711d165795066fda8ca9ad"
+    sha256 cellar: :any_skip_relocation, mojave:        "a46ed6aca2fde30c8c4c7692b213dc4ffdb125dc62e0ba90f1ce1053a48c47d5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5eff6cd8bcc55ba0e5a36c279d8670570364eafb5fa0fa9aa417bdc78554af69"
   end
 
   depends_on "go" => :build
@@ -54,24 +55,8 @@ class Filebeat < Formula
     EOS
   end
 
-  plist_options manual: "filebeat"
-
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"
-      "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-        <dict>
-          <key>Label</key>
-          <string>#{plist_name}</string>
-          <key>Program</key>
-          <string>#{opt_bin}/filebeat</string>
-          <key>RunAtLoad</key>
-          <true/>
-        </dict>
-      </plist>
-    EOS
+  service do
+    run opt_bin/"filebeat"
   end
 
   test do

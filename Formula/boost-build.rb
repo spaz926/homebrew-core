@@ -1,8 +1,8 @@
 class BoostBuild < Formula
   desc "C++ build system"
   homepage "https://www.boost.org/build/"
-  url "https://github.com/boostorg/build/archive/boost-1.75.0.tar.gz"
-  sha256 "889e931b25e435912e7b0dda89ae150fa1dabe419caccfbb923d41e85809e7df"
+  url "https://github.com/boostorg/build/archive/boost-1.76.0.tar.gz"
+  sha256 "886bc799c4a7c56218a41acee89f37073672c5c02586b680bf6dc0603d6c9349"
   license "BSL-1.0"
   version_scheme 1
   head "https://github.com/boostorg/build.git"
@@ -13,21 +13,14 @@ class BoostBuild < Formula
   end
 
   bottle do
-    rebuild 2
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "050492679c4ceafce723aca7fa4185e1342e3cd011b1947f33466e639ece226a"
-    sha256 cellar: :any_skip_relocation, big_sur:       "3e55b292a1bb2162a3ac207897e0c38031dc65a4bd858c085ffb35dfeae8237e"
-    sha256 cellar: :any_skip_relocation, catalina:      "71b77320b7c991c74dbad21e38e875cb2b150db8fcd56113d3f74ea379343b6f"
-    sha256 cellar: :any_skip_relocation, mojave:        "ef91e139803aba94c3ce22e085d1332b78e1a820fdeb73dace0eebc194aec0a4"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "1b5f6010ccb4c9cf6d2ffa8f59e09ebebe54264425648f473aa8d704b0fe1120"
+    sha256 cellar: :any_skip_relocation, big_sur:       "a3115a74eee73792fa4c7b2dcd025c2a254f66a87a1427b8382c77f62aac61b5"
+    sha256 cellar: :any_skip_relocation, catalina:      "045128c087f35b78de73c5723385607a9a5ba061a076cd646a61f9240e6a2b50"
+    sha256 cellar: :any_skip_relocation, mojave:        "37ca4bbff9b1d54b04141cc63f9fc3ccbfe3b6fc875ed66a83456600b79aed7d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8ee01029c5ebfa4012102049946d63357ad8c3ad08710ad7a68d74f662133ba1"
   end
 
   conflicts_with "b2-tools", because: "both install `b2` binaries"
-
-  # Fix build system issues on Apple silicon. This change has aleady
-  # been merged upstream, remove this patch once it lands in a release.
-  patch do
-    url "https://github.com/boostorg/build/commit/456be0b7ecca065fbccf380c2f51e0985e608ba0.patch?full_index=1"
-    sha256 "e7a78145452fc145ea5d6e5f61e72df7dcab3a6eebb2cade6b4cfae815687f3a"
-  end
 
   def install
     system "./bootstrap.sh"

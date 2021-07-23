@@ -1,15 +1,16 @@
 class Pybind11 < Formula
   desc "Seamless operability between C++11 and Python"
   homepage "https://github.com/pybind/pybind11"
-  url "https://github.com/pybind/pybind11/archive/v2.6.2.tar.gz"
-  sha256 "8ff2fff22df038f5cd02cea8af56622bc67f5b64534f1b83b9f133b8366acff2"
+  url "https://github.com/pybind/pybind11/archive/v2.7.0.tar.gz"
+  sha256 "6cd73b3d0bf3daf415b5f9b87ca8817cc2e2b64c275d65f9500250f9fee1677e"
   license "BSD-3-Clause"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "14da8f7bb353d43750a0a8d52186b8a244756fcd1d0c69375f75bb65d549c01a"
-    sha256 cellar: :any_skip_relocation, big_sur:       "6814212a1bfcd1dfcdfb1948844a779383af7d234f9abf4d0ee612881851258d"
-    sha256 cellar: :any_skip_relocation, catalina:      "af19160070703e3b77ba619488c0681e526c5ba0cbc09dc29fb76f64dc8ca516"
-    sha256 cellar: :any_skip_relocation, mojave:        "791c62f8620b29aba3210d3b8764f0edf85f89a7b886737e05ce6d9e94f452ed"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "d397147795fdd4238fc43bc36949c3d8e1f21a97d4c469d3be7571ba55e3d3ec"
+    sha256 cellar: :any_skip_relocation, big_sur:       "16a7225caa88105dcc5738bc448b044a6b55271eae1d39e26e53125f12e7863a"
+    sha256 cellar: :any_skip_relocation, catalina:      "3388b6d611d3b92c3f74c45e698172e2369837bbabc898612e61ab93c1736e23"
+    sha256 cellar: :any_skip_relocation, mojave:        "106e9718a698498a9a779598c49914a8dca16118ebf4e3c54832ac050578be27"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2a4f59731a9f99e1dac5a0bfae87c1857d454623fdf03004c2709c7fbb0f4335"
   end
 
   depends_on "cmake" => :build
@@ -58,7 +59,7 @@ class Pybind11 < Formula
     site_packages = "lib/python#{version}/site-packages"
 
     python_flags = `#{Formula["python@3.9"].opt_bin}/python3-config --cflags --ldflags --embed`.split
-    system ENV.cxx, "-O3", "-shared", "-std=c++11", *python_flags, "example.cpp", "-o", "example.so"
+    system ENV.cxx, "-shared", "-fPIC", "-O3", "-std=c++11", "example.cpp", "-o", "example.so", *python_flags
     system Formula["python@3.9"].opt_bin/"python3", "example.py"
 
     test_module = shell_output("#{Formula["python@3.9"].opt_bin/"python3"} -m pybind11 --includes")

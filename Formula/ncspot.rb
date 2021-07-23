@@ -1,19 +1,20 @@
 class Ncspot < Formula
   desc "Cross-platform ncurses Spotify client written in Rust"
   homepage "https://github.com/hrkfdn/ncspot"
-  url "https://github.com/hrkfdn/ncspot/archive/v0.4.0.tar.gz"
-  sha256 "d43785832cb3283aa8969b366916a2cbd72c5511b6d429aaae306da5287caea6"
+  url "https://github.com/hrkfdn/ncspot/archive/v0.7.3.tar.gz"
+  sha256 "b5e558279b6212d86face687220b85808b7d105ac678c2dbf8affd9ef3002e00"
   license "BSD-2-Clause"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "18e6e5f4c39f6b98a58ac1f0ebafa1d55e0c3a767dd43e5a13494175e34c8f29"
-    sha256 cellar: :any_skip_relocation, big_sur:       "e18c594f6014ea5e02b00a8393d7f34dd3f7f52ce51c8650105709ae1966122b"
-    sha256 cellar: :any_skip_relocation, catalina:      "6e503a3e3dc1752b3a034c29bd69f7db7e64b16475e7e1496abd74c1e2038dea"
-    sha256 cellar: :any_skip_relocation, mojave:        "35a09c9fe20a5a3a5e02e274d9d25b551274953b939b1b9995451d03b68cbf2c"
+    sha256 cellar: :any, arm64_big_sur: "3e8fbf7fcda473da5f7e65b53d153ba88387b66a5174cef0cc20e98443dbcd2e"
+    sha256 cellar: :any, big_sur:       "c1d0d1cdec6c3ee64c1d9e7b271b3d2440492f263027bf15a8ac524912544e22"
+    sha256 cellar: :any, catalina:      "e0fb78362d23f03dd67601e83c823780ead268b363a050704897d80ae48f59ae"
+    sha256 cellar: :any, mojave:        "c8152b314fa9297759a163ff11ec98c37deb7954653b886f1c05c0000dbbad4a"
   end
 
   depends_on "python@3.9" => :build
   depends_on "rust" => :build
+  depends_on "portaudio"
 
   on_linux do
     depends_on "alsa-lib"
@@ -23,14 +24,16 @@ class Ncspot < Formula
   def install
     ENV["COREAUDIO_SDK_PATH"] = MacOS.sdk_path_if_needed
     system "cargo", "install",
-      "--no-default-features", "--features", "rodio_backend,cursive/pancurses-backend", *std_cargo_args
+      "--no-default-features", "--features", "portaudio_backend,cursive/pancurses-backend", *std_cargo_args
   end
 
   test do
-    pid = fork { exec "#{bin}/ncspot -b . -d debug.log 2>&1 >/dev/null" }
-    sleep 2
-    Process.kill "TERM", pid
+    stdin, stdout, wait_thr = Open3.popen2 "script -q /dev/null"
+    stdin.puts "stty rows 80 cols 130"
+    stdin.puts "env LC_CTYPE=en_US.UTF-8 LANG=en_US.UTF-8 TERM=xterm #{bin}/ncspot -b ."
+    sleep 1
+    Process.kill("INT", wait_thr.pid)
 
-    assert_match '[ncspot::config] [TRACE] "./.config"', File.read("debug.log")
+    assert_match "Please login to Spotify", stdout.read
   end
 end

@@ -2,16 +2,17 @@ class Auditbeat < Formula
   desc "Lightweight Shipper for Audit Data"
   homepage "https://www.elastic.co/products/beats/auditbeat"
   url "https://github.com/elastic/beats.git",
-      tag:      "v7.12.0",
-      revision: "08e20483a651ea5ad60115f68ff0e53e6360573a"
+      tag:      "v7.13.4",
+      revision: "1907c246c8b0d23ae4027699c44bf3fbef57f4a4"
   license "Apache-2.0"
   head "https://github.com/elastic/beats.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "d5c9eec5cadb918feb7060b787de3d710002a987f6380ccf547c2c873f0228af"
-    sha256 cellar: :any_skip_relocation, big_sur:       "87e8ff8d3196c611ad6f35ed46127f4cd323f3a588ff5aedc5652aff85caf4a6"
-    sha256 cellar: :any_skip_relocation, catalina:      "95aebf2b0d0d6c4333167b24f1e7d1c8b14afc719a4ed6f9fb35f74589c1afb1"
-    sha256 cellar: :any_skip_relocation, mojave:        "2f9c1efbd1935b5c05b4853e7233d82de2379476f53960a1d814518aeccf4b9c"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "8d7ec19320ff1bd8e256ffd7c62a42e648d8915c5171bb1f894d59e77037540f"
+    sha256 cellar: :any_skip_relocation, big_sur:       "dfca3a3795e58330637afba0733d016d4d4b51a168fddb9192bc91e265fb8f33"
+    sha256 cellar: :any_skip_relocation, catalina:      "455cfc084407dfc9b1404abebc99a1eb76b41ba522e82b3a1b9e2b8b50f188a0"
+    sha256 cellar: :any_skip_relocation, mojave:        "88d80c0391620dd0f4d19e7f75be77212d4b4db9cb2ef4356caa704f78a61e1a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bd458bfe9dac99a9e0fd990f38fea420ea719042d9073ee03835c43acf5ba0f9"
   end
 
   depends_on "go" => :build
@@ -54,24 +55,8 @@ class Auditbeat < Formula
     (var/"log/auditbeat").mkpath
   end
 
-  plist_options manual: "auditbeat"
-
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"
-      "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-        <dict>
-          <key>Label</key>
-          <string>#{plist_name}</string>
-          <key>Program</key>
-          <string>#{opt_bin}/auditbeat</string>
-          <key>RunAtLoad</key>
-          <true/>
-        </dict>
-      </plist>
-    EOS
+  service do
+    run opt_bin/"auditbeat"
   end
 
   test do
@@ -91,7 +76,7 @@ class Auditbeat < Formula
     sleep 5
     touch testpath/"files/touch"
     sleep 30
-    s = IO.readlines(testpath/"auditbeat/auditbeat").last(1)[0]
+    s = File.readlines(testpath/"auditbeat/auditbeat").last(1)[0]
     assert_match(/"action":\["(initial_scan|created)"\]/, s)
     realdirpath = File.realdirpath(testpath)
     assert_match "\"path\":\"#{realdirpath}/files/touch\"", s

@@ -1,11 +1,10 @@
 class Mpich < Formula
   desc "Implementation of the MPI Message Passing Interface standard"
   homepage "https://www.mpich.org/"
-  url "https://www.mpich.org/static/downloads/3.4.1/mpich-3.4.1.tar.gz"
-  mirror "https://fossies.org/linux/misc/mpich-3.4.1.tar.gz"
-  sha256 "8836939804ef6d492bcee7d54abafd6477d2beca247157d92688654d13779727"
+  url "https://www.mpich.org/static/downloads/3.4.2/mpich-3.4.2.tar.gz"
+  mirror "https://fossies.org/linux/misc/mpich-3.4.2.tar.gz"
+  sha256 "5c19bea8b84e8d74cca5f047e82b147ff3fba096144270e3911ad623d6c587bf"
   license "mpich2"
-  revision 1
 
   livecheck do
     url "https://www.mpich.org/static/downloads/"
@@ -13,10 +12,11 @@ class Mpich < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "d57992c74140b8bc0d410bc86a6e67febeb0e6e9805b2ab5608f41f5f26b121b"
-    sha256 cellar: :any, big_sur:       "7f970d15db426859aadea466f17549bd4add967ad1082d34fc5844b332b4099e"
-    sha256 cellar: :any, catalina:      "823585ee5005dd4c5298524ff8b6950296f3cbcc6a9c6cc53b3e93252185344f"
-    sha256 cellar: :any, mojave:        "30ff98a7f4bded67dc55b08ab72a01cac22b747d7b91389d72577a60c4815187"
+    sha256 cellar: :any,                 arm64_big_sur: "8c79cf6b224e90fbe5fbe111cdafb03d1b54f8f4a88c32a157af6d3ea29de7c4"
+    sha256 cellar: :any,                 big_sur:       "23d95423962812214194ca039fdd2d7dcca76626d291e02566989460b748a8df"
+    sha256 cellar: :any,                 catalina:      "3d5324ae766872fb9c2d6229ea97f49930c6a8239e38cc89bf5fb6a8f71d88d4"
+    sha256 cellar: :any,                 mojave:        "80d73225cb6e7242190049addb88898f920991a637f6dd7af07f13ffa28095fd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "36cc3d6dc61cf19eeea37e07ce456200353b034c89952abc89e8999e2c198274"
   end
 
   head do
@@ -28,6 +28,17 @@ class Mpich < Formula
   end
 
   depends_on "gcc" # for gfortran
+  depends_on "hwloc"
+
+  on_macos do
+    conflicts_with "libfabric", because: "both install `fabric.h`"
+  end
+
+  on_linux do
+    # Can't be enabled on mac:
+    # https://lists.mpich.org/pipermail/discuss/2021-May/006192.html
+    depends_on "libfabric"
+  end
 
   conflicts_with "open-mpi", because: "both install MPI compiler wrappers"
 
@@ -48,22 +59,33 @@ class Mpich < Formula
       system "./autogen.sh"
     end
 
-    system "./configure", "--disable-dependency-tracking",
-                          "--enable-fast=all,O3",
-                          "--enable-g=dbg",
-                          "--enable-romio",
-                          "--enable-shared",
-                          "--with-pm=hydra",
-                          "FC=gfortran-#{Formula["gcc"].any_installed_version.major}",
-                          "F77=gfortran-#{Formula["gcc"].any_installed_version.major}",
-                          "--disable-silent-rules",
-                          "--prefix=#{prefix}",
-                          "--mandir=#{man}",
-                          # Flag for compatibility with GCC 10
-                          # https://lists.mpich.org/pipermail/discuss/2020-January/005863.html
-                          "FFLAGS=-fallow-argument-mismatch",
-                          "CXXFLAGS=-Wno-deprecated",
-                          "CFLAGS=-fgnu89-inline -Wno-deprecated"
+    args = %W[
+      --disable-dependency-tracking
+      --enable-fast=all,O3
+      --enable-g=dbg
+      --enable-romio
+      --enable-shared
+      --with-pm=hydra
+      FC=gfortran-#{Formula["gcc"].any_installed_version.major}
+      F77=gfortran-#{Formula["gcc"].any_installed_version.major}
+      --disable-silent-rules
+      --prefix=#{prefix}
+      --mandir=#{man}
+    ]
+
+    # Flag for compatibility with GCC 10
+    # https://lists.mpich.org/pipermail/discuss/2020-January/005863.html
+    args << "FFLAGS=-fallow-argument-mismatch"
+    args << "CXXFLAGS=-Wno-deprecated"
+    args << "CFLAGS=-fgnu89-inline -Wno-deprecated"
+
+    on_linux do
+      # Use libfabric https://lists.mpich.org/pipermail/discuss/2021-January/006092.html
+      args << "--with-device=ch4:ofi"
+      args << "--with-libfabric=#{Formula["libfabric"].opt_prefix}"
+    end
+
+    system "./configure", *args
 
     system "make"
     system "make", "install"

@@ -7,7 +7,9 @@ class RbenvAliases < Formula
   revision 1
   head "https://github.com/tpope/rbenv-aliases.git"
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "6f7cde3483899529f991977d389c5e6a41116ea4628377d97535fccddb306d9b"
+  end
 
   depends_on "rbenv"
 

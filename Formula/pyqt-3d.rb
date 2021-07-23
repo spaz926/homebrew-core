@@ -1,37 +1,34 @@
 class Pyqt3d < Formula
   desc "Python bindings for The Qt Company’s Qt 3D framework"
   homepage "https://www.riverbankcomputing.com/software/pyqt3d/"
-  url "https://files.pythonhosted.org/packages/86/a8/91f76584146250da04d9f2c33355a119279928ed8cfc04a8b1baf9c2c667/PyQt6_3D-6.0.3.tar.gz"
-  sha256 "6981d25d7fe850a036d75c0fb1eb58331d7e1c51eda305b40081d1d2c4db0e82"
+  url "https://files.pythonhosted.org/packages/f7/06/6a2d193f36d2f115fcfaac6375f05737270bc8c133cd259a7a3431c38152/PyQt6_3D-6.1.0.tar.gz"
+  sha256 "8f04ffa5d8ba983434b0b12a63d06e8efab671a0b2002cee761bbd0ef443513c"
   license "GPL-3.0-only"
 
   bottle do
-    sha256 arm64_big_sur: "f7590022b8a3eb011743eb067338922efc5d63869304d496786f906eacf4c705"
-    sha256 big_sur:       "c71968e68258d734b2167e05067342b4ce58716434a19ca26f2880726b352521"
-    sha256 catalina:      "6de6137c50a524ef598367c2850dd4cf05c519bbe0f98b66014ca965dd577d0f"
-    sha256 mojave:        "3e937bc4e4c6f3d188f5ea8fb5eef6b8f6f39446d314e3e29e9f00fb28d6d38f"
+    sha256 cellar: :any, arm64_big_sur: "1ebc992cfbe773992ac78168d35a613188f2ef568e692d73a64b92f4fe783966"
+    sha256 cellar: :any, big_sur:       "dbedfd03a8d1726ef7cd83d4e99134c5b4557b83f49da2fb6079c8375a2b636c"
+    sha256 cellar: :any, catalina:      "b20343bc989fa856da1d932f69d81b4d20b3260340b43d6bc7a8ef6d7b6be44d"
+    sha256 cellar: :any, mojave:        "5d341e8e1b620672694be46288700363c543324cbc93d1f7fa4cc13b66d17874"
   end
 
+  keg_only "pyqt now contains all submodules"
+  disable! date: "2021-06-16", because: "pyqt now contains all submodules"
+
   depends_on "pyqt-builder" => :build
+  depends_on "sip" => :build
 
   depends_on "pyqt"
   depends_on "python@3.9"
   depends_on "qt"
-  depends_on "sip"
 
   def install
     pyqt = Formula["pyqt"]
-    xy = Language::Python.major_minor_version Formula["python@3.9"].opt_bin/"python3"
+    site_packages = Language::Python.site_packages("python3")
 
-    open("pyproject.toml", "a") do |f|
-      f.puts <<~EOS
-        [tool.sip.project]
-        sip-include-dirs = ["#{pyqt.opt_lib}/python#{xy}/site-packages/PyQt#{pyqt.version.major}/bindings"]
-      EOS
-    end
-
-    system "sip-install", "--target-dir", prefix
-    (lib/"python#{xy}/site-packages").install %W[#{prefix}/PyQt#{pyqt.version.major} #{prefix}/PyQt#{pyqt.version.major}_3D-#{version}.dist-info]
+    inreplace "pyproject.toml", "[tool.sip.project]",
+      "[tool.sip.project]\nsip-include-dirs = [\"#{pyqt.prefix/site_packages}/PyQt#{version.major}/bindings\"]\n"
+    system "sip-install", "--target-dir", prefix/site_packages
   end
 
   test do

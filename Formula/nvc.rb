@@ -1,16 +1,15 @@
 class Nvc < Formula
   desc "VHDL compiler and simulator"
   homepage "https://github.com/nickg/nvc"
-  url "https://github.com/nickg/nvc/releases/download/r1.5.0/nvc-1.5.tar.gz"
-  sha256 "4da984ba95eb3b8dd2893fb7a676675de869ff114b827a9f5490dfd54bc95fcb"
+  url "https://github.com/nickg/nvc/releases/download/r1.5.1/nvc-1.5.1.tar.gz"
+  sha256 "2c418a19c60ee91c92865700be53907b8fbfaa3ea64bfc32aed996ed2c55df43"
   license "GPL-3.0-or-later"
-  revision 2
 
   bottle do
-    sha256 arm64_big_sur: "76441135ec856345e43510a1a7da280138a85d9c0cfee5976dd66d765d4baf4e"
-    sha256 big_sur:       "1f2d64225daa270c2914bc24bf9510ee778e3760a287c9d72f1aa6e96eb9ecbe"
-    sha256 catalina:      "35cf1be4eec7f103dd0d77d3a19464e7bbb745bc3dbbf04ccb0edf35ea82c734"
-    sha256 mojave:        "512571d57d7e9e97199941fc0dea8347034d64f750abb000ada7ba9fa5c8f4ea"
+    sha256 arm64_big_sur: "7c05a43adb8e06f4d7c476ee7648c98baf6cba58f964321c9d8035493168e88c"
+    sha256 big_sur:       "d4064f6d3d03798588a886d0c243184169b582d1228f344c97d1d380f4ec6767"
+    sha256 catalina:      "2164b0c823a884279abecb21ed79425cdc910ee472a771f99aa51c5db1134a78"
+    sha256 mojave:        "e6125afeec736628f6f02f3912d8aa0c412049b07b08ca4c2f7a88ca38b194c0"
   end
 
   head do
@@ -31,10 +30,10 @@ class Nvc < Formula
 
   def install
     system "./autogen.sh" if build.head?
-    system "./tools/fetch-ieee.sh"
     system "./configure", "--with-llvm=#{Formula["llvm"].opt_bin}/llvm-config",
                           "--prefix=#{prefix}",
-                          "--with-system-cc=/usr/bin/clang"
+                          "--with-system-cc=/usr/bin/clang",
+                          "--enable-vhpi"
     system "make"
     system "make", "install"
   end

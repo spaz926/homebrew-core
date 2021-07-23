@@ -3,8 +3,8 @@ require "language/node"
 class Hsd < Formula
   desc "Handshake Daemon & Full Node"
   homepage "https://handshake.org"
-  url "https://github.com/handshake-org/hsd/archive/v2.3.0.tar.gz"
-  sha256 "1787d1e35288494724eaf3144bba9e061613048d34b5babd38b6c52995a15a72"
+  url "https://github.com/handshake-org/hsd/archive/v2.4.0.tar.gz"
+  sha256 "8de104d55fd50c458d7a1d3e3fc1fa6e9398b97f9b639416a01b19f853dfcf60"
   license "MIT"
 
   livecheck do
@@ -13,9 +13,9 @@ class Hsd < Formula
   end
 
   bottle do
-    sha256 big_sur:  "33e844aa1841d7492c1b34d9de70242c26ce94ae5c90cc4b82cd319ae73be9e2"
-    sha256 catalina: "5ea75133f88879508221fea5c747b14d4839f4d0892187bec8441f28d347ca1a"
-    sha256 mojave:   "8ad56895ec82c5a673c230c18e3b8def53014cef39cbd6f428292d1405b17da5"
+    sha256 big_sur:  "2d849b6056ad70220df056474d22acc75f67d7393e791de5cd03be373cb38daa"
+    sha256 catalina: "66dc553d9f6889a82ffd8994e7403fd106bc9f388ba9fb29c06ee770739d90ee"
+    sha256 mojave:   "22148799a8b3f468ba46236e9686d0130bbea86b0cc1ed01b1db022ec9dd6e2e"
   end
 
   depends_on "python@3.9" => :build
@@ -44,6 +44,6 @@ class Hsd < Formula
       })();
     EOS
     system "#{Formula["node@10"].opt_bin}/node", testpath/"script.js"
-    assert_true File.directory?("#{testpath}/.hsd")
+    assert File.directory?("#{testpath}/.hsd")
   end
 end

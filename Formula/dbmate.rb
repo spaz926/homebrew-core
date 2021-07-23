@@ -1,16 +1,17 @@
 class Dbmate < Formula
   desc "Lightweight, framework-agnostic database migration tool"
   homepage "https://github.com/amacneil/dbmate"
-  url "https://github.com/amacneil/dbmate/archive/v1.11.0.tar.gz"
-  sha256 "97c017061a6ae1d3f2c614306639990fa0dab656e329a353467f9515ca999bb9"
+  url "https://github.com/amacneil/dbmate/archive/v1.12.1.tar.gz"
+  sha256 "63aaa1ec734e62d52331ee80706b24e9e3abc856a26d8e8289ce9228d38d87c8"
   license "MIT"
   head "https://github.com/amacneil/dbmate.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "466238443d72e6d0f7bcf0c92a977ee34ca7c1003d0f355aae895725fe12be3a"
-    sha256 cellar: :any_skip_relocation, big_sur:       "2ff8a77e409a899dd70559f72a8e8501df068ef6c6f1095f3ac1f28b0122c241"
-    sha256 cellar: :any_skip_relocation, catalina:      "5223d60533452d4ddb6d9d140418f74b263fec8ea000cda0f9c1757b4c2dddef"
-    sha256 cellar: :any_skip_relocation, mojave:        "547cad2cb3074d94999ddc6e3fc0a4b3000a0e91287bfb5192ce74fe89ca62e4"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "a7e44584e98abac0f1ee3724238308cc320de4d80ef8bc161727392c948a1b32"
+    sha256 cellar: :any_skip_relocation, big_sur:       "24765d6c4a62dbe0da38fadece43cd5370496187b1c0cc8f46c385155aad2d27"
+    sha256 cellar: :any_skip_relocation, catalina:      "20c977cf5fd8c4770eed868e1143b2b4faa1897f94628fb325a535b62745912c"
+    sha256 cellar: :any_skip_relocation, mojave:        "daabcc8391777571779235dd6bb86a04b8a8505ca64efd3c8c8c4aa455faa925"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6c9044a1ed9432cd4f370d60a726dbb0282d3f6c3d5014d4eae5d6d7d7ecef2c"
   end
 
   depends_on "go" => :build

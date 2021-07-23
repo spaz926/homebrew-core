@@ -11,41 +11,19 @@ class Beanstalkd < Formula
     sha256 cellar: :any_skip_relocation, catalina:      "eb308ce225c6f335a5a27518b63f8ce70caa263e94afbb7d9c2bb9000c12d974"
     sha256 cellar: :any_skip_relocation, mojave:        "da06f9b4142a163f26de89e5d67c729fd4edd9fbd2dcf3ada91507f92f45ec93"
     sha256 cellar: :any_skip_relocation, high_sierra:   "d57a1db5de295181c1f5596951160cc65b7f27645806fb35834f6409cbc57a6e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0a15f72d4f8afb377d6610eb9c1a1e1c0006c080807fadd9ca05cc02360fa533"
   end
 
   def install
     system "make", "install", "PREFIX=#{prefix}"
   end
 
-  plist_options manual: "beanstalkd"
-
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-        <dict>
-          <key>KeepAlive</key>
-          <true/>
-          <key>Label</key>
-          <string>#{plist_name}</string>
-          <key>ProgramArguments</key>
-          <array>
-            <string>#{opt_bin}/beanstalkd</string>
-          </array>
-          <key>RunAtLoad</key>
-          <true/>
-          <key>KeepAlive</key>
-          <true/>
-          <key>WorkingDirectory</key>
-          <string>#{var}</string>
-          <key>StandardErrorPath</key>
-          <string>#{var}/log/beanstalkd.log</string>
-          <key>StandardOutPath</key>
-          <string>#{var}/log/beanstalkd.log</string>
-        </dict>
-      </plist>
-    EOS
+  service do
+    run opt_bin/"beanstalkd"
+    keep_alive true
+    working_dir var
+    log_path var/"log/beanstalkd.log"
+    error_log_path var/"log/beanstalkd.log"
   end
 
   test do

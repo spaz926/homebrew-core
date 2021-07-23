@@ -10,6 +10,7 @@ class E2fsprogs < Formula
     "BSD-3-Clause",      # lib/uuid
     "MIT",               # lib/et, lib/ss
   ]
+  revision 1
   head "https://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git"
 
   livecheck do
@@ -18,10 +19,11 @@ class E2fsprogs < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "1e0cdd0fdb3195c51b5c8945ee6940831c996b7a43bed64ae44793eedec30f5b"
-    sha256 big_sur:       "5867593150f8074619181fb886e614d799be0fa241e579875593e8c4cadcd900"
-    sha256 catalina:      "567cf6795aebc06c1f1d99051800bcd55195061062398bad92049a38bb343890"
-    sha256 mojave:        "fd0cb15c18294ce9072377f0833b73302011efc1087c9fdc4fce3e730839c717"
+    sha256 arm64_big_sur: "5b854e0ccf3d4455570b84e1a4694d6a5f3ea6cc8d80a3b5356ebec32eafa63b"
+    sha256 big_sur:       "d3337fe5a93d5b47e93cb353f08027a5d9c83f7729cddfed7804fc1479138f89"
+    sha256 catalina:      "af4cc5453ef9c0a2d19a157657d4c09212b0632d7cfc2cb2279d45e9212aa2d2"
+    sha256 mojave:        "d2cec63941cae2d21631eb5d4e486f46736a98a4f3dfe86e3dae6b9cd7bf7ba5"
+    sha256 x86_64_linux:  "74e93b5a2932db3116ff1912bff5a8b72605a3cdd4c0eba3640c669b70a8ee8e"
   end
 
   keg_only "this installs several executables which shadow macOS system commands"
@@ -37,10 +39,25 @@ class E2fsprogs < Formula
     # Enforce MKDIR_P to work around a configure bug
     # see https://github.com/Homebrew/homebrew-core/pull/35339
     # and https://sourceforge.net/p/e2fsprogs/discussion/7053/thread/edec6de279/
-    system "./configure", "--prefix=#{prefix}", "--disable-e2initrd-helper",
-                          "MKDIR_P=mkdir -p"
+    args = [
+      "--prefix=#{prefix}",
+      "--disable-e2initrd-helper",
+      "MKDIR_P=mkdir -p",
+    ]
+    on_macos do
+      args << "--enable-bsd-shlibs" unless Hardware::CPU.arm?
+    end
+    on_linux do
+      args << "--enable-elf-shlibs"
+    end
+
+    system "./configure", *args
 
     system "make"
+
+    # Fix: lib/libcom_err.1.1.dylib: No such file or directory
+    ENV.deparallelize
+
     system "make", "install"
     system "make", "install-libs"
   end

@@ -4,6 +4,11 @@ class Cdb < Formula
   url "https://cr.yp.to/cdb/cdb-0.75.tar.gz"
   sha256 "1919577799a50c080a8a05a1cbfa5fa7e7abc823d8d7df2eeb181e624b7952c5"
 
+  livecheck do
+    url "https://cr.yp.to/cdb/install.html"
+    regex(/href=.*?cdb[._-]v?(\d+(?:\.\d+)+)\.t/i)
+  end
+
   bottle do
     rebuild 2
     sha256 cellar: :any_skip_relocation, arm64_big_sur: "c9136d67f3a62785add35b9b205169b9ace86da2c86edf4fe1c16cb833465bf5"
@@ -14,7 +19,6 @@ class Cdb < Formula
     sha256 cellar: :any_skip_relocation, sierra:        "16b08929c8c42feeb2df4eaed5b46967eca487aaa20585dc5869ba44a28f0fe8"
     sha256 cellar: :any_skip_relocation, el_capitan:    "ac5a34c222875d86113275127632fe02ccc15c0332c7719cdac8321aa0f83bc4"
     sha256 cellar: :any_skip_relocation, yosemite:      "4181f08e221e9cebd1cb9f7dd0082fef86d8f8571831491464340b68be238186"
-    sha256 cellar: :any_skip_relocation, mavericks:     "e0be7db3074bc27f430c2b7536b4f3676cafc9d7e574971cdb592340be0fec06"
   end
 
   def install

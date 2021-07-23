@@ -10,7 +10,9 @@ class Xmlsectool < Formula
     regex(/href=.*?xmlsectool[._-]v?(\d+(?:\.\d+)+)(?:-bin)?\.zip/i)
   end
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "08f56219830aaf82a142dd338e4fd6ebc48f48ade7cc1a23646d78cc7ca7d48f"
+  end
 
   depends_on "openjdk"
 

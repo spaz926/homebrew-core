@@ -1,8 +1,8 @@
 class WireguardGo < Formula
   desc "Userspace Go implementation of WireGuard"
   homepage "https://www.wireguard.com/"
-  url "https://git.zx2c4.com/wireguard-go/snapshot/wireguard-go-0.0.20210323.tar.xz"
-  sha256 "88e864b28bbf4502bbef71c7a8483921f7888fdb09cff1dbc90e9551e1ab5e24"
+  url "https://git.zx2c4.com/wireguard-go/snapshot/wireguard-go-0.0.20210424.tar.xz"
+  sha256 "0f9a7c0657e6119d317a0bab453aeb5140111b186ae10f62cfa081eecf2f03ba"
   license "MIT"
   head "https://git.zx2c4.com/wireguard-go.git"
 
@@ -12,10 +12,11 @@ class WireguardGo < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "0e0a94eddadcf4fb2f62e0dca50c3a882059812c62c142d9f1887bd5d07d1918"
-    sha256 cellar: :any_skip_relocation, big_sur:       "131da2ebc99a2ffd47bbb72a785eb9652dabb5b060c359d8bdfac5f4c16cbe89"
-    sha256 cellar: :any_skip_relocation, catalina:      "23993db691d81f3b0ff8013f3f8c73d16e28e33a3dd80f3ddd7a297514e5ad6f"
-    sha256 cellar: :any_skip_relocation, mojave:        "c3add9aa99b757e456d941a59bd49845bc888de70bc630eb52504682a0498aea"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "2b5cecc46c8cb3358a10768cd638fefab905dfb66f1ec151af64ce27d152f474"
+    sha256 cellar: :any_skip_relocation, big_sur:       "9f3812acc99aaf982518460b33d67930b824e8e86bfd00e9303dd0fb7e94cd74"
+    sha256 cellar: :any_skip_relocation, catalina:      "7067cc06c22612f886694f5471b1b7b7d196f9047c1939745f8140d5b1695f1f"
+    sha256 cellar: :any_skip_relocation, mojave:        "be446fceccc238dbfe68c3c23cb03feb1e911245934bba66007c263bfeb9114c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "93b2808f28f71bc2dca45268cd82a86db23b9f9264df87e0946eef577b62d984"
   end
 
   depends_on "go" => :build
@@ -33,7 +34,7 @@ class WireguardGo < Formula
     end
 
     on_linux do
-      assert_match "Running this software on Linux is unnecessary", pipe_output(prog)
+      assert_match "Running wireguard-go is not required because this", pipe_output(prog)
     end
   end
 end

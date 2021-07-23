@@ -6,16 +6,15 @@ class Bcoin < Formula
   url "https://github.com/bcoin-org/bcoin/archive/v2.1.2.tar.gz"
   sha256 "b4c63598ee1efc17e4622ef88c1dff972692da1157e8daf7da5ea8abc3d234df"
   license "MIT"
-  revision 2
+  revision 4
   head "https://github.com/bcoin-org/bcoin.git"
 
   bottle do
-    rebuild 1
-    sha256 arm64_big_sur: "f401dfcda058e68165418880973b275201dd372734fb866de7a51f6a48c0e6ce"
-    sha256 big_sur:       "18e9b1f2074c5c98b15cb118b72a6104db12e9c80bc56d4c74374d86f394dece"
-    sha256 catalina:      "3f46d506838e38420dc9ed5bd5b8c5c3ae8038bea02fad83f36f1ed36cda9046"
-    sha256 mojave:        "5adbc476b4e3ef00c5e8fe7fc1554a891b4a3b09bd5d318103d0ac44f7540d80"
-    sha256 high_sierra:   "c4bdb0a86a7fbfce14261af58ab4954c93f2eba09806a6933959fdfe8698878d"
+    sha256                               arm64_big_sur: "03cd2231a1a9761a6e55696ac3285930b18193a390a4e327227e0ed71c4ad350"
+    sha256                               big_sur:       "f5ea48d98b345f76dba628c6fca49f1202e214a8ed265109d898716b689198f4"
+    sha256                               catalina:      "cbc374b70e39ec6954a58f1c69cfb357121df495da3e2e5b51d6ce590b35de92"
+    sha256                               mojave:        "4e8b2f111b3643712058823c9af5c1650ce64c7d5757e30c1c58d3d34dcac8ec"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "46f97e509af3ecc06af837d1f6d5987f3da8026cb280f9641736b840d7ad8b89"
   end
 
   depends_on "python@3.9" => :build
@@ -41,6 +40,6 @@ class Bcoin < Formula
       })();
     EOS
     system "#{Formula["node"].bin}/node", testpath/"script.js"
-    assert_true File.directory?("#{testpath}/.bcoin")
+    assert File.directory?("#{testpath}/.bcoin")
   end
 end

@@ -3,43 +3,43 @@ class Grokmirror < Formula
 
   desc "Framework to smartly mirror git repositories"
   homepage "https://github.com/mricon/grokmirror"
-  url "https://files.pythonhosted.org/packages/8c/27/cdbb5f2b6ad0561e5c8b0559579ec4bb31fec0092828babc0d16800b261f/grokmirror-2.0.8.tar.gz"
-  sha256 "a6b9cdba41395970c50fd390b9552c6ae277e256a4fcaf73eab994e882bf7a49"
+  url "https://files.pythonhosted.org/packages/c0/b1/36ae8acf7c9ec4a6afc5383e7dc0fed47596f51d8725ff367161523215bb/grokmirror-2.0.9.tar.gz"
+  sha256 "d6a45827f47ee66322a96462458bf9d285eb00be22d1a9ac7156fd056a2314af"
   license "GPL-3.0-or-later"
   head "https://github.com/mricon/grokmirror.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "b6363942b0ba4f4cd74100b125aeab6eb2566d9998ce5e386a40d796e8b4a9e7"
-    sha256 cellar: :any_skip_relocation, big_sur:       "465221e24931ce248d415966c5d7f40501b19214b5d733865f9e8fcecba5689e"
-    sha256 cellar: :any_skip_relocation, catalina:      "b4f9c7834a77322157a80a591c5dce404108c4f1d234d1bf5dfce68a5299f941"
-    sha256 cellar: :any_skip_relocation, mojave:        "3b09035c635f2c77bbefd5c419ef3c878df175629ac8d6940d96c72a47f8c177"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "e467d1b7970d20f0790e9493520e8d3eafe1330dc6c168bdec1ebc49baeaa05c"
+    sha256 cellar: :any_skip_relocation, big_sur:       "c19426f48eebc2b4e47c14103c3f56be3b3ad9211d3b74617d90dcf6d71e9d31"
+    sha256 cellar: :any_skip_relocation, catalina:      "c19426f48eebc2b4e47c14103c3f56be3b3ad9211d3b74617d90dcf6d71e9d31"
+    sha256 cellar: :any_skip_relocation, mojave:        "c19426f48eebc2b4e47c14103c3f56be3b3ad9211d3b74617d90dcf6d71e9d31"
   end
 
   depends_on "python@3.9"
 
   resource "certifi" do
-    url "https://files.pythonhosted.org/packages/06/a9/cd1fd8ee13f73a4d4f491ee219deeeae20afefa914dfb4c130cfc9dc397a/certifi-2020.12.5.tar.gz"
-    sha256 "1a4995114262bffbc2413b159f2a1a480c969de6e6eb13ee966d470af86af59c"
+    url "https://files.pythonhosted.org/packages/6d/78/f8db8d57f520a54f0b8a438319c342c61c22759d8f9a1cd2e2180b5e5ea9/certifi-2021.5.30.tar.gz"
+    sha256 "2bbf76fd432960138b3ef6dda3dde0544f27cbf8546c458e60baf371917ba9ee"
   end
 
-  resource "chardet" do
-    url "https://files.pythonhosted.org/packages/ee/2d/9cdc2b527e127b4c9db64b86647d567985940ac3698eeabc7ffaccb4ea61/chardet-4.0.0.tar.gz"
-    sha256 "0d6f53a15db4120f2b08c94f11e7d93d2c911ee118b6b30a04ec3ee8310179fa"
+  resource "charset-normalizer" do
+    url "https://files.pythonhosted.org/packages/45/ab/74c77cf4590dfc846c101aee617f390ae679500630dd806b07f1a8e27b7b/charset-normalizer-2.0.1.tar.gz"
+    sha256 "ad0da505736fc7e716a8da15bf19a985db21ac6415c26b34d2fafd3beb3d927e"
   end
 
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/ea/b7/e0e3c1c467636186c39925827be42f16fee389dc404ac29e930e9136be70/idna-2.10.tar.gz"
-    sha256 "b307872f855b18632ce0c21c5e45be78c0ea7ae4c15c828c20788b26921eb3f6"
+    url "https://files.pythonhosted.org/packages/cb/38/4c4d00ddfa48abe616d7e572e02a04273603db446975ab46bbcd36552005/idna-3.2.tar.gz"
+    sha256 "467fbad99067910785144ce333826c71fb0e63a425657295239737f7ecd125f3"
   end
 
   resource "requests" do
-    url "https://files.pythonhosted.org/packages/6b/47/c14abc08432ab22dc18b9892252efaf005ab44066de871e72a38d6af464b/requests-2.25.1.tar.gz"
-    sha256 "27973dd4a904a4f13b263a19c866c13b92a39ed1c964655f025f3f8d3d75b804"
+    url "https://files.pythonhosted.org/packages/e7/01/3569e0b535fb2e4a6c384bdbed00c55b9d78b5084e0fb7f4d0bf523d7670/requests-2.26.0.tar.gz"
+    sha256 "b8aa58f8cf793ffd8782d3d8cb19e66ef36f7aba4353eec859e74678b01b07a7"
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/d7/8d/7ee68c6b48e1ec8d41198f694ecdc15f7596356f2ff8e6b1420300cf5db3/urllib3-1.26.3.tar.gz"
-    sha256 "de3eedaad74a2683334e282005cd8d7f22f4d55fa690a2a1020a416cb0a47e73"
+    url "https://files.pythonhosted.org/packages/4f/5a/597ef5911cb8919efe4d86206aa8b2658616d676a7088f0825ca08bd7cb8/urllib3-1.26.6.tar.gz"
+    sha256 "f57b4c16c62fa2760b7e3d97c35b255512fb6b59a259730f36ba32ce9f8e342f"
   end
 
   def install

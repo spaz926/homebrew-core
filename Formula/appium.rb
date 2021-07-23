@@ -3,16 +3,16 @@ require "language/node"
 class Appium < Formula
   desc "Automation for Apps"
   homepage "https://appium.io/"
-  url "https://registry.npmjs.org/appium/-/appium-1.20.2.tgz"
-  sha256 "a707dc2f21890774b289d87a35caf5e4ca1211d794cbb4daa1b4a82174c6ab43"
+  url "https://registry.npmjs.org/appium/-/appium-1.21.0.tgz"
+  sha256 "8d61454f8f969260aecc1f46f4ca0123c55c2fbe4ecd3303d095ec90ecd3dc4f"
   license "Apache-2.0"
   head "https://github.com/appium/appium.git"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "73c0488d2b56b71fa63c6ac64cf3907ba3af4af58edc1eb32501f15dcca98746"
-    sha256 cellar: :any, big_sur:       "041e871dbb940d86bf7ca1c389ffd1ee4edfbebbe33e050c2c9ce614b06040f7"
-    sha256 cellar: :any, catalina:      "e37ee0e06e21738b0cd4b3e30ceb3699dfc2adaf310fe672d7178b9e7263dad8"
-    sha256 cellar: :any, mojave:        "272492e72dda7b421261a7197fb77dc07fcbb63f01692485cc3b94201d7afb64"
+    sha256 cellar: :any, arm64_big_sur: "4dd71c228058ccb1d8d5228bfe2e185f56b6bf3319bc0eb7a869063061a5d865"
+    sha256 cellar: :any, big_sur:       "23444487c2d7cf59ac07501c52fe8a93811176242d7a46c4a24fa28fe00cf8a6"
+    sha256 cellar: :any, catalina:      "23444487c2d7cf59ac07501c52fe8a93811176242d7a46c4a24fa28fe00cf8a6"
+    sha256 cellar: :any, mojave:        "23444487c2d7cf59ac07501c52fe8a93811176242d7a46c4a24fa28fe00cf8a6"
   end
 
   depends_on "node"
@@ -24,36 +24,14 @@ class Appium < Formula
 
   plist_options manual: "appium"
 
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-        <dict>
-          <key>KeepAlive</key>
-          <true/>
-          <key>RunAtLoad</key>
-          <true/>
-          <key>Label</key>
-          <string>#{plist_name}</string>
-          <key>ProgramArguments</key>
-          <array>
-            <string>#{bin}/appium</string>
-          </array>
-          <key>EnvironmentVariables</key>
-          <dict>
-            <key>PATH</key>
-            <string>#{HOMEBREW_PREFIX}/bin:#{HOMEBREW_PREFIX}/sbin:/usr/bin:/bin:/usr/sbin:/sbin</string>
-          </dict>
-          <key>WorkingDirectory</key>
-          <string>#{var}</string>
-          <key>StandardErrorPath</key>
-          <string>#{var}/log/appium-error.log</string>
-          <key>StandardOutPath</key>
-          <string>#{var}/log/appium.log</string>
-        </dict>
-      </plist>
-    EOS
+  service do
+    run opt_bin/"appium"
+    environment_variables PATH: std_service_path_env
+    run_type :immediate
+    keep_alive true
+    error_log_path var/"log/appium-error.log"
+    log_path var/"log/appium.log"
+    working_dir var
   end
 
   test do

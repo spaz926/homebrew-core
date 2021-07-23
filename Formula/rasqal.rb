@@ -1,8 +1,13 @@
 class Rasqal < Formula
   desc "RDF query library"
-  homepage "http://librdf.org/rasqal/"
-  url "http://download.librdf.org/source/rasqal-0.9.33.tar.gz"
+  homepage "https://librdf.org/rasqal/"
+  url "https://download.librdf.org/source/rasqal-0.9.33.tar.gz"
   sha256 "6924c9ac6570bd241a9669f83b467c728a322470bf34f4b2da4f69492ccfd97c"
+
+  livecheck do
+    url :homepage
+    regex(/href=.*?rasqal[._-]v?(\d+(?:\.\d+)+)\.t/i)
+  end
 
   bottle do
     sha256 cellar: :any, arm64_big_sur: "36d9d4a210921573c1cad68bc17bf0d0fced251de091855ce1b61cefc64a37c8"
@@ -13,7 +18,6 @@ class Rasqal < Formula
     sha256 cellar: :any, sierra:        "8d57d6803a7323f9e13c45d56b3cea41f71f7dc7cab493ddf9b34d0a2a6b68f5"
     sha256 cellar: :any, el_capitan:    "fa7368eb30256eb80ead76f7b551bc5980ed15ae8aa655d332a200edb073c2a3"
     sha256 cellar: :any, yosemite:      "c84ec1a4c837b4a30fe597c9cc728f5075764b87978c5977757e2836db3eca0b"
-    sha256 cellar: :any, mavericks:     "8bef11d9b2763b72cb5576926bd251175c2b0c4c7dec6ffc666f98720341ba27"
   end
 
   depends_on "pkg-config" => :build

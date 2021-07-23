@@ -1,8 +1,8 @@
 class Jack < Formula
   desc "Audio Connection Kit"
   homepage "https://jackaudio.org/"
-  url "https://github.com/jackaudio/jack2/archive/v1.9.17.tar.gz"
-  sha256 "38f674bbc57852a8eb3d9faa1f96a0912d26f7d5df14c11005ad499c8ae352f2"
+  url "https://github.com/jackaudio/jack2/archive/v1.9.19.tar.gz"
+  sha256 "9030f4dc11773351b6ac96affd9c89803a5587ebc1b091e5ff866f433327e4b0"
   license "GPL-2.0-or-later"
 
   livecheck do
@@ -11,10 +11,10 @@ class Jack < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "30c242528a4d4995027685b6a9dbe0ef588101d8a77449f8b4d0efc11fda4fe0"
-    sha256 big_sur:       "63d190108f0d1265b3e2fa25118bbe1c993dbbf4922fff9d04d6ee1d786eb4bd"
-    sha256 catalina:      "526aa853b3738080f6710f957cb213e0ba313f6045270e08ffef775ddea30c3a"
-    sha256 mojave:        "8f3a34b8bb3406174b1c1e2d5f377ec85dec41372f3c772dac4abbde80d18a92"
+    sha256 arm64_big_sur: "cf18a780331e9c43a8ed6ecd26424ebbdffd601d70d02ce785cb33e808833d6d"
+    sha256 big_sur:       "ec0cff191b694dc9b41d1a4e79d954609d1504a60041be12690c5819f4ece9e2"
+    sha256 catalina:      "726a9eb19a6dd938d6869810b22cfcd8a0645a42978c5fc1aeba4bb5f9c42ba1"
+    sha256 mojave:        "120bad55e3a9649ec92a78f847ff0cbfcc2d46508c40dd5a93b314adef809cb0"
   end
 
   depends_on "autoconf" => :build
@@ -82,7 +82,7 @@ class Jack < Formula
     end
     midi_sink = IO.popen "#{bin}/jack_midi_dump #{sink_name}"
     sleep 1
-    system "#{bin}/jack_connect #{source_name}:out #{sink_name}:input"
+    system "#{bin}/jack_connect", "#{source_name}:out", "#{sink_name}:input"
     sleep 1
     Process.kill "TERM", midi_sink.pid
 

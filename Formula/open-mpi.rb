@@ -1,26 +1,10 @@
 class OpenMpi < Formula
   desc "High performance message passing library"
   homepage "https://www.open-mpi.org/"
+  url "https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.1.tar.bz2"
+  sha256 "e24f7a778bd11a71ad0c14587a7f5b00e68a71aa5623e2157bafee3d44c07cda"
   license "BSD-3-Clause"
-
-  stable do
-    url "https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.0.tar.bz2"
-    sha256 "73866fb77090819b6a8c85cb8539638d37d6877455825b74e289d647a39fd5b5"
-
-    if Hardware::CPU.arm?
-      # Dependencies needed for patch. Remove at next release.
-      depends_on "autoconf" => :build
-      depends_on "automake" => :build
-      depends_on "libtool" => :build
-
-      # Patch to fix ARM build. Remove at next release.
-      # https://github.com/open-mpi/ompi/pull/8421
-      patch do
-        url "https://github.com/open-mpi/ompi/commit/4779d8e079314ffd4556e3cb3289fecd07646cc5.patch?full_index=1"
-        sha256 "0553ffcc813919ee06937156073fc18ef6b55fa58201a9cba5168f35f7040c66"
-      end
-    end
-  end
+  revision 2
 
   livecheck do
     url :homepage
@@ -28,10 +12,11 @@ class OpenMpi < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "1a32070a050b640c3340fa373646616e24c08bb766a48ccc9c3acd96a17f2cad"
-    sha256 big_sur:       "cd22187eefe00b41be67b2abb748d0a1423034263dd6c0675d09bf800362f2f8"
-    sha256 catalina:      "66dc67fc6a8541ef9f8fc4fc67086ab792b229defc2723101fb55fcecb2bf563"
-    sha256 mojave:        "646305d4e1973750c88d0f08b7242517959143b632a08336b5f10195b8a8caed"
+    sha256 arm64_big_sur: "c24af00250fad2b097822d0d6e51f1027915e375dcbc0590b385b30ef8af6453"
+    sha256 big_sur:       "da310195e62c1a27aea7365b325cb15dd48f99dd673fd1f685f8b5247cfbb48d"
+    sha256 catalina:      "27f25156376078df9cb6e41a57c370cb030f16092ee7dfe85d7a8000f252240e"
+    sha256 mojave:        "4d57102ec2e06043bc97d34130ae5cd9115a6a1718331476f5fbd71d8bef149e"
+    sha256 x86_64_linux:  "0c6558437eedbf31810f41163ddff64c610ec5d5065bb4080e2559961ab3668d"
   end
 
   head do
@@ -81,14 +66,13 @@ class OpenMpi < Formula
       --disable-dependency-tracking
       --disable-silent-rules
       --enable-ipv6
-      --enable-mca-no-build=op-avx,reachable-netlink
+      --enable-mca-no-build=reachable-netlink
       --with-libevent=#{Formula["libevent"].opt_prefix}
       --with-sge
     ]
     args << "--with-platform-optimized" if build.head?
 
-    # Remove ` || Hardware::CPU.arm?` in the next release
-    system "./autogen.pl", "--force" if build.head? || Hardware::CPU.arm?
+    system "./autogen.pl", "--force" if build.head?
     system "./configure", *args
     system "make", "all"
     system "make", "check"

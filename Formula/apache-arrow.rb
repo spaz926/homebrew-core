@@ -1,18 +1,19 @@
 class ApacheArrow < Formula
   desc "Columnar in-memory analytics layer designed to accelerate big data"
   homepage "https://arrow.apache.org/"
-  url "https://www.apache.org/dyn/closer.lua?path=arrow/arrow-3.0.0/apache-arrow-3.0.0.tar.gz"
-  mirror "https://archive.apache.org/dist/arrow/arrow-3.0.0/apache-arrow-3.0.0.tar.gz"
-  sha256 "73c2cc3be537aa1f3fd9490cfec185714168c9bfd599d23e287ab0cc0558e27a"
+  url "https://www.apache.org/dyn/closer.lua?path=arrow/arrow-4.0.1/apache-arrow-4.0.1.tar.gz"
+  mirror "https://archive.apache.org/dist/arrow/arrow-4.0.1/apache-arrow-4.0.1.tar.gz"
+  sha256 "75ccbfa276b925c6b1c978a920ff2f30c4b0d3fdf8b51777915b6f69a211896e"
   license "Apache-2.0"
-  revision 4
+  revision 2
   head "https://github.com/apache/arrow.git"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "64f82d9bdc476fe3cc6a201de3983cd3c1177ac6fd038918ea36b1771d297120"
-    sha256 cellar: :any, big_sur:       "8261f65e35b902389be6a40ff3734cbec6afdfa06a5732292f75cc7e0b068f8a"
-    sha256 cellar: :any, catalina:      "ad81da9f96a7a6d5efa5c0eea5403c47eaec53fe54d1cb8e922a3d0ff7ceeb00"
-    sha256 cellar: :any, mojave:        "60c0e8f79baaa38228ba30bfae9ad6b98dc754633a949eda69d5a10fd61245ee"
+    sha256 cellar: :any,                 arm64_big_sur: "8a6a94755fa92f764f313dfd45a337b14ea9dfaef5a141188a38450645451aae"
+    sha256 cellar: :any,                 big_sur:       "9e9ce4de62c9e8dab1ebf1ab7f58636fcb65607ceddf11833d40a7d1a9f867fc"
+    sha256 cellar: :any,                 catalina:      "3848f588cfa2abdef9f09fa4b525b8efb7dfd499d76f7039e292adfe4c3d2246"
+    sha256 cellar: :any,                 mojave:        "4548162fe83109277453c4904ff35e409818a6ba31f4a071e54da3e0ba6d6be2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4d7e4bacc78423f89ef828213257a778742667d2e19647e7d56b3af54ef4dc76"
   end
 
   depends_on "boost" => :build
@@ -30,16 +31,13 @@ class ApacheArrow < Formula
   depends_on "re2"
   depends_on "snappy"
   depends_on "thrift"
+  depends_on "utf8proc"
   depends_on "zstd"
 
-  # Remove in next version
-  # https://github.com/apache/arrow/pull/9542
-  patch do
-    url "https://github.com/apache/arrow/commit/06c795c948b594c16d3a48289519ce036a285aad.patch?full_index=1"
-    sha256 "732845543b67289d1d462ebf6e87117ac72104047c6747e189a76d09840bc23f"
-  end
-
   def install
+    # https://github.com/Homebrew/homebrew-core/issues/76537
+    ENV.runtime_cpu_detection if Hardware::CPU.intel?
+
     # link against system libc++ instead of llvm provided libc++
     ENV.remove "HOMEBREW_LIBRARY_PATHS", Formula["llvm"].opt_lib
     args = %W[
@@ -58,9 +56,12 @@ class ApacheArrow < Formula
       -DARROW_WITH_LZ4=ON
       -DARROW_WITH_SNAPPY=ON
       -DARROW_WITH_BROTLI=ON
+      -DARROW_WITH_UTF8PROC=ON
       -DARROW_INSTALL_NAME_RPATH=OFF
       -DPYTHON_EXECUTABLE=#{Formula["python@3.9"].bin/"python3"}
     ]
+
+    args << "-DARROW_MIMALLOC=ON" unless Hardware::CPU.arm?
 
     mkdir "build" do
       system "cmake", "../cpp", *std_cmake_args, *args

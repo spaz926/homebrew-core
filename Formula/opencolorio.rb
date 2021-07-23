@@ -1,17 +1,18 @@
 class Opencolorio < Formula
   desc "Color management solution geared towards motion picture production"
   homepage "https://opencolorio.org/"
-  url "https://github.com/imageworks/OpenColorIO/archive/v2.0.0.tar.gz"
-  sha256 "b407afcbcaecad8409545857796b9b6e27b0be0c85f2b9e7aa7d251bdc3a4416"
+  url "https://github.com/imageworks/OpenColorIO/archive/v2.0.1.tar.gz"
+  sha256 "ff1397b4516fdecd75096d5b575d6a23771d0c876bbcfc7beb5a82af37adcdf9"
   license "BSD-3-Clause"
   head "https://github.com/imageworks/OpenColorIO.git"
 
   bottle do
     rebuild 1
-    sha256 arm64_big_sur: "3f501b862fd81a38e3395b74cea1c315222cae167d218bf29e9781880b40bc60"
-    sha256 big_sur:       "cac7814fd18e6b7bfafc5e00a2b0bd82ff31bc8c93b80fb6d50b5c89816081b8"
-    sha256 catalina:      "f421a922c08d79d16cb3b13a0bd5e89391b532d3d4f4bd673a265d01c21913da"
-    sha256 mojave:        "f1300eca64637ad73adbfb2d3a77e59d65b5eae008fbbf4676d30555636f645e"
+    sha256 cellar: :any,                 arm64_big_sur: "ff7921b54ca7e0589fff3dbf2e8f2b071b0f503f1657f4963d80749a8c5aedf0"
+    sha256 cellar: :any,                 big_sur:       "94fc18f52a783c11afd946c72b100bf16d570767d5934b245c03cabb3f9de715"
+    sha256 cellar: :any,                 catalina:      "8dcc8e3561f9e564239366ed88a2488b36af37c022e8b98f94e2d6cb1e718bde"
+    sha256 cellar: :any,                 mojave:        "c0fa4803986b6960a3a3578f6e453428864eff5fb7ed5f51fd6c505258cc0ca5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "08c2c289893682d242e35d91bde98fab3cf11de92f1e4bae4ad64c34c4b4ce62"
   end
 
   depends_on "cmake" => :build
@@ -22,7 +23,7 @@ class Opencolorio < Formula
   def install
     args = std_cmake_args + %W[
       -DCMAKE_VERBOSE_MAKEFILE=OFF
-      -DCMAKE_INSTALL_RPATH=#{lib}
+      -DCMAKE_INSTALL_RPATH=#{rpath}
       -DPYTHON=python3
       -DPYTHON_EXECUTABLE=#{Formula["python@3.9"].opt_bin}/"python3"
     ]

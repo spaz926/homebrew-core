@@ -1,29 +1,38 @@
 class Exim < Formula
   desc "Complete replacement for sendmail"
   homepage "https://exim.org"
-  url "https://ftp.exim.org/pub/exim/exim4/exim-4.94.tar.xz"
-  mirror "https://dl.bintray.com/homebrew/mirror/exim-4.94.tar.xz"
-  sha256 "f77ee8faf04f5db793243c3ae81c1f4e452cd6ad7dd515a80edf755c4b144bdb"
-  license "GPL-2.0"
+  url "https://ftp.exim.org/pub/exim/exim4/exim-4.94.2.tar.xz"
+  sha256 "051861fc89f06205162f12129fb7ebfe473383bb6194bf8642952bfd50329274"
+  license "GPL-2.0-or-later"
 
-  # The upstream download page at https://ftp.exim.org/pub/exim/exim4/ places
-  # maintenance releases (e.g., 4.93.0.4) in a separate "fixes" subdirectory.
-  # As a result, we can't create a check that finds both the main releases
-  # (e.g., 4.93) and the aforementioned maintenance releases. The Git repo tags
-  # seem to be the best solution currently and we're using the GitHub mirror
-  # below since the upstream repo (git://git.exim.org/exim.git) doesn't work
-  # over https.
+  # Maintenance releases are kept in a `fixes` subdirectory, so it's necessary
+  # to check both the main `exim4` directory and the `fixes` subdirectory to
+  # identify the latest version.
   livecheck do
-    url "https://github.com/Exim/exim.git"
-    regex(/^exim[._-]v?(\d+(?:\.\d+)+)$/i)
+    url "https://ftp.exim.org/pub/exim/exim4/"
+    regex(/href=.*?exim[._-]v?(\d+(?:\.\d+)+)\.t/i)
+    strategy :page_match do |page, regex|
+      # Match versions from files in the `exim4` directory
+      versions = page.scan(regex).flatten.uniq
+
+      # Return versions if a `fixes` subdirectory isn't present
+      next versions if page.match(%r{href=["']?fixes/?["' >]}i).blank?
+
+      # Fetch the page for the `fixes` directory
+      fixes_page = Homebrew::Livecheck::Strategy.page_content(URI.join(@url, "fixes").to_s)
+      next versions if fixes_page[:content].blank?
+
+      # Match maintenance releases and add them to the versions array
+      versions += fixes_page[:content].scan(regex).flatten
+      versions
+    end
   end
 
   bottle do
-    rebuild 1
-    sha256 arm64_big_sur: "bf56cde1d89c867b6449952cad6cafa0e84ea8d1a44e3321c01d6f8a754a8481"
-    sha256 big_sur:       "e6dd0ac8d655c88f4a774c3ec49852d7502f56c585f83a0edf247b048344eba3"
-    sha256 catalina:      "831aed4b806adb75d3b510531d47f17ae0c38ea9539c608e68e5013c4508bc9f"
-    sha256 mojave:        "a2341adeb6989c905c6f3cdcb3152bba15c76a9d2678e70c7738dd7e8fbc9c9c"
+    sha256 arm64_big_sur: "27beb8798303a6435aa2d66380dda416d525ec9a148885ffc47a0ea854cce61b"
+    sha256 big_sur:       "db5cb6710964ec20b9a3a0f291241cc3ff9580705e2367aac781caeff626508b"
+    sha256 catalina:      "c090fcc24665c6506ec53fbc46d56b24f51783d6e3325b917c833206413be6e8"
+    sha256 mojave:        "5953883752ecffe5defcb5b337feaf8fd2fdce0ad88b0d02bb5f2723ee7b3cdf"
   end
 
   depends_on "berkeley-db@4"

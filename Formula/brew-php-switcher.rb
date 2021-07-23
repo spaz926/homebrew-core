@@ -6,7 +6,9 @@ class BrewPhpSwitcher < Formula
   license "MIT"
   head "https://github.com/philcook/brew-php-switcher.git"
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "ff0c773aa993b39343b501b7d5fca1355249bfce4e4d6a068ea30c6490ddbb7b"
+  end
 
   depends_on "php" => :test
 

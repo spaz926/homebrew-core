@@ -5,6 +5,11 @@ class Minimodem < Formula
   mirror "https://deb.debian.org/debian/pool/main/m/minimodem/minimodem_0.24.orig.tar.gz"
   sha256 "f8cca4db8e3f284d67f843054d6bb4d88a3db5e77b26192410e41e9a06f4378e"
 
+  livecheck do
+    url :homepage
+    regex(/href=.*?minimodem[._-]v?(\d+(?:\.\d+)+)\.t/i)
+  end
+
   bottle do
     sha256 cellar: :any, arm64_big_sur: "659dd378a4d6fc0f96d3752b6fd8303f0f6c79beeb0424fa8456ec33d270fb02"
     sha256 cellar: :any, big_sur:       "09ee4e144cb7484994278cf3698474f9d205fb38d926c1936046c422eb772a99"
@@ -14,7 +19,6 @@ class Minimodem < Formula
     sha256 cellar: :any, sierra:        "224fc001ea92a1df8133680c6eb9b6d659912d5e8ce84e8c12509a671538d8ae"
     sha256 cellar: :any, el_capitan:    "1539133df2fe9f85e8dcdf56e2a62d5ae116861e6dbc3b02e45680fbf8a467a9"
     sha256 cellar: :any, yosemite:      "ac39bf2ca304ce0f513a037193aca0850cf3cafddf17cd40a2ac047e5f051db7"
-    sha256 cellar: :any, mavericks:     "bbd84e83ce1e3a2f7f257d5c8b5fafd998187aeeb78b5d98eeb4ca97fc90d00e"
   end
 
   depends_on "pkg-config" => :build

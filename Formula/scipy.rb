@@ -1,18 +1,21 @@
 class Scipy < Formula
   desc "Software for mathematics, science, and engineering"
   homepage "https://www.scipy.org"
-  url "https://files.pythonhosted.org/packages/26/68/84dbe18583e79e56e4cee8d00232a8dd7d4ae33bc3acf3be1c347991848f/scipy-1.6.1.tar.gz"
-  sha256 "c4fceb864890b6168e79b0e714c585dbe2fd4222768ee90bc1aa0f8218691b11"
+  url "https://files.pythonhosted.org/packages/bb/bb/944f559d554df6c9adf037aa9fc982a9706ee0e96c0d5beac701cb158900/scipy-1.7.0.tar.gz"
+  sha256 "998c5e6ea649489302de2c0bc026ed34284f531df89d2bdc8df3a0d44d165739"
   license "BSD-3-Clause"
   head "https://github.com/scipy/scipy.git"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "77db460fd4323ed36fe928a1bdec4dee2e03aff74190f7d4771fd423d100e6e2"
-    sha256 cellar: :any, big_sur:       "b7fa6bd0b970993177b67d5801b7d1a6a0b21ac26a9fa106da136b930a8a9834"
-    sha256 cellar: :any, catalina:      "3312dead60fc9c8be4356c669be35fc6df547f79e5ad7d2205d51c07183c865e"
-    sha256 cellar: :any, mojave:        "869a09d250583791715494cf5b15ab1d00060f8e9213eec08321826259fba796"
+    sha256 cellar: :any, arm64_big_sur: "d741913cb81d77ff7e9b1b6a926e3ac49f9971c49267331fce0b6070f7042dde"
+    sha256 cellar: :any, big_sur:       "beab14d43846f01df17df652134b294f610f5168c7ee15aa704a9b694627d2f7"
+    sha256 cellar: :any, catalina:      "d903e85c46fb8bb667bdf0433491fd2a335870ff79c02bd9392ea09e6704e74d"
+    sha256 cellar: :any, mojave:        "b81ef93026ddb9110681de09d83f26de17c20ce3129361a9d685b80c49135dc5"
+    sha256               x86_64_linux:  "13ba728e69a66ad0702e3015cc38ed6b02239727addf26e10e449454405ee0bc"
   end
 
+  depends_on "cython" => :build
+  depends_on "pythran" => :build
   depends_on "swig" => :build
   depends_on "gcc" # for gfortran
   depends_on "numpy"
@@ -21,6 +24,8 @@ class Scipy < Formula
   depends_on "python@3.9"
 
   cxxstdlib_check :skip
+
+  fails_with gcc: "5"
 
   def install
     # Fix for current GCC on Big Sur, which does not like 11 as version value
@@ -43,10 +48,14 @@ class Scipy < Formula
 
     Pathname("site.cfg").write config
 
-    version = Language::Python.major_minor_version Formula["python@3.9"].opt_bin/"python3"
-    ENV["PYTHONPATH"] = Formula["numpy"].opt_lib/"python#{version}/site-packages"
-    ENV.prepend_create_path "PYTHONPATH", lib/"python#{version}/site-packages"
-    system Formula["python@3.9"].opt_bin/"python3", "setup.py", "build", "--fcompiler=gnu95"
+    site_packages = Language::Python.site_packages("python3")
+    ENV.prepend_create_path "PYTHONPATH", Formula["cython"].opt_libexec/site_packages
+    ENV.prepend_create_path "PYTHONPATH", Formula["pythran"].opt_libexec/site_packages
+    ENV.prepend_create_path "PYTHONPATH", Formula["numpy"].opt_prefix/site_packages
+    ENV.prepend_create_path "PYTHONPATH", site_packages
+
+    system Formula["python@3.9"].opt_bin/"python3", "setup.py", "build",
+      "--fcompiler=gfortran", "--parallel=#{ENV.make_jobs}"
     system Formula["python@3.9"].opt_bin/"python3", *Language::Python.setup_install_args(prefix)
   end
 

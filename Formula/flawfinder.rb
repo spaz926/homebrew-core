@@ -3,8 +3,8 @@ class Flawfinder < Formula
 
   desc "Examines code and reports possible security weaknesses"
   homepage "https://dwheeler.com/flawfinder/"
-  url "https://dwheeler.com/flawfinder/flawfinder-2.0.15.tar.gz"
-  sha256 "0a65cf93b1d380669476e576abbb04ea0766a557ce2bf75d9e71f387fcd74406"
+  url "https://dwheeler.com/flawfinder/flawfinder-2.0.18.tar.gz"
+  sha256 "6a51efd7869e0f36a00f33455ec2d1745dc36121130625887b4589e646f062c2"
   license "GPL-2.0-or-later"
   head "https://github.com/david-a-wheeler/flawfinder.git"
 
@@ -14,17 +14,17 @@ class Flawfinder < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "234bf06a99252223cb9acfc14b439b1ab6ed8143caa59cda8a5d8424aad9e743"
-    sha256 cellar: :any_skip_relocation, big_sur:       "be0c6b6c0819fece1f9d37f8275deec415c6435f7a5285659e8a310ff602bfa5"
-    sha256 cellar: :any_skip_relocation, catalina:      "2bba36ebc01b78e23dae0d7a9696f9fb8714ff82ad6a31cde9499b22e293516b"
-    sha256 cellar: :any_skip_relocation, mojave:        "6d371f08132175d2c34d3e20e95febceb469a104a6789dd382de3479303ceba9"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "2543426a3f0c9fce88f8e1ef6dac28f553c1ffbcc5507f1bff4f751179c4eb76"
+    sha256 cellar: :any_skip_relocation, big_sur:       "12a152169ad256368cb53f466fb7cdfa0ef30a8e214d71226a90e6dd038a3303"
+    sha256 cellar: :any_skip_relocation, catalina:      "12a152169ad256368cb53f466fb7cdfa0ef30a8e214d71226a90e6dd038a3303"
+    sha256 cellar: :any_skip_relocation, mojave:        "12a152169ad256368cb53f466fb7cdfa0ef30a8e214d71226a90e6dd038a3303"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2543426a3f0c9fce88f8e1ef6dac28f553c1ffbcc5507f1bff4f751179c4eb76"
   end
 
   depends_on "python@3.9"
 
   def install
-    rewrite_shebang detected_python_shebang, "flawfinder"
+    rewrite_shebang detected_python_shebang, "flawfinder.py"
     system "make", "prefix=#{prefix}", "install"
   end
 

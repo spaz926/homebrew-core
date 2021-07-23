@@ -1,8 +1,8 @@
 class Reminiscence < Formula
   desc "Flashback engine reimplementation"
   homepage "http://cyxdown.free.fr/reminiscence/"
-  url "http://cyxdown.free.fr/reminiscence/REminiscence-0.4.6.tar.bz2"
-  sha256 "a1738ca7df64cd34e75a0ada3110e70ed495260fda813bc9d8722b521fc6fee0"
+  url "http://cyxdown.free.fr/reminiscence/REminiscence-0.4.8.tar.bz2"
+  sha256 "1cb6ccb4ac9ec38fa80dd80dbdb24ccf16cf58d2de42a030776a3a7c691cabf8"
 
   livecheck do
     url :homepage
@@ -10,12 +10,10 @@ class Reminiscence < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any, arm64_big_sur: "b29f5b37b68bbdf1d9e5b0b067d572e4b75cf0bd487c131248cf9f1de062b238"
-    sha256 cellar: :any, big_sur:       "154c213b923be7d8ba32f9b6b39d08da52c8c4528c747616928bb4a32f7f4f78"
-    sha256 cellar: :any, catalina:      "a587449c5846115b5bb4100e1ec50af6256e48bc770c35dad4985850ab8e1b3c"
-    sha256 cellar: :any, mojave:        "a1a752e53d40822409ea80a273b38d307e6e6afdfc52d856dee8e8dcc6ae32d8"
-    sha256 cellar: :any, high_sierra:   "537b631728a9b8e322cc835d20b3d8bac832c5c14ebc0bdedde43fe0b607bcd2"
+    sha256 cellar: :any, arm64_big_sur: "e5f1b6bbae4b98d7b63fc625185777507337626a291562e40e9bf43a5b5cd07a"
+    sha256 cellar: :any, big_sur:       "d9ce59c1d7e918e95c41ab0634f37296716d81985463b066415c5cd311e23a1b"
+    sha256 cellar: :any, catalina:      "6e2a4eae17d7c5344f2fdcf4c23214fba760d039e9a5d9a1ba6d9236684a9331"
+    sha256 cellar: :any, mojave:        "267a60d456e2223523e09144575cab1d5b6087b8e52c4bb6715450ee00fa60ac"
   end
 
   depends_on "autoconf" => :build
@@ -44,6 +42,10 @@ class Reminiscence < Formula
 
     ENV.prepend "CPPFLAGS", "-I#{libexec}/include"
     ENV.prepend "LDFLAGS", "-L#{libexec}/lib"
+    on_linux do
+      # Fixes: reminiscence: error while loading shared libraries: libvorbisidec.so.1
+      ENV.append "LDFLAGS", "-Wl,-rpath=#{libexec}/lib"
+    end
 
     system "make"
     bin.install "rs" => "reminiscence"

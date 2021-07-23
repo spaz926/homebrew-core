@@ -3,13 +3,18 @@ class Lgogdownloader < Formula
   homepage "https://sites.google.com/site/gogdownloader/"
   url "https://sites.google.com/site/gogdownloader/lgogdownloader-3.7.tar.gz"
   sha256 "984859eb2e0802cfe6fe76b1fe4b90e7354e95d52c001b6b434e0a9f5ed23bf0"
-  revision 4
+  revision 6
+
+  livecheck do
+    url :homepage
+    regex(/href=.*?lgogdownloader[._-]v?(\d+(?:\.\d+)+)\.t/i)
+  end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "4d1ffe227ab919193c96021c9fb5ea4b161335b7ffaa0ee4bceaf3fba94280ed"
-    sha256 cellar: :any, big_sur:       "e83c5d97b10c35f300f38b61330f777eb875e9f1c9234a14bdb9837db435fd21"
-    sha256 cellar: :any, catalina:      "ba061ec21041d85ec77a992106630eae9e764559074947d6c8a0f875d140b20b"
-    sha256 cellar: :any, mojave:        "f76cceb5381ca392f61d5398fdb93b87f253a8256e20f554ff5fae20f2d8ef8d"
+    sha256 cellar: :any, arm64_big_sur: "22db82ba045992174dce562391c21113a74146976858ad238d0de60371b28d41"
+    sha256 cellar: :any, big_sur:       "dabf7c17a7b146f64ce1fb4335b412ca992f5263bb0458d6e3965e5ad301f7fe"
+    sha256 cellar: :any, catalina:      "f138795f5579d3b1ee338daeb4eb26752a6eff8599088de4f6eb3c2e1d256ffc"
+    sha256 cellar: :any, mojave:        "e1d508700531625bf2048c81af8371b45392a30334e071c3e292f0ac96e03b48"
   end
 
   depends_on "cmake" => :build

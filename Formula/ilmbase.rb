@@ -2,16 +2,22 @@ class Ilmbase < Formula
   desc "OpenEXR ILM Base libraries (high dynamic-range image file format)"
   homepage "https://www.openexr.com/"
   # NOTE: Please keep these values in sync with openexr.rb when updating.
-  url "https://github.com/openexr/openexr/archive/v2.5.5.tar.gz"
-  sha256 "59e98361cb31456a9634378d0f653a2b9554b8900f233450f2396ff495ea76b3"
+  url "https://github.com/openexr/openexr/archive/v2.5.7.tar.gz"
+  sha256 "36ecb2290cba6fc92b2ec9357f8dc0e364b4f9a90d727bf9a57c84760695272d"
   license "BSD-3-Clause"
 
   bottle do
-    sha256 arm64_big_sur: "f465c8e3f824777ab727d17e11c018eff8d8afc12ffe0bb014dbce22522e9b7d"
-    sha256 big_sur:       "c29c6544af5a4b57b14984322b16ab1d7e5e6598f6a999bed1cd757b78d8324c"
-    sha256 catalina:      "9f185fa9c393f463d37002736f4ef0dfdbe347a60193d38371d1b1055fc22a0d"
-    sha256 mojave:        "53b8f2f3e3e1ef9b6c22de5993eec29ab6d9cc46109df39a7eb7b49f0b8e02a2"
+    sha256 cellar: :any,                 arm64_big_sur: "972c5920255115ab63cc84c699e9cd032d120bbb85095f8a4d1f2865326ceaa8"
+    sha256 cellar: :any,                 big_sur:       "71c8e6cedb938d2c5ec99fea9343805f293013b070ad561e2fa652194f84a59c"
+    sha256 cellar: :any,                 catalina:      "e505a83ecb7ab3aee3f5cb38973612a559ec106a96d7142bc0f245556512a670"
+    sha256 cellar: :any,                 mojave:        "a3416415f8a68fc12922080e36e24481833343d89a06aad74ad57034b2200eb0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "de87ab59dcd306ea5dadae39afd1fa62304843e3af6cde221b197d9756005598"
   end
+
+  keg_only "ilmbase conflicts with `openexr` and `imath`"
+
+  # https://github.com/AcademySoftwareFoundation/openexr/pull/929
+  deprecate! date: "2021-04-05", because: :unsupported
 
   depends_on "cmake" => :build
 
@@ -20,6 +26,13 @@ class Ilmbase < Formula
       system "cmake", ".", *std_cmake_args, "-DBUILD_TESTING=OFF"
       system "make", "install"
     end
+  end
+
+  def caveats
+    <<~EOS
+      `ilmbase` has been replaced by `imath`. You may want to `brew uninstall ilmbase`
+      or `brew unlink ilmbase` to prevent conflicts.
+    EOS
   end
 
   test do

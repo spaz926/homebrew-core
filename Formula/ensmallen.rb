@@ -1,15 +1,14 @@
 class Ensmallen < Formula
   desc "Flexible C++ library for efficient mathematical optimization"
   homepage "https://ensmallen.org"
-  url "https://github.com/mlpack/ensmallen/archive/2.16.2.tar.gz"
-  sha256 "b4c9c6dcb3ec7a034f4668b0b71048f2e28c01aa57ce4291d6b3fca8c5bfeed2"
+  url "https://github.com/mlpack/ensmallen/archive/2.17.0.tar.gz"
+  sha256 "9322cffceaf1e171b427f14e693e03ee9e1033fb404dfdbc8956cd8fa4e331d9"
   license "BSD-3-Clause"
+  revision 1
   head "https://github.com/mlpack/ensmallen.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, big_sur:  "e1f7354fa4e31a5312961d8c47c1b45f81d590f3074a5214a6c0ccf2e9e71b8f"
-    sha256 cellar: :any_skip_relocation, catalina: "bde043315aa52c771e43a628a9282de67e3599f982364da216dca51ca3db0966"
-    sha256 cellar: :any_skip_relocation, mojave:   "03ff20db9a165c237b5ef647fa7fefad606d7ae2f422ec52294d64bd254a5d9d"
+    sha256 cellar: :any_skip_relocation, all: "5fb7dbbdee46a94e038f831925cf693cd982683ffef94467c7d529bce47a4ed2"
   end
 
   depends_on "cmake" => :build
@@ -35,7 +34,7 @@ class Ensmallen < Formula
         return 0;
       }
     EOS
-    system ENV.cxx, "test.cpp", "-std=c++11", "-I#{include}", "-I#{Formula["armadillo"].opt_lib}/libarmadillo",
-                    "-o", "test"
+    system ENV.cxx, "test.cpp", "-std=c++11", "-I#{include}", "-L#{Formula["armadillo"].opt_lib}",
+                    "-larmadillo", "-o", "test"
   end
 end

@@ -1,9 +1,10 @@
 class ScummvmTools < Formula
   desc "Collection of tools for ScummVM"
   homepage "https://www.scummvm.org/"
-  url "https://www.scummvm.org/frs/scummvm-tools/2.2.0/scummvm-tools-2.2.0.tar.xz"
+  url "https://downloads.scummvm.org/frs/scummvm-tools/2.2.0/scummvm-tools-2.2.0.tar.xz"
   sha256 "1e72aa8f21009c1f7447c755e7f4cf499fe9b8ba3d53db681ea9295666cb48a4"
   license "GPL-2.0-or-later"
+  revision 2
   head "https://github.com/scummvm/scummvm-tools.git"
 
   livecheck do
@@ -12,10 +13,9 @@ class ScummvmTools < Formula
   end
 
   bottle do
-    sha256 cellar: :any, big_sur:     "4b1a47fd6bd0890f4c10b2feb784b5c2cece304cfd106bd214ce8233688e72a3"
-    sha256 cellar: :any, catalina:    "4d43c5933986b4c011c5cf9f45bd853cf0faabb652aab2ce53f9e5cfc5d95ae0"
-    sha256 cellar: :any, mojave:      "64cce3aa4cfbb11ee9223bb1037cf85e8cec3ab78d2206aeb93f2605ea7cf327"
-    sha256 cellar: :any, high_sierra: "0c207fc3e8ee9b54b1c6f85d1461458cbe3ba05b591f87807ff4e534c4baec17"
+    sha256 cellar: :any, big_sur:  "aee03cae297adf7d8dea7810148e34669a533cafc8bd4fc136d01d9602654afd"
+    sha256 cellar: :any, catalina: "e5adfc7c4a46b93538f4eb6ae92d74d089c5dd0702709bec10a2b13e507d3b30"
+    sha256 cellar: :any, mojave:   "cbd440b905907ecffa3e63ad833f73c3263f8a4970c01cc0ae83de131fa83272"
   end
 
   depends_on "boost"
@@ -24,10 +24,22 @@ class ScummvmTools < Formula
   depends_on "libpng"
   depends_on "libvorbis"
   depends_on "mad"
-  depends_on "wxmac"
+  depends_on "wxmac@3.0"
 
   def install
-    system "./configure", "--prefix=#{prefix}"
+    # configure will happily carry on even if it can't find wxmac,
+    # so let's make sure the install method keeps working even when
+    # the wxmac dependency version changes
+    wxmac = deps.find { |dep| dep.name.match?(/^wxmac(@\d+(\.\d+)?)?$/) }
+                .to_formula
+
+    # The configure script needs a little help finding our wx-config
+    wxconfig = "wx-config-#{wxmac.version.major_minor}"
+    inreplace "configure", /^_wxconfig=wx-config$/, "_wxconfig=#{wxconfig}"
+
+    system "./configure", "--prefix=#{prefix}",
+                          "--disable-debug",
+                          "--enable-verbose-build"
     system "make", "install"
   end
 

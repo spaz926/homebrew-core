@@ -7,23 +7,52 @@ class X264 < Formula
   stable do
     # the latest commit on the stable branch
     url "https://code.videolan.org/videolan/x264.git",
-        revision: "b86ae3c66f51ac9eab5ab7ad09a9d62e67961b8a"
-    version "r3048"
+        revision: "5db6aa6cab1b146e07b60cc1736a01f21da01154"
+    version "r3060"
   end
 
-  # There's no guarantee that the versions we find on the `release-macos` index
-  # page are stable but there didn't appear to be a different way of getting
-  # the version information at the time of writing.
+  # Cross-check the abbreviated commit hashes from the release filenames with
+  # the latest commits in the `stable` Git branch:
+  # https://code.videolan.org/videolan/x264/-/commits/stable
   livecheck do
-    url "https://artifacts.videolan.org/x264/release-macos/"
-    regex(%r{href=.*?x264[._-](r\d+)[._-][\da-z]+/?["' >]}i)
+    url "https://artifacts.videolan.org/x264/release-macos-arm64/"
+    regex(%r{href=.*?x264[._-](r\d+)[._-]([\da-z]+)/?["' >]}i)
+    strategy :page_match do |page, regex|
+      # Match the version and abbreviated commit hash in filenames
+      matches = page.scan(regex)
+
+      # Fetch the `stable` Git branch Atom feed
+      stable_page_data = Homebrew::Livecheck::Strategy.page_content("https://code.videolan.org/videolan/x264/-/commits/stable?format=atom")
+      next [] if stable_page_data[:content].blank?
+
+      # Extract commit hashes from the feed content
+      commit_hashes = stable_page_data[:content].scan(%r{/commit/([\da-z]+)}i).flatten
+      next [] if commit_hashes.blank?
+
+      # Only keep versions with a matching commit hash in the `stable` branch
+      matches.map do |match|
+        next nil unless match.length >= 2
+
+        release_hash = match[1]
+        commit_in_stable = false
+        commit_hashes.each do |commit_hash|
+          next unless commit_hash.start_with?(release_hash)
+
+          commit_in_stable = true
+          break
+        end
+
+        commit_in_stable ? match[0] : nil
+      end.compact
+    end
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "4f597c360dc023f6a9cd1bbe9b91e582dab095ba728a0f1456b604f0027e190e"
-    sha256 cellar: :any, big_sur:       "c15ba7b15e08f8d58ae1913935994c49fbc7242aae36eb7346be493b164ffb6b"
-    sha256 cellar: :any, catalina:      "2f3a1318610548a1eae131141dace544594da35d11753dfdd9dc3b6f81c08801"
-    sha256 cellar: :any, mojave:        "6bd8fc9dd92ce4aad6071c0e7d2eac6ccf8a9971f5176901a3fff22dbf24198d"
+    sha256 cellar: :any,                 arm64_big_sur: "2f5442c86dc08c7c283a4de626e8a7e8ceb17621b2ce63c7674f8c31a47eaf2c"
+    sha256 cellar: :any,                 big_sur:       "dae0e0e0715c44a916170879eb71c942b673d9450c7c0db319ce7e56757e567f"
+    sha256 cellar: :any,                 catalina:      "2ffa8448569c0272db62789e0c1475330356956f570fea278a3fa0ca7739ab3b"
+    sha256 cellar: :any,                 mojave:        "6780344c98d8c614d8fb8039365747cc699cb6818f7c3d56b708d9e2c5afe388"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4ed86de1b2e5af0136202b8479dde1935c46bbdd9da4c11afa52f1f18820e9a1"
   end
 
   depends_on "nasm" => :build
@@ -65,7 +94,7 @@ class X264 < Formula
           return 0;
       }
     EOS
-    system ENV.cc, "-L#{lib}", "-lx264", "test.c", "-o", "test"
+    system ENV.cc, "-L#{lib}", "test.c", "-lx264", "-o", "test"
     system "./test"
   end
 end

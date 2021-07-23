@@ -1,8 +1,8 @@
 class Dust < Formula
   desc "More intuitive version of du in rust"
   homepage "https://github.com/bootandy/dust"
-  url "https://github.com/bootandy/dust/archive/v0.5.4.tar.gz"
-  sha256 "395f0d5f44d5000468dc51a195e4b8e8c0b710a1c75956fb1f9ad08f2fbbc935"
+  url "https://github.com/bootandy/dust/archive/v0.6.1.tar.gz"
+  sha256 "925a54c5db9672a66718d24159f89abdbe477e905715f994fc5c3d0f23fed799"
   license "Apache-2.0"
   head "https://github.com/bootandy/dust.git"
 
@@ -12,10 +12,11 @@ class Dust < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "63975da52bf489fa48faf28948811662e212ba34bd3eec9e46326ef75c90d3aa"
-    sha256 cellar: :any_skip_relocation, big_sur:       "d1b5422255a774bfc2a582936c2a639e70167a1a6ae01cc2a99d9d3bded9d3fb"
-    sha256 cellar: :any_skip_relocation, catalina:      "7b30dd40fba19a354809b0d311afb061b3d67134a4e8dc522911240fc04f1c56"
-    sha256 cellar: :any_skip_relocation, mojave:        "9a20691424cccdb57170661480740191517a617d2a1a079d29411fd376f4f78a"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "ba89a8ce4968565f44b159fd38dca9491f95bb1f8fcd9a39d19fb67a75b9bb76"
+    sha256 cellar: :any_skip_relocation, big_sur:       "6f84112c0ad67a6f3098d672e01529d26be71df0ab6bbe60c8becafa8f8d9d81"
+    sha256 cellar: :any_skip_relocation, catalina:      "6d025629e4db12253d716caa7c4a26b7a4dd575cd14474846fa71f506ad6f24c"
+    sha256 cellar: :any_skip_relocation, mojave:        "19f98e79ccaccda3d58483fbc59c345b3833b62d61254b663ad28f4e56cf2bf8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8686d1ba2941e40dc66fad27fc7ee97a1cb2474a6becd94e35d81f3fc88a1a7b"
   end
 
   depends_on "rust" => :build

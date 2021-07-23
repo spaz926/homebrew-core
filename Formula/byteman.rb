@@ -1,8 +1,8 @@
 class Byteman < Formula
   desc "Java bytecode manipulation tool for testing, monitoring and tracing"
   homepage "https://byteman.jboss.org/"
-  url "https://downloads.jboss.org/byteman/4.0.14/byteman-download-4.0.14-bin.zip"
-  sha256 "e202f6a452ee31538d618d25d353137d5ab9ea6f78a748230c9b8b5d97d4a474"
+  url "https://downloads.jboss.org/byteman/4.0.16/byteman-download-4.0.16-bin.zip"
+  sha256 "4d3a25d7cbe1432be3689854775e692e18f539d8d75328c4e1ad8cf33989c80b"
   license "LGPL-2.1-or-later"
   head "https://github.com/bytemanproject/byteman"
 
@@ -11,7 +11,9 @@ class Byteman < Formula
     regex(/href=.*?byteman-download[._-]v?(\d+(?:\.\d+)+)-bin\.zip/i)
   end
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "641417737526f28532015727aaa9f025f8869f68f7fdf4aec116cd34bde8b013"
+  end
 
   depends_on "openjdk"
 

@@ -1,11 +1,21 @@
 class Haxe < Formula
   desc "Multi-platform programming language"
   homepage "https://haxe.org/"
-  url "https://github.com/HaxeFoundation/haxe.git",
-      tag:      "4.2.1",
-      revision: "bf9ff69c0801082174f0b2b0a66faeb5356de580"
   license all_of: ["GPL-2.0-or-later", "MIT"]
+  revision 2
   head "https://github.com/HaxeFoundation/haxe.git", branch: "development"
+
+  stable do
+    url "https://github.com/HaxeFoundation/haxe.git",
+        tag:      "4.2.3",
+        revision: "1385eda48e60387e349282d26347b28d0b2768ca"
+
+    # Remove when campl5 dependency is bumped to 8.00 in a release
+    patch do
+      url "https://github.com/HaxeFoundation/haxe/commit/db72b31390c51c1627cf5658ca256aace41a81b0.patch?full_index=1"
+      sha256 "95a22f2cc227c4e6d066e60eb88b2a71ad6c278d6f38656fbd87ee905411918a"
+    end
+  end
 
   livecheck do
     url :stable
@@ -13,16 +23,17 @@ class Haxe < Formula
   end
 
   bottle do
-    sha256 cellar: :any, big_sur:  "3dc0587c5d6c49899f0b2208a97671c80eff869c68da21873d345d95a7ad7a8b"
-    sha256 cellar: :any, catalina: "aa33bde76f485b4f587aaeccbfee29cdbb1838cf77bfdb8ada917b11aa4a617c"
-    sha256 cellar: :any, mojave:   "56c43935a93389029569492772bd0dfedfc46de51be542fbe5c3ea908f2f7dde"
+    sha256 cellar: :any, arm64_big_sur: "982600fa3892cbd4ef0d2597b9400499bcf820d7866b188fcd048b8a483b5bb6"
+    sha256 cellar: :any, big_sur:       "69541c84de5f7a89565c1b0db59742801d56d7b92717d3ff4f129ec0099ef055"
+    sha256 cellar: :any, catalina:      "73cd847047274cb23a0b23e47ce091145c8eaf5131ad298e0195005f4ec6ee03"
+    sha256 cellar: :any, mojave:        "bce0544534411a2f7c53a66114a5c9e4e681e44ad9b9903fa6ddf757757721fd"
   end
 
   depends_on "cmake" => :build
   depends_on "ocaml" => :build
   depends_on "opam" => :build
   depends_on "pkg-config" => :build
-  depends_on "mbedtls"
+  depends_on "mbedtls@2"
   depends_on "neko"
   depends_on "pcre"
 
@@ -60,7 +71,7 @@ class Haxe < Formula
       system "opam", "config", "exec", "--",
              "opam", "pin", "add", "haxe", buildpath, "--no-action"
       system "opam", "config", "exec", "--",
-             "opam", "install", "haxe", "--deps-only"
+             "opam", "install", "haxe", "--deps-only", "--working-dir"
       system "opam", "config", "exec", "--",
              "make"
     end

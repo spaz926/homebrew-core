@@ -6,7 +6,9 @@ class Colormake < Formula
   license "GPL-2.0"
   head "https://github.com/pagekite/Colormake.git"
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "0022e24dd1386f086be55a80bdcd0b7de7c2871995a4980f18db436c69dc4c63"
+  end
 
   def install
     inreplace "colormake", "colormake.pl", "#{libexec}/colormake.pl"

@@ -1,21 +1,26 @@
 class Libfabric < Formula
   desc "OpenFabrics libfabric"
   homepage "https://ofiwg.github.io/libfabric/"
-  url "https://github.com/ofiwg/libfabric/releases/download/v1.12.0/libfabric-1.12.0.tar.bz2"
-  sha256 "ca98785fe25e68a26c61e272be64a1efeea37e61b0dcebd34ccfd381bda7d9cc"
+  url "https://github.com/ofiwg/libfabric/releases/download/v1.13.0/libfabric-1.13.0.tar.bz2"
+  sha256 "0c68264ae18de5c31857724c754023351614330bd61a50b40cef2b5e8f63ab28"
   license any_of: ["BSD-2-Clause", "GPL-2.0-only"]
   head "https://github.com/ofiwg/libfabric.git"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "5ff8006f95b58535cccc2ad7b2f2b4ba66888c103dfb459d96dde05feee8c4ff"
-    sha256 cellar: :any, big_sur:       "cc6aa253fb948b77386ce7fdc5c64ced7fa2a0d31c1b248c39f3815e5cc577eb"
-    sha256 cellar: :any, catalina:      "2309aec7c76635a8cdd18f79e0abac6cf8ff1813857958d9dfab280e5245a244"
-    sha256 cellar: :any, mojave:        "1b854ecd4b7a50023f7c96f5e3784aae452f48eb02ee84e427d2cb72691263a0"
+    sha256 cellar: :any,                 arm64_big_sur: "d70fb55fb5fa73564492482956b460b163c7170ee8063502315d919e774c9d36"
+    sha256 cellar: :any,                 big_sur:       "c3aa52601f5c00b8c7590349e6c55ac49a9f0d0bd11413d264b5c7d0089fbc30"
+    sha256 cellar: :any,                 catalina:      "bc75cab6edaf0b5288dbb30fc3bbcc403231fb0cf7edbe06e2fb24b7ccae4633"
+    sha256 cellar: :any,                 mojave:        "906289db2df6c86e5016f15534aced96c67392e1a1e3f72b606882077684d402"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "691e2168f24f4a1b8d06d1964379e6bf897c81f0613f6c269551a4fed9b59f1e"
   end
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "libtool"  => :build
+
+  on_macos do
+    conflicts_with "mpich", because: "both install `fabric.h`"
+  end
 
   def install
     system "autoreconf", "-fiv"

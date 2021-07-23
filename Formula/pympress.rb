@@ -3,16 +3,15 @@ class Pympress < Formula
 
   desc "Simple and powerful dual-screen PDF reader designed for presentations"
   homepage "https://github.com/Cimbali/pympress/"
-  url "https://files.pythonhosted.org/packages/92/80/c63ad7748e877dfeb5d7d756c1bdd4c2657e5a857814b4d6edf96d44678c/pympress-1.5.3.tar.gz"
-  sha256 "d8c10c286d1de2210c19a3e752542b61c8bcc592c48553f7c7043e943a87d05d"
-  license "GPL-2.0"
-  revision 2
+  url "https://files.pythonhosted.org/packages/c8/dc/5343fe21c911247410667fe93d9b9a46355572ce4154037c0d7657d211ce/pympress-1.6.1.tar.gz"
+  sha256 "17943f706124edbabb0b06a50ee927f04ee6cc232ba6edb9ccb15cc4263c0dd5"
+  license "GPL-2.0-or-later"
   head "https://github.com/Cimbali/pympress.git"
 
   bottle do
-    sha256 cellar: :any, big_sur:  "0dace778ed9f1ac2939f6b4c1305a629c4fc256d8768b9658196e90f0819e84e"
-    sha256 cellar: :any, catalina: "d730fa081be30bd9dd49fa5f08cf8aa39ac31842fbb8b86423c1bc28db8b616c"
-    sha256 cellar: :any, mojave:   "88b035ea21bd93571a1920bd94c1bc293ee68ffbc63237dbe8f9da0958323bae"
+    sha256 cellar: :any, big_sur:  "dcf74c6df97e8eeda3a9a9b98aaf6ff48d7256a9f188693c84e396529c2f103d"
+    sha256 cellar: :any, catalina: "e18b08d0632cbcc4fcb041cffed78e3c4d24c30a1f158be74e0a4eeeb7ffffb5"
+    sha256 cellar: :any, mojave:   "dca884e4a3a106e65b72c878a7444706005eeac196b9a5eba2299a3a128b9f18"
   end
 
   depends_on "gobject-introspection"
@@ -58,11 +57,6 @@ class Pympress < Formula
       return if ENV["HOMEBREW_GITHUB_ACTIONS"]
     end
 
-    system bin/"pympress", "--help"
-
-    # Version info contained in log file only if all dependencies loaded successfully
-    assert_predicate testpath/"Library/Logs/pympress.log", :exist?
-    output = (testpath/"Library/Logs/pympress.log").read
-    assert_match(/^INFO:pympress.__main__:Pympress: #{version}\s*;/, output)
+    system bin/"pympress", "--quit"
   end
 end

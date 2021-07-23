@@ -1,17 +1,19 @@
 class DockerComposeCompletion < Formula
   desc "Completion script for docker-compose"
   homepage "https://docs.docker.com/compose/completion/"
-  url "https://github.com/docker/compose/archive/1.28.6.tar.gz"
-  sha256 "873c5c94056be7cf4a10c9c94c862d51c339f9f03c4bc0e1752b74b969a94a1a"
+  url "https://github.com/docker/compose/archive/1.29.2.tar.gz"
+  sha256 "99a9b91d476062d280c889ae4e9993d7dd6a186327bafb2bb39521f9351b96eb"
   license "Apache-2.0"
   head "https://github.com/docker/compose.git"
 
   livecheck do
     url :stable
-    regex(/^v?(\d+(?:\.\d+)+)$/i)
+    strategy :github_latest
   end
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "edaaa7562b5ef5255da64daa17a086a2c8c45fe2114e7704047b15f155719c1e"
+  end
 
   conflicts_with "docker-compose",
     because: "docker-compose already includes completion scripts"

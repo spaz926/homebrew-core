@@ -1,10 +1,9 @@
 class Inspircd < Formula
   desc "Modular C++ Internet Relay Chat daemon"
   homepage "https://www.inspircd.org/"
-  url "https://github.com/inspircd/inspircd/archive/v3.9.0.tar.gz"
-  sha256 "5bda0fc3d41908cda4580de39d62e8be4840da45f31e072cfca337b838add567"
+  url "https://github.com/inspircd/inspircd/archive/v3.10.0.tar.gz"
+  sha256 "9bbf3581fc1a9443ef4c4595b208e5b8852483cb78b20fe3e98d225fa4538982"
   license "GPL-2.0-only"
-  revision 1
 
   livecheck do
     url "https://github.com/inspircd/inspircd.git"
@@ -12,10 +11,10 @@ class Inspircd < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "5d2dbc888bc7aba0351d25899c9d380ee22d4516e739a1edbfea816346e793ea"
-    sha256 big_sur:       "03ea201f04b20128300f42ae72a5d5ca210dd83ecc9f9d855a81322501fc92a1"
-    sha256 catalina:      "23c294085fe76ce18f6ee9af8716d72c3b116733aa576f0e45126e0c022f13db"
-    sha256 mojave:        "d319dc9f7e5574a95f751b7823ead8b4f07440846ec79b10d239f28027065c70"
+    sha256 arm64_big_sur: "b7671a5f73963019fac39b7d6f4ef92690d0f987b49a3c86e20c72207d50061c"
+    sha256 big_sur:       "3dac92c86073fd5a9dc75aaa92daab2083492cae9b68f06f912332db55641e60"
+    sha256 catalina:      "a20e5a664888416963f633b8d569593bde9f0533918c5c5483d8d49968a1947b"
+    sha256 mojave:        "52f51d088ec0ea10bfde3f046e67e3b41cc78332a104880d8314c3f55f179efe"
   end
 
   depends_on "pkg-config" => :build

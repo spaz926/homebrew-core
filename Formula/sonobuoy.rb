@@ -1,15 +1,16 @@
 class Sonobuoy < Formula
   desc "Kubernetes component that generates reports on cluster conformance"
   homepage "https://github.com/vmware-tanzu/sonobuoy"
-  url "https://github.com/vmware-tanzu/sonobuoy/archive/v0.50.0.tar.gz"
-  sha256 "6ade7b7ecf1b0c6338ba6b404f68b76ed23a368d27317b39f3cf1d0f89057b6c"
+  url "https://github.com/vmware-tanzu/sonobuoy/archive/v0.52.0.tar.gz"
+  sha256 "933ea49489bfe77599f3b1b6981250c0e341c11ff293bcf9818644803726506f"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "41847f6806b9c3eb24bcb9b4437dd07d7d10991bdb40b6946b9d37a79fa73191"
-    sha256 cellar: :any_skip_relocation, big_sur:       "9bfd90b6aca121fdeb269cded36889258f5f3c29458f1a21f9c30ac28042bce9"
-    sha256 cellar: :any_skip_relocation, catalina:      "cce8b27a554fcfd2d75ffe9eb5c942bacfcff179cd88887c51c56f70f9bfe3dc"
-    sha256 cellar: :any_skip_relocation, mojave:        "77bdb5c7fe88f9df70d018aa12434a45ee1ef8cbe1ff91188ba396d4d4794693"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "738955bb8364fefd0acc8ede9b947c8b3fb0cd5d3cffe7632a3d1df45027261b"
+    sha256 cellar: :any_skip_relocation, big_sur:       "5379ec22891dc0b59fad157930cdf06cd25373df7cc21b32aa5afc455a7b6d5d"
+    sha256 cellar: :any_skip_relocation, catalina:      "c63b03ff49f4da13f1fcf7fcfc27c915ea102fd613446be05aa886723d5b0d7d"
+    sha256 cellar: :any_skip_relocation, mojave:        "524b636a5c49187945d811d7b97f162205251b65aeac173618d57e70c30e4145"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3cd4a312a67ffc1f1e1808da824594947cd6e2c85a8ba4502d2ccbfc027bb54b"
   end
 
   depends_on "go" => :build

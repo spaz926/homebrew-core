@@ -1,16 +1,19 @@
 class Openvdb < Formula
   desc "Sparse volume processing toolkit"
   homepage "https://www.openvdb.org/"
-  url "https://github.com/AcademySoftwareFoundation/openvdb/archive/v8.0.1.tar.gz"
-  sha256 "a6845da7c604d2c72e4141c898930ac8a2375521e535f696c2cd92bebbe43c4f"
+  # Check whether this can be switched to `openexr`, `imath`, and `tbb` at version bump
+  # https://github.com/AcademySoftwareFoundation/openvdb/issues/1034
+  # https://github.com/AcademySoftwareFoundation/openvdb/issues/932
+  url "https://github.com/AcademySoftwareFoundation/openvdb/archive/v8.1.0.tar.gz"
+  sha256 "3e09d47331429be7409a3a3c27fdd3c297f96d31d2153febe194e664a99d6183"
   license "MPL-2.0"
   head "https://github.com/AcademySoftwareFoundation/openvdb.git"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "9cb0c66ec3ad5baa45c67f8dada344f9ea146f77e077addefbea16706764980a"
-    sha256 cellar: :any, big_sur:       "bd06f00067f72d29c1db2d4dc5b89b4478f03b2706f0643ac2b7d7014339c0c3"
-    sha256 cellar: :any, catalina:      "6a6d9b59e6e0a83d1067183a239fb01cd6fccdc18951e50bca8221a7b14934de"
-    sha256 cellar: :any, mojave:        "942d34f3346db67246bcb9d9ad642c6f328645425fced48f68e885277d3c09be"
+    sha256 cellar: :any, arm64_big_sur: "3b009e6f335c6dd6264c391ede13d7dcda7731851f8e6bb8d7f1395d1baa1338"
+    sha256 cellar: :any, big_sur:       "09b92c96f974aa12123a31b92c5cda3fec0678d6491c5e9895d7cdd8dbfdde50"
+    sha256 cellar: :any, catalina:      "55ec23082cdec8e584dbacc3b566430a6d83f847b7fbaf58fcc817e05194b255"
+    sha256 cellar: :any, mojave:        "2a82056566ede58322204b6881cd00600b210d8fd9a781fc46499a39d254830a"
   end
 
   depends_on "cmake" => :build
@@ -20,8 +23,8 @@ class Openvdb < Formula
   depends_on "glfw"
   depends_on "ilmbase"
   depends_on "jemalloc"
-  depends_on "openexr"
-  depends_on "tbb"
+  depends_on "openexr@2"
+  depends_on "tbb@2020"
 
   resource "test_file" do
     url "https://artifacts.aswf.io/io/aswf/openvdb/models/cube.vdb/1.0.0/cube.vdb-1.0.0.zip"
@@ -32,6 +35,7 @@ class Openvdb < Formula
     cmake_args = [
       "-DDISABLE_DEPENDENCY_VERSION_CHECKS=ON",
       "-DOPENVDB_BUILD_DOCS=ON",
+      "-DCMAKE_EXE_LINKER_FLAGS=-Wl,-rpath,#{rpath}",
     ]
 
     mkdir "build" do

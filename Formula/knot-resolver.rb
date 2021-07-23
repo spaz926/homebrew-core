@@ -1,8 +1,8 @@
 class KnotResolver < Formula
   desc "Minimalistic, caching, DNSSEC-validating DNS resolver"
   homepage "https://www.knot-resolver.cz"
-  url "https://secure.nic.cz/files/knot-resolver/knot-resolver-5.3.0.tar.xz"
-  sha256 "fb6cb2c03f4fffbdd8a0098127383d03b14cf7d6abf3a0cd229fb13ff68ee33e"
+  url "https://secure.nic.cz/files/knot-resolver/knot-resolver-5.3.2.tar.xz"
+  sha256 "8b6f447d5fe93422d4c129a2d4004a977369c3aa6e55258ead1cbd488bc01436"
   license all_of: ["CC0-1.0", "GPL-3.0-or-later", "LGPL-2.1-or-later", "MIT"]
   head "https://gitlab.labs.nic.cz/knot/knot-resolver.git"
 
@@ -12,9 +12,9 @@ class KnotResolver < Formula
   end
 
   bottle do
-    sha256 big_sur:  "f007354c76fdd4af09945fa548dc3889deab4e84c5bd1f1c206c109febd54b11"
-    sha256 catalina: "62e84d19b85449c3bda7b7b177449143c69864c72a10c2251b35c016bd779d3a"
-    sha256 mojave:   "562be32a5e4504b9f2bebeb4043d36efc6e21b6a7c13578d2228ab6f1a9545b8"
+    sha256 big_sur:  "a7ea8a46735ba271c77d9222164b1b59d6c24804cba79784f06efbce28749b90"
+    sha256 catalina: "d53612425f1a690289bd46524551f2d13cef6486b5bb9389089165c4e3fca33d"
+    sha256 mojave:   "01c96cd6fc7804f1ec6520a90c023f7fc760a5be69db3d4b3cdf581d13a70714"
   end
 
   depends_on "meson" => :build
@@ -71,7 +71,7 @@ class KnotResolver < Formula
   end
 
   test do
-    assert_path_exist var/"knot-resolver"
+    assert_path_exists var/"knot-resolver"
     system sbin/"kresd", "--version"
   end
 end

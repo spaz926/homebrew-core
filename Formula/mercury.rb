@@ -1,27 +1,24 @@
 class Mercury < Formula
   desc "Logic/functional programming language"
   homepage "https://mercurylang.org/"
-  url "https://dl.mercurylang.org/release/mercury-srcdist-20.06.tar.gz"
-  sha256 "b9c6965d41af49b4218d2444440c4860630d6f50c18dc6f1f4f8374d114f79be"
+  url "https://dl.mercurylang.org/release/mercury-srcdist-20.06.1.tar.gz"
+  sha256 "ef093ae81424c4f3fe696eff9aefb5fb66899e11bb17ae0326adfb70d09c1c1f"
   license all_of: ["GPL-2.0-only", "LGPL-2.0-only", "MIT"]
 
+  livecheck do
+    url "https://dl.mercurylang.org/"
+    regex(/href=.*?mercury-srcdist[._-]v?(\d+(?:\.\d+)+)\.t/i)
+  end
+
   bottle do
-    rebuild 1
-    sha256 cellar: :any, big_sur:     "2b02e97a19000e9c576fdd5c48b29300e210b9464fff7a0b7b68879555b9723b"
-    sha256 cellar: :any, catalina:    "ede7304ce96165ca6382118eacb3997e0732b875db721640002d203db9e66346"
-    sha256 cellar: :any, mojave:      "ac95cc73104a5621d7a561ae9957561206541633bff5adaf22ed36e21517add1"
-    sha256 cellar: :any, high_sierra: "60240308ebcc05ca33a4d40a787745cd4f60b445c9d94302505253bfd4697f6f"
+    sha256 cellar: :any, big_sur:  "8b37f68829e59efd2127a32dfbcbf80d617196b6f35c970e1d4727b5076abb39"
+    sha256 cellar: :any, catalina: "2b98c59507d6aa72db55b8864d9818f302fef92b5bbdc6630287276494a3bc62"
+    sha256 cellar: :any, mojave:   "e0011e25fa5732a2a271f30c5589c35f1caeb7cbab44ccba2271ab7bd2632243"
   end
 
   depends_on "openjdk"
 
   uses_from_macos "flex"
-
-  # Disable advanced segfault handling due to broken header detection.
-  patch do
-    url "https://github.com/Mercury-Language/mercury/commit/37ed70d43878cd53c8da40bf410e0a312835c036.patch?full_index=1"
-    sha256 "f01aca048464341dcf6e345056050e2c45236839cca17ac01fc944131d1641c0"
-  end
 
   def install
     system "./configure", "--prefix=#{prefix}",

@@ -1,11 +1,25 @@
 class Phpstan < Formula
   desc "PHP Static Analysis Tool"
   homepage "https://github.com/phpstan/phpstan"
-  url "https://github.com/phpstan/phpstan/releases/download/0.12.82/phpstan.phar"
-  sha256 "7d7ed82b8cfac548522768d30b2edb44ad774f15d29ffaa8ec4e4379996fd8dc"
+  url "https://github.com/phpstan/phpstan/releases/download/0.12.93/phpstan.phar"
+  sha256 "007bd9a4afcc31987ed02d73c758b4f91e789ed8e7e0ceb2e9445bd22913d4ad"
   license "MIT"
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "b537c335364b0b4fd401341c96827e989c2e11fff8de267ead317b5f65ff3257"
+    sha256 cellar: :any_skip_relocation, big_sur:       "00be2413cfa16c2a2a1ae4eef3b9be5b49ce2000d081fb85e456b30ed36ad3ef"
+    sha256 cellar: :any_skip_relocation, catalina:      "00be2413cfa16c2a2a1ae4eef3b9be5b49ce2000d081fb85e456b30ed36ad3ef"
+    sha256 cellar: :any_skip_relocation, mojave:        "00be2413cfa16c2a2a1ae4eef3b9be5b49ce2000d081fb85e456b30ed36ad3ef"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b537c335364b0b4fd401341c96827e989c2e11fff8de267ead317b5f65ff3257"
+  end
+
+  # Keg-relocation breaks the formula when it replaces `/usr/local` with a non-default prefix
+  pour_bottle? do
+    on_macos do
+      reason "The bottle needs to be installed into `#{Homebrew::DEFAULT_PREFIX}` on Intel macOS."
+      satisfy { HOMEBREW_PREFIX.to_s == Homebrew::DEFAULT_PREFIX || Hardware::CPU.arm? }
+    end
+  end
 
   depends_on "php" => :test
 

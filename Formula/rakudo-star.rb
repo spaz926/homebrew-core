@@ -1,8 +1,8 @@
 class RakudoStar < Formula
   desc "Rakudo compiler and commonly used packages"
   homepage "https://rakudo.org/"
-  url "https://rakudo.org/dl/star/rakudo-star-2021.02.1.tar.gz"
-  sha256 "1c9546fe115d49bf115cdb15b89bce27c5d24e2c1fd95a03c8853a46cc87e2a0"
+  url "https://rakudo.org/dl/star/rakudo-star-2021.04.tar.gz"
+  sha256 "66a5c9d7375f8b83413974113e1024f2e8317d8a6f505e6de0e54d5683c081e7"
   license "Artistic-2.0"
 
   livecheck do
@@ -11,10 +11,11 @@ class RakudoStar < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "84f51d0d28836b4f2f0fb229d2f430ed61dc62bf09dbdef11441518903ff3d95"
-    sha256 big_sur:       "d75aee60ff1ad43d4136597cc397479b9e92c03ffe604d6f317fd9d5636a9205"
-    sha256 catalina:      "540c25480053a98c4551ed7313693d27852f5492698400caa4369563dd8f9363"
-    sha256 mojave:        "26c6eda9839e94506bcd19894e52b5067e1f22e7457db05e3952e59e79f7ddf4"
+    sha256 arm64_big_sur: "13f29562a836448fb820c7efa93eb2fd635eda7b428635bce9002ccac1e28a6a"
+    sha256 big_sur:       "a7dd4d2139e570762a78b60e505f62e581825732768ae49b4f9ca2ffc52bbb23"
+    sha256 catalina:      "40bf7dfbdda3c1091dc5d4b8fd5a776ca8e6ba722b48fb7c536deb1914263096"
+    sha256 mojave:        "4bb9fd2754e328dca6a7199f900a85bea5a673bd7ee4a1f47e330144eee81cff"
+    sha256 x86_64_linux:  "1b05bf9ce1cf2b663b0f7c2b25332352db5a4e848df0b49b7b55ed49c298e5d1"
   end
 
   depends_on "bash" => :build

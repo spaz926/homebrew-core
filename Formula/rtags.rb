@@ -4,7 +4,8 @@ class Rtags < Formula
   url "https://github.com/Andersbakken/rtags.git",
       tag:      "v2.38",
       revision: "9687ccdb9e539981e7934e768ea5c84464a61139"
-  license "GPL-3.0"
+  license "GPL-3.0-or-later"
+  revision 1
   head "https://github.com/Andersbakken/rtags.git"
 
   livecheck do
@@ -13,11 +14,11 @@ class Rtags < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "7db38c61d8d0df69ed9dfa3934ca55480b2b84bea813b6be9fed3d74c11b00be"
-    sha256 cellar: :any, big_sur:       "8412892ed1cfce17e4575a7bad34fd208fcc80d44b263460bb75c2d8d9346f3c"
-    sha256 cellar: :any, catalina:      "332ba278034061d8789e8bcfc2d06120c122f0912de030524ee44d73089bdda6"
-    sha256 cellar: :any, mojave:        "a9b3b3f280643e151a9d98438ae1bef2bf77eda3a3412d07c1781d60b6e13a25"
-    sha256 cellar: :any, high_sierra:   "b1f34a462f2473d7059b8db4d78ff85f3bc18e5df25e2d597ce95052d15da132"
+    sha256 cellar: :any, arm64_big_sur: "841f0e639cd56b510b2f2571276c7bcbe3fc86269127222f605c605ec5a074aa"
+    sha256 cellar: :any, big_sur:       "78858c44b0a41a2437f5b553069b14a9c612fd77b717e95dbaf1949f8629184a"
+    sha256 cellar: :any, catalina:      "a421a220b9d412b03d094fc5ce869813534daf3df87271bc16b0fbf01b3cb305"
+    sha256 cellar: :any, mojave:        "84995048fe27191b02332d264e02f7c51178fd5ae5b1f16e6f7be7849adbabcb"
+    sha256               x86_64_linux:  "4eafc513cdf548a06aa5756b0c70e5229d21f4d6a777ae9e327e423cc8deb5c4"
   end
 
   depends_on "cmake" => :build
@@ -25,10 +26,13 @@ class Rtags < Formula
   depends_on "llvm"
   depends_on "openssl@1.1"
 
-  def install
-    # Homebrew llvm libc++.dylib doesn't correctly reexport libc++abi
-    ENV.append("LDFLAGS", "-lc++abi")
+  on_linux do
+    depends_on "gcc"
+  end
 
+  fails_with gcc: "5"
+
+  def install
     args = std_cmake_args << "-DRTAGS_NO_BUILD_CLANG=ON"
 
     mkdir "build" do

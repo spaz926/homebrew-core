@@ -1,15 +1,16 @@
 class Kafka < Formula
   desc "Open-source distributed event streaming platform"
   homepage "https://kafka.apache.org/"
-  url "https://www.apache.org/dyn/closer.lua?path=kafka/2.7.0/kafka_2.13-2.7.0.tgz"
-  mirror "https://archive.apache.org/dist/kafka/2.7.0/kafka_2.13-2.7.0.tgz"
-  sha256 "1dd84b763676a02fecb48fa5d7e7e94a2bf2be9ff87bce14cf14109ce1cb7f90"
+  url "https://www.apache.org/dyn/closer.lua?path=kafka/2.8.0/kafka_2.13-2.8.0.tgz"
+  mirror "https://archive.apache.org/dist/kafka/2.8.0/kafka_2.13-2.8.0.tgz"
+  sha256 "3fa380ae5d1385111ee9c83b0d1806172924ffec2e29399fd1a42671a97492c6"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, big_sur:  "ca872162f6fd02dc02a554a2c84f3b92cb5b2648f92dd8e0daf16eae6fd02ed3"
-    sha256 cellar: :any_skip_relocation, catalina: "ab63bbcd513acd2c9d39fda4f1888e5a8d96d3df819fb05b1c50e75fc3d2230f"
-    sha256 cellar: :any_skip_relocation, mojave:   "c7ef596aafc4e23c1144348e4e258e892135db6d9cebbd4d1a2a3d0da009ec79"
+    sha256 cellar: :any_skip_relocation, big_sur:      "2419e9580114e1927801684919abd741fa1b90dc05b458209e40848da97f536f"
+    sha256 cellar: :any_skip_relocation, catalina:     "2419e9580114e1927801684919abd741fa1b90dc05b458209e40848da97f536f"
+    sha256 cellar: :any_skip_relocation, mojave:       "0dcd62ccde3266e7e2719e06bc40c8f9ec837e9d37dcffc18bd9b8d78c1536b7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "5d3048c003b7d60540889e82c8663e906e1037bbcf2a498a29b4a566584cd63d"
   end
 
   depends_on "openjdk"
@@ -40,7 +41,7 @@ class Kafka < Formula
     (var+"log/kafka").mkpath
   end
 
-  plist_options manual: "zookeeper-server-start #{HOMEBREW_PREFIX}/etc/kafka/zookeeper.properties & kafka-server-start #{HOMEBREW_PREFIX}/etc/kafka/server.properties"
+  plist_options manual: "zookeeper-server-start -daemon #{HOMEBREW_PREFIX}/etc/kafka/zookeeper.properties & kafka-server-start #{HOMEBREW_PREFIX}/etc/kafka/server.properties"
 
   def plist
     <<~EOS
@@ -117,6 +118,6 @@ class Kafka < Formula
       sleep 10
     end
 
-    assert_match(/test message/, IO.read("#{testpath}/kafka/demo.out"))
+    assert_match(/test message/, File.read("#{testpath}/kafka/demo.out"))
   end
 end

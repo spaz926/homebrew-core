@@ -1,16 +1,20 @@
 class OpenZwave < Formula
   desc "Library that interfaces with selected Z-Wave PC controllers"
   homepage "http://www.openzwave.com"
-  url "http://old.openzwave.com/downloads/openzwave-1.6.1080.tar.gz"
-  sha256 "61c4b1857bb80c67b06f83bbeb956275184e30e12401984587dfe79070218d3c"
-  license "LGPL-3.0"
+  url "http://old.openzwave.com/downloads/openzwave-1.6.1914.tar.gz"
+  sha256 "c4e4eb643709eb73c30cc25cffc24e9e7b6d7c49bd97ee8986c309d168d9ad2f"
+  license "LGPL-3.0-or-later"
+
+  livecheck do
+    url "http://old.openzwave.com/downloads/"
+    regex(/href=.*?openzwave[._-]v?(\d+(?:\.\d+)+)\.t/i)
+  end
 
   bottle do
-    sha256 arm64_big_sur: "d7ac3272c8e97d579bd7cbf660d0831b282d426344d1c66d1d6273665972c5ac"
-    sha256 big_sur:       "ca1c3e4e29bb19f377f169a015112818ebb69320ff76f05de671a857a28a4670"
-    sha256 catalina:      "28b55791a9d9ab0a1c772e11ba7459d42b5e9cbed50d9e1db4af154b2ad84d5e"
-    sha256 mojave:        "7e79dc03f657d9d92305f036d6118df60b56e2ddcbf8506234aa8b73dd9f4d31"
-    sha256 high_sierra:   "e3bc4eeb04ec86a43d3a63f263db9aa28090123822de81869c44dcef4af08f8d"
+    sha256 arm64_big_sur: "946d78311179280c3460097a1b60331daa782d916b10e819b97fa80a06037c3f"
+    sha256 big_sur:       "e3c9055c54562fc0fc8879f094359263626bb0cbb0b67a1c48999420f2f223c4"
+    sha256 catalina:      "af0ac45b4c07da453526cc464cf777d17cdbb3760c34ddefcfb3435977139d91"
+    sha256 mojave:        "9680488853f6ee6db1f0e299ff1f00597e8652c095ecb411e322a99b8b43caad"
   end
 
   depends_on "doxygen" => :build
@@ -29,13 +33,14 @@ class OpenZwave < Formula
   test do
     (testpath/"test.cpp").write <<~EOS
       #include <iostream>
+      #include <functional>
       #include <openzwave/Manager.h>
       int main()
       {
         return OpenZWave::Manager::getVersionAsString().empty();
       }
     EOS
-    system ENV.cxx, "test.cpp", "-I#{include}/openzwave",
+    system ENV.cxx, "-std=c++11", "test.cpp", "-I#{include}/openzwave",
                     "-L#{lib}", "-lopenzwave", "-o", "test"
     system "./test"
   end

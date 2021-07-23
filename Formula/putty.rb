@@ -1,15 +1,16 @@
 class Putty < Formula
   desc "Implementation of Telnet and SSH"
   homepage "https://www.chiark.greenend.org.uk/~sgtatham/putty/"
-  url "https://the.earth.li/~sgtatham/putty/0.74/putty-0.74.tar.gz"
-  sha256 "ddd5d388e51dd9e6e294005b30037f6ae802239a44c9dc9808c779e6d11b847d"
+  url "https://the.earth.li/~sgtatham/putty/0.76/putty-0.76.tar.gz"
+  sha256 "547cd97a8daa87ef71037fab0773bceb54a8abccb2f825a49ef8eba5e045713f"
+  license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "0595c24581bb65f29d125f18abd5a5671194114a6f93c9dec43f06470c6ff1d5"
-    sha256 cellar: :any_skip_relocation, big_sur:       "c15a7253a5548f318e45e619e831475ddfb59f314e286b99c9f03164830233f2"
-    sha256 cellar: :any_skip_relocation, catalina:      "d5e454c08c5d06394527aa7141a332eb721097068f25deff3b4affa847837178"
-    sha256 cellar: :any_skip_relocation, mojave:        "5f9844fc7464fefd987780b3579a33b2ca37673be56c2a8249c312a19e20faea"
-    sha256 cellar: :any_skip_relocation, high_sierra:   "6621f31a41a8eedbbb2fda99a0548deed80d432216469105bac8084df66dbcbf"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "adb57691d42b70e51a4336dc37126996c782f2bf66db5d0f05813ebd04178ebf"
+    sha256 cellar: :any_skip_relocation, big_sur:       "75e23ad8100002d5ade0acf3745f4f40a9add28a25ea4814caafd0cb37be7cb8"
+    sha256 cellar: :any_skip_relocation, catalina:      "ab58a1de02894bd5364c31e4a5b864acb81cbc0160814d048f98077bfe01a4b1"
+    sha256 cellar: :any_skip_relocation, mojave:        "4aab22d3d6867678be1d1be95edb5fe41fcd7d807892b00b83d0280b6f356f46"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "51689b0cb6c740349175dad1786ac7786b639e78f5e5b3765272ae83162009d4"
   end
 
   head do
@@ -33,10 +34,7 @@ class Putty < Formula
       system "make", "-C", "doc"
     end
 
-    args = %W[
-      --prefix=#{prefix}
-      --disable-silent-rules
-      --disable-dependency-tracking
+    args = std_configure_args + %w[
       --disable-gtktest
       --without-gtk
     ]
@@ -55,7 +53,7 @@ class Putty < Formula
 
   test do
     (testpath/"command.sh").write <<~EOS
-      #!/usr/bin/expect -f
+      #!/usr/bin/env expect
       set timeout -1
       spawn #{bin}/puttygen -t rsa -b 4096 -q -o test.key
       expect -exact "Enter passphrase to save key: "

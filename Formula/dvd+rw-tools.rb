@@ -5,6 +5,11 @@ class DvdxrwTools < Formula
   sha256 "f8d60f822e914128bcbc5f64fbe3ed131cbff9045dca7e12c5b77b26edde72ca"
   license "GPL-2.0"
 
+  livecheck do
+    url "http://fy.chalmers.se/~appro/linux/DVD+RW/tools/"
+    regex(/href=.*?dvd\+rw-tools[._-]v?(\d+(?:[.-]\d+)+)\.t/i)
+  end
+
   bottle do
     sha256 cellar: :any_skip_relocation, arm64_big_sur: "11ec6e949911cca76b2c3a940e362aff334523a7018dfd3bdcd232acb7b741d1"
     sha256 cellar: :any_skip_relocation, big_sur:       "c3d9ab88096123bd36acbad9f27cc21c07fd881f00ac45b49605f18de03262b1"
@@ -14,7 +19,6 @@ class DvdxrwTools < Formula
     sha256 cellar: :any_skip_relocation, sierra:        "932e3879247dd1587f35d99c7132c302ddeaf3b5efad9effb05f5b086a55541a"
     sha256 cellar: :any_skip_relocation, el_capitan:    "01bae78a5187a47ea770a9cb9c0cabdbafb60485e333a563240a6ea74d6718b0"
     sha256 cellar: :any_skip_relocation, yosemite:      "13fa5b14889c82bd2ff44d4da2ba8049603bdfc6026196440fe33102939faa06"
-    sha256 cellar: :any_skip_relocation, mavericks:     "834a3e5e1276e77a9dd5182d60b55484599bd5d705e6bb0d89a8db5720b7e197"
   end
 
   # Respect $PREFIX
@@ -41,5 +45,5 @@ index a6a100b..bf7c041 100644
 +	install -m $(BIN_MODE) $(CHAIN) $(PREFIX)/bin
 +	install -m 0644 growisofs.1 $(PREFIX)/share/man/man1
  ])
- 
+
  ifelse(OS,MINGW32,[

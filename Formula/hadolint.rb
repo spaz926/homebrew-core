@@ -1,14 +1,16 @@
 class Hadolint < Formula
   desc "Smarter Dockerfile linter to validate best practices"
   homepage "https://github.com/hadolint/hadolint"
-  url "https://github.com/hadolint/hadolint/archive/v2.0.0.tar.gz"
-  sha256 "a3e820d33c2a74ead549f962e8ae2905b32b5b1eb9ee6b2c0c20b81f4cbda6a5"
+  url "https://github.com/hadolint/hadolint/archive/v2.6.0.tar.gz"
+  sha256 "4001fa296cccf8366af773b33edb5d8131d375096c6bf593890164818dbc3e2d"
   license "GPL-3.0-only"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, big_sur:  "3c6cc1fb4733be6d6a326dd08609c1afa65cda5bff6117f2b28574e4ca724f2e"
-    sha256 cellar: :any_skip_relocation, catalina: "e6c611ce654ab63465cd87a52583ce8e2478e861ce06bf563ac1a05ca1581f69"
-    sha256 cellar: :any_skip_relocation, mojave:   "e7db9635f6fcd06fefed2a51ca4b67b8b0826c0d1af14e4bce7fbe90c90c1bf5"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "1a147ced2e0c45fb6a67281ccac1e4e6e7f82644fff2d6e53d0cac791ebcd151"
+    sha256 cellar: :any_skip_relocation, big_sur:       "cd0497cca38f6a6ad914f34951bf4178cc689f3599ce000377f3049ead0ffbbd"
+    sha256 cellar: :any_skip_relocation, catalina:      "88978464f63f97957d17ce8a3728a6575815ecb4ee6d2a670ade6c166e23c041"
+    sha256 cellar: :any_skip_relocation, mojave:        "77f170344d5275b6eebbed7699d5f2406a30532b35edce0e60f1ab5cf312ff35"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1059695a96883652329d6688d085c8600914b7c2e597acbb0c2acb4cdfa4c78d"
   end
 
   depends_on "ghc" => :build
@@ -16,17 +18,19 @@ class Hadolint < Formula
 
   uses_from_macos "xz"
 
-  on_linux do
-    depends_on "gmp"
-  end
-
   def install
     # Let `stack` handle its own parallelization
     jobs = ENV.make_jobs
     ENV.deparallelize
 
-    system "stack", "-j#{jobs}", "build"
-    system "stack", "-j#{jobs}", "--local-bin-path=#{bin}", "install"
+    ghc_args = [
+      "--system-ghc",
+      "--no-install-ghc",
+      "--skip-ghc-check",
+    ]
+
+    system "stack", "-j#{jobs}", "build", *ghc_args
+    system "stack", "-j#{jobs}", "--local-bin-path=#{bin}", "install", *ghc_args
   end
 
   test do

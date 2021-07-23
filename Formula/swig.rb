@@ -3,7 +3,7 @@ class Swig < Formula
   homepage "http://www.swig.org/"
   url "https://downloads.sourceforge.net/project/swig/swig/swig-4.0.2/swig-4.0.2.tar.gz"
   sha256 "d53be9730d8d58a16bf0cbd1f8ac0c0c3e1090573168bfa151b01eb47fa906fc"
-  license "GPL-3.0"
+  license "GPL-3.0-or-later"
 
   bottle do
     sha256 arm64_big_sur: "918c070202e0138b64b2e27f262aae3a72ab9f273f14842802d1fbe9169e66fc"
@@ -11,6 +11,7 @@ class Swig < Formula
     sha256 catalina:      "530e80b7e7dcd28469b52fc3b668683a97b72642ebf2b6d4e6708d14f05e7286"
     sha256 mojave:        "50afb5930cb37af2e400f0369f6da15b1d4922c1f72f45d13e7e3f8bd9d6d27b"
     sha256 high_sierra:   "8bab440005b048ce454a3dd50ba608e1f85391edd73e9e40510269e923cad238"
+    sha256 x86_64_linux:  "2a5fe8e40d8ba5e09fd194e9e36f8fe4bd7a427e31d1456a99bb45539074c92a"
   end
 
   head do
@@ -50,9 +51,23 @@ class Swig < Formula
       puts Test.add(1, 1)
     EOS
     system "#{bin}/swig", "-ruby", "test.i"
-    system ENV.cc, "-c", "test.c"
-    system ENV.cc, "-c", "test_wrap.c", "-I#{MacOS.sdk_path}/System/Library/Frameworks/Ruby.framework/Headers/"
-    system ENV.cc, "-bundle", "-undefined", "dynamic_lookup", "test.o", "test_wrap.o", "-o", "test.bundle"
-    assert_equal "2", shell_output("/usr/bin/ruby run.rb").strip
+    on_macos do
+      system ENV.cc, "-c", "test.c"
+      system ENV.cc, "-c", "test_wrap.c", "-I#{MacOS.sdk_path}/System/Library/Frameworks/Ruby.framework/Headers/"
+      system ENV.cc, "-bundle", "-undefined", "dynamic_lookup", "test.o", "test_wrap.o", "-o", "test.bundle"
+    end
+    on_linux do
+      ruby = Formula["ruby"]
+      args = Utils.safe_popen_read(
+        ruby.opt_bin/"ruby", "-e", "'puts RbConfig::CONFIG[\"LIBRUBYARG\"]'"
+      ).chomp
+      system ENV.cc, "-c", "-fPIC", "test.c"
+      system ENV.cc, "-c", "-fPIC", "test_wrap.c",
+             "-I#{ruby.opt_include}/ruby-#{ruby.version.major_minor}.0",
+             "-I#{ruby.opt_include}/ruby-#{ruby.version.major_minor}.0/x86_64-linux/"
+      system ENV.cc, "-shared", "test.o", "test_wrap.o", "-o", "test.so",
+             *args.delete("'").split
+    end
+    assert_equal "2", shell_output("ruby run.rb").strip
   end
 end

@@ -1,20 +1,21 @@
 class CairommAT114 < Formula
   desc "Vector graphics library with cross-device output support"
   homepage "https://cairographics.org/cairomm/"
-  url "https://cairographics.org/releases/cairomm-1.14.2.tar.xz"
-  sha256 "0126b9cc295dc36bc9c0860d5b720cb5469fd78d5620c8f10cc5f0c07b928de3"
+  url "https://cairographics.org/releases/cairomm-1.14.3.tar.xz"
+  sha256 "0d37e067c5c4ca7808b7ceddabfe1932c5bd2a750ad64fb321e1213536297e78"
   license "LGPL-2.0-or-later"
 
   livecheck do
     url "https://cairographics.org/releases/?C=M&O=D"
-    regex(/href=.*?cairomm[._-]v?(1\.14\.\d*[02468](?:\.\d+)*)\.t/i)
+    regex(/href=.*?cairomm[._-]v?(1\.14(?:\.\d+)+)\.t/i)
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "ef44f96c1bcf4ee0260d4580bb2f58b4d702559521525cd094c40c437408ec20"
-    sha256 cellar: :any, big_sur:       "ac3ed3d2ba79498f26005046e61a835978c4c8ca0ca6435d39b405d2bc39535b"
-    sha256 cellar: :any, catalina:      "89fc4b03efa9136f5a828959c3263b36dfb209d303b62192d57d6d6aed4058ef"
-    sha256 cellar: :any, mojave:        "b9eff4d0aca913e713ee870137962be2a44c498936f1c915e459eb95002e60ef"
+    sha256 cellar: :any, arm64_big_sur: "71bcd76e90894734f2e5d63935bc183cd8486235f9a664d4e205db1b96a0c822"
+    sha256 cellar: :any, big_sur:       "67f908984fdf0cefc9d18cc14bc59517f5b41a821acee8b6f98538f3bfea864a"
+    sha256 cellar: :any, catalina:      "61e7e813f3a0a75951b2a25ef451bc97268330768cb2963fd00e8debf4d26a92"
+    sha256 cellar: :any, mojave:        "919c048378cc28132ddbff1138796dcdc1f1d330a6f60b97b0ddfa2c77394780"
+    sha256               x86_64_linux:  "55a72b3ff6eb503eebf7aced50b3bad26f50422804e9802d1c92ebe242146595"
   end
 
   depends_on "meson" => :build

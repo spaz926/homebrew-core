@@ -11,7 +11,9 @@ class SeleniumServerStandalone < Formula
     regex(/href=.*?selenium-server-standalone[._-]v?(\d+(?:\.\d+)+)\.jar/i)
   end
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "5a2d805f6a197441039bd29d284192ecefefdd4e5bc3e84395a87ce19705dc4c"
+  end
 
   depends_on "openjdk"
 
@@ -56,12 +58,12 @@ class SeleniumServerStandalone < Formula
   test do
     port = free_port
     fork { exec "#{bin}/selenium-server -port #{port}" }
-    sleep 3
+    sleep 6
     output = shell_output("curl --silent localhost:#{port}/wd/hub/status")
     output = JSON.parse(output)
 
     assert_equal 0, output["status"]
-    assert_true output["value"]["ready"]
+    assert_equal true, output["value"]["ready"]
     assert_equal version, output["value"]["build"]["version"]
   end
 end

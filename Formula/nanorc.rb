@@ -6,7 +6,9 @@ class Nanorc < Formula
   license "GPL-3.0"
   head "https://github.com/scopatz/nanorc.git"
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "bf71c9da19d2ac1b05163bd9f92ea86adc475ca15d3e95101c91d788ff781625"
+  end
 
   def install
     pkgshare.install Dir["*.nanorc"]

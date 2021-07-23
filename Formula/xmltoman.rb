@@ -1,4 +1,8 @@
+require "language/perl"
+
 class Xmltoman < Formula
+  include Language::Perl::Shebang
+
   desc "XML to manpage converter"
   homepage "https://sourceforge.net/projects/xmltoman/"
   url "https://downloads.sourceforge.net/project/xmltoman/xmltoman/xmltoman-0.4.tar.gz/xmltoman-0.4.tar.gz"
@@ -14,10 +18,34 @@ class Xmltoman < Formula
     sha256 cellar: :any_skip_relocation, sierra:        "06a29d1545388d2111008cc244733f36971638e05408e1a7353fe9e142f91b76"
     sha256 cellar: :any_skip_relocation, el_capitan:    "010af030c01ebe6528bbdecfa1153fac5f6e082fa088e1803d0768bb268a509b"
     sha256 cellar: :any_skip_relocation, yosemite:      "6345ec17095eeec7fde97b609c0c88f07fcdd1e911fa7fd3b8db7f3e5b081b9c"
-    sha256 cellar: :any_skip_relocation, mavericks:     "9330b2e39919f745009122679a1e4f42ff818c55950fd7b462af86de644c0a45"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "20b505270931bb3f16da16f43706a9bb5062948923b22d01a40709447c7c7f80"
+  end
+
+  uses_from_macos "perl"
+
+  on_linux do
+    resource "XML::Parser" do
+      url "https://cpan.metacpan.org/authors/id/T/TO/TODDR/XML-Parser-2.44.tar.gz"
+      sha256 "1ae9d07ee9c35326b3d9aad56eae71a6730a73a116b9fe9e8a4758b7cc033216"
+    end
   end
 
   def install
+    on_linux do
+      ENV.prepend_create_path "PERL5LIB", libexec/"lib/perl5"
+
+      resources.each do |res|
+        res.stage do
+          system "perl", "Makefile.PL", "INSTALL_BASE=#{libexec}"
+          system "make", "PERL5LIB=#{ENV["PERL5LIB"]}"
+          system "make", "install"
+        end
+      end
+
+      inreplace "xmltoman", "#!/usr/bin/perl -w", "#!/usr/bin/env perl"
+      rewrite_shebang detected_perl_shebang, "xmlmantohtml"
+    end
+
     # generate the man files from their original XML sources
     system "./xmltoman xml/xmltoman.1.xml > xmltoman.1"
     system "./xmltoman xml/xmlmantohtml.1.xml > xmlmantohtml.1"
@@ -25,5 +53,13 @@ class Xmltoman < Formula
     man1.install %w[xmltoman.1 xmlmantohtml.1]
     bin.install %w[xmltoman xmlmantohtml]
     pkgshare.install %w[xmltoman.xsl xmltoman.dtd xmltoman.css]
+
+    on_linux do
+      bin.env_script_all_files(libexec/"bin", PERL5LIB: ENV["PERL5LIB"])
+    end
+  end
+
+  def test_do
+    assert_match "You need to specify a file to parse", shell_output("xmltoman")
   end
 end

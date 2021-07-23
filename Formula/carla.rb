@@ -1,10 +1,9 @@
 class Carla < Formula
   desc "Audio plugin host supporting LADSPA, LV2, VST2/3, SF2 and more"
   homepage "https://kxstudio.linuxaudio.org/Applications:Carla"
-  url "https://github.com/falkTX/Carla/archive/v2.2.0.tar.gz"
-  sha256 "4bf08511257db88979eccc002f10c153ff2a14f5143291c2be39cadd69ce10e1"
+  url "https://github.com/falkTX/Carla/archive/v2.3.1.tar.gz"
+  sha256 "b3c0aefbaf1112c9f6017b8681f6a3c3319b59a153e644800195f9552000fb98"
   license "GPL-2.0-or-later"
-  revision 3
   head "https://github.com/falkTX/Carla.git"
 
   livecheck do
@@ -13,9 +12,10 @@ class Carla < Formula
   end
 
   bottle do
-    sha256 cellar: :any, big_sur:  "f8ee9fd5b1230b0e4b8e447969a420534d63f735758d21acdea0f52713b4f29a"
-    sha256 cellar: :any, catalina: "3d507dc32add60b1a0eb60eb0cb27fcfa352789c63133229d7881dedaf86779d"
-    sha256 cellar: :any, mojave:   "6d4f42afcb7a94322b8509db1a44dd8859cb46b3c0adda2efa103f4115032a9d"
+    sha256 cellar: :any, arm64_big_sur: "35b8485aa43399484a5ba71be0d8e1960517c88ff788681ce40657009ad42246"
+    sha256 cellar: :any, big_sur:       "0dde7e1a7b972ed8121e1fbad3f129f499f8137e1f1e1b686aa6ed86c0974f54"
+    sha256 cellar: :any, catalina:      "8f200e6aed534f9be88d37dd4b3c9c75569628c042a434fabe8bcb484c6658b5"
+    sha256 cellar: :any, mojave:        "fdfc096ac6766c32b65a655e4fb63cf67810b040505710557317e2a330b56571"
   end
 
   depends_on "pkg-config" => :build

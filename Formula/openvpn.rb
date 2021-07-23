@@ -1,9 +1,9 @@
 class Openvpn < Formula
   desc "SSL/TLS VPN implementing OSI layer 2 or 3 secure network extension"
   homepage "https://openvpn.net/community/"
-  url "https://swupdate.openvpn.org/community/releases/openvpn-2.5.1.tar.xz"
-  mirror "https://build.openvpn.net/downloads/releases/openvpn-2.5.1.tar.xz"
-  sha256 "40930489c837c05f6153f38e1ebaec244431ef1a034e4846ff732d71d59ff194"
+  url "https://swupdate.openvpn.org/community/releases/openvpn-2.5.3.tar.xz"
+  mirror "https://build.openvpn.net/downloads/releases/openvpn-2.5.3.tar.xz"
+  sha256 "fb6a9943c603a1951ca13e9267653f8dd650c02f84bccd2b9d20f06a4c9c9a7e"
   license "GPL-2.0-only" => { with: "openvpn-openssl-exception" }
 
   livecheck do
@@ -12,10 +12,10 @@ class Openvpn < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "9a740d80d18d2999f2cd1842bd5abfc968728b7fb9b0dc57000eb9a03dcca450"
-    sha256 big_sur:       "fd6e1e6ba3af7d36b07c57d7f9d81ef6a349d3127a1191775b23f2e9b87b38ce"
-    sha256 catalina:      "f6210b51996581a5fe4e4264c4e57c47fea91456b2bf33982c159189c58f50bd"
-    sha256 mojave:        "20f274f259542da33069a9436e68048b0a377900ebac72aaac13d13845a701e1"
+    sha256 arm64_big_sur: "433d03f96b84988645792035d030fe75d6dd5798ef8378801819ea26fcf47e53"
+    sha256 big_sur:       "2793ac511bf39ba8188d91f44ed4e54a3d4d7ebe343b12bc51ab5230527dafa5"
+    sha256 catalina:      "934be2e38dcba81a70b32c075bde79d5bbe57f5f754c9216c24edb0c8a1a581f"
+    sha256 mojave:        "e7b821dff3579fbb6e1d3b9c0ece0e2152ede9eac7ff98daec488300d92c50ac"
   end
 
   depends_on "pkg-config" => :build
@@ -27,6 +27,7 @@ class Openvpn < Formula
 
   on_linux do
     depends_on "linux-pam"
+    depends_on "net-tools"
   end
 
   def install
@@ -36,12 +37,9 @@ class Openvpn < Formula
                           "--with-crypto-library=openssl",
                           "--enable-pkcs11",
                           "--prefix=#{prefix}"
-    inreplace "sample/sample-plugins/Makefile" do |s|
-      s.gsub! HOMEBREW_LIBRARY/"Homebrew/shims/mac/super/pkg-config",
+    inreplace "sample/sample-plugins/Makefile",
+              HOMEBREW_SHIMS_PATH/"mac/super/pkg-config",
               Formula["pkg-config"].opt_bin/"pkg-config"
-      s.gsub! HOMEBREW_LIBRARY/"Homebrew/shims/mac/super/sed",
-              "/usr/bin/sed"
-    end
     system "make", "install"
 
     inreplace "sample/sample-config-files/openvpn-startup.sh",

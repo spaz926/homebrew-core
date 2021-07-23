@@ -3,18 +3,20 @@ class Wllvm < Formula
 
   desc "Toolkit for building whole-program LLVM bitcode files"
   homepage "https://pypi.org/project/wllvm/"
-  url "https://files.pythonhosted.org/packages/63/cd/0cc7994c2a94983adb8b07f34a88e6a815f4d18a1e29eb68d094e5863f18/wllvm-1.3.0.tar.gz"
-  sha256 "a98dd48350d8aae80fe03b92efb11c3e1b92f6aee482f4331f7c97265ca7a602"
+  url "https://files.pythonhosted.org/packages/4b/df/31d7519052bc21d0e9771e9a6540d6310bfb13bae7dacde060d8f647b8d3/wllvm-1.3.1.tar.gz"
+  sha256 "3e057a575f05c9ecc8669a8c4046f2bfdf0c69533b87b4fbfcabe0df230cc331"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "b146448a287a26c086f41c4db6222e2f2969bbc12a4d86c9eaf05e2ce5ed4da2"
-    sha256 cellar: :any_skip_relocation, big_sur:       "fe0b731ecde0d7e66f096f374741fc177fa01c2d866d28d2519b009f7f3f881a"
-    sha256 cellar: :any_skip_relocation, catalina:      "87139d500bf0594a1573a3d6c7f860db22d5608f1556771cf4ae2dd06e45d828"
-    sha256 cellar: :any_skip_relocation, mojave:        "cbaafe80bf7c436c2aca8d8080f1772d5d592836ce05d8b3864345b53bd4f4e2"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "c20248474947e050b8e5c8950301896c7343beca3baa4063a910c68e44f59cd4"
+    sha256 cellar: :any_skip_relocation, big_sur:       "946b4f71c813838a6bcf71992379dbc092fe1586374c8b372f70a5a9f007a4fd"
+    sha256 cellar: :any_skip_relocation, catalina:      "946b4f71c813838a6bcf71992379dbc092fe1586374c8b372f70a5a9f007a4fd"
+    sha256 cellar: :any_skip_relocation, mojave:        "d371b3aeaae37cdb1f250e536aaa6f52dd0da4e132bdddb02a238a702d130735"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "05f8b627879dd34512b6423047ec04d5b668ac28dbde974c2e7df85ddb703a6b"
   end
 
-  depends_on "llvm"
+  depends_on "llvm" => :test
   depends_on "python@3.9"
 
   def install
@@ -31,11 +33,7 @@ class Wllvm < Formula
     assert_predicate testpath/".test.o", :exist?
     assert_predicate testpath/".test.o.bc", :exist?
 
-    # extract-bc currently does not work on ARM.
-    # https://github.com/SRI-CSL/whole-program-llvm/issues/29
-    unless Hardware::CPU.arm?
-      system bin/"extract-bc", testpath/"test"
-      assert_predicate testpath/"test.bc", :exist?
-    end
+    system bin/"extract-bc", testpath/"test"
+    assert_predicate testpath/"test.bc", :exist?
   end
 end

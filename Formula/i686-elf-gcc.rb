@@ -1,16 +1,18 @@
 class I686ElfGcc < Formula
   desc "GNU compiler collection for i686-elf"
   homepage "https://gcc.gnu.org"
-  url "https://ftp.gnu.org/gnu/gcc/gcc-10.2.0/gcc-10.2.0.tar.xz"
-  mirror "https://ftpmirror.gnu.org/gcc/gcc-10.2.0/gcc-10.2.0.tar.xz"
-  sha256 "b8dd4368bb9c7f0b98188317ee0254dd8cc99d1e3a18d0ff146c855fe16c1d8c"
-  license "GPL-2.0"
+  url "https://ftp.gnu.org/gnu/gcc/gcc-11.1.0/gcc-11.1.0.tar.xz"
+  mirror "https://ftpmirror.gnu.org/gcc/gcc-11.1.0/gcc-11.1.0.tar.xz"
+  sha256 "4c4a6fb8a8396059241c2e674b85b351c26a5d678274007f076957afa1cc9ddf"
+  license "GPL-3.0-or-later" => { with: "GCC-exception-3.1" }
+  revision 1
 
   bottle do
-    sha256 big_sur:     "774bb133598e76c19daa758e533132d632e6b541a4f6c348bc1428b573bb5c58"
-    sha256 catalina:    "8e258af70b398807c115631de8a1dc8c6ebdb3be870fe26410c14e91a7659a58"
-    sha256 mojave:      "4c14d4308435c164f92de628f8e1b97a63692fb0b3ff083c083a64fed1c72870"
-    sha256 high_sierra: "c8d9a65d529d5c9219b451dfd724c7df0275df5f9c6138eb3db173b783c07372"
+    sha256 arm64_big_sur: "7365d64296a1435d2a3649c4b9bf8d17e0d42ed40523de3fbe09cdea725c1651"
+    sha256 big_sur:       "f90e0015f48d6801c2baecff35f1f585424736886c61df900d6a16d3a6ca0f58"
+    sha256 catalina:      "653e014807bf4321c23e9e5375d489065bee7cd3e67e0b48bbfb8583420b6d66"
+    sha256 mojave:        "ed1638bf912983d96fd04d43f5a56a542a6cd9dc927ca2dbac028238f1b6f7de"
+    sha256 x86_64_linux:  "09af3648758f172b4726c8111943303833c6523e4fb1702f3011248aae818d4d"
   end
 
   depends_on "gmp"
@@ -18,18 +20,27 @@ class I686ElfGcc < Formula
   depends_on "libmpc"
   depends_on "mpfr"
 
+  # Remove when upstream has Apple Silicon support
+  if Hardware::CPU.arm?
+    patch do
+      # patch from gcc-11.1.0-arm branch
+      url "https://github.com/fxcoudert/gcc/commit/eea3046c5fa62d4dee47e074c7a758570d9da61c.patch?full_index=1"
+      sha256 "b55ca05a0ed32f69f63bbe708568df5ad62d938da0e34b515d601bb966d32d40"
+    end
+  end
+
   def install
+    target = "i686-elf"
     mkdir "i686-elf-gcc-build" do
-      system "../configure", "--target=i686-elf",
+      system "../configure", "--target=#{target}",
                              "--prefix=#{prefix}",
-                             "--infodir=#{info}/i686-elf-gcc",
+                             "--infodir=#{info}/#{target}",
                              "--disable-nls",
                              "--without-isl",
                              "--without-headers",
                              "--with-as=#{Formula["i686-elf-binutils"].bin}/i686-elf-as",
                              "--with-ld=#{Formula["i686-elf-binutils"].bin}/i686-elf-ld",
-                             "--enable-languages=c,c++",
-                             "SED=/usr/bin/sed"
+                             "--enable-languages=c,c++"
       system "make", "all-gcc"
       system "make", "install-gcc"
       system "make", "all-target-libgcc"

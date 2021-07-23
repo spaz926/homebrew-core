@@ -1,27 +1,34 @@
 class Kumactl < Formula
   desc "Kuma control plane command-line utility"
   homepage "https://kuma.io/"
-  url "https://github.com/kumahq/kuma/archive/1.1.1.tar.gz"
-  sha256 "7c8086807fcdfa33c95dc9fa4a4fbf8cbafd22b50d749d14d877a64299381914"
+  url "https://github.com/kumahq/kuma/archive/1.2.2.tar.gz"
+  sha256 "dbef0c92541af35855543a9a5c84f6655c917ae858e2c5fb9f6d10c8b87ac069"
   license "Apache-2.0"
 
+  livecheck do
+    url :stable
+    strategy :github_latest
+  end
+
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "9891ad7f0a45a1bc41de6833fe7b2912c5e70c602eecf78cc3c49908f6af2975"
-    sha256 cellar: :any_skip_relocation, big_sur:       "20629acfd92489281588abffe2de1e5c1c4750914a4468efa9c9a45240b338bf"
-    sha256 cellar: :any_skip_relocation, catalina:      "1cda3c8d8888ffc019a21cb1ff2dd8b87715e3448b362c3be02db5fca5f2e353"
-    sha256 cellar: :any_skip_relocation, mojave:        "cdc6f7768fae60ca5c0eb1728f57533d008e420f125b8f0edcb093eea0309822"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "af500337a48e0d71d01042f8f6fb775e3acacbbfa383afccded67df8418a4f12"
+    sha256 cellar: :any_skip_relocation, big_sur:       "241ff2c52fad0df096dd5acc80664c1303eea8f93c69f13b96eb1c401b1bf55f"
+    sha256 cellar: :any_skip_relocation, catalina:      "29314f57a125f4df57b9ebdc7d385381f26b2e6bcda100cb5500097f3c4c312f"
+    sha256 cellar: :any_skip_relocation, mojave:        "fb48f21dcb351bddf5dc97e3612041015809292f02a60704309a09cb081daacd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ab73a33a9d4387172613d8abc7f9e9dab7daefadca194ef301df7394fc1f755e"
   end
 
   depends_on "go" => :build
 
   def install
-    srcpath = buildpath/"src/kuma.io/kuma"
-    srcpath.install buildpath.children
+    ldflags = %W[
+      -s -w
+      -X github.com/kumahq/kuma/pkg/version.version=#{version}
+      -X github.com/kumahq/kuma/pkg/version.gitTag=#{version}
+      -X github.com/kumahq/kuma/pkg/version.buildDate=#{time.strftime("%F")}
+    ].join(" ")
 
-    cd srcpath do
-      system "make", "build/kumactl", "BUILD_INFO_VERSION=#{version}"
-      bin.install Dir["build/artifacts-*/kumactl/kumactl"].first
-    end
+    system "go", "build", *std_go_args(ldflags: ldflags), "./app/kumactl"
 
     output = Utils.safe_popen_read("#{bin}/kumactl", "completion", "bash")
     (bash_completion/"kumactl").write output

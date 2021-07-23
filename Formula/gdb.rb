@@ -1,32 +1,31 @@
 class Gdb < Formula
   desc "GNU debugger"
   homepage "https://www.gnu.org/software/gdb/"
-  url "https://ftp.gnu.org/gnu/gdb/gdb-10.1.tar.xz"
-  mirror "https://ftpmirror.gnu.org/gdb/gdb-10.1.tar.xz"
-  sha256 "f82f1eceeec14a3afa2de8d9b0d3c91d5a3820e23e0a01bbb70ef9f0276b62c0"
+  url "https://ftp.gnu.org/gnu/gdb/gdb-10.2.tar.xz"
+  mirror "https://ftpmirror.gnu.org/gdb/gdb-10.2.tar.xz"
+  sha256 "aaa1223d534c9b700a8bec952d9748ee1977513f178727e1bee520ee000b4f29"
   license "GPL-3.0-or-later"
-  revision 1
   head "https://sourceware.org/git/binutils-gdb.git"
 
   bottle do
-    sha256 big_sur:  "e091e16129311d4c9c444e415dc8f8cd58f0ba2f3647952cab242c32c049426e"
-    sha256 catalina: "33e0973094baeb29eeeb29472a8534e11f8c870e94864777ab3d66a1ba68416f"
-    sha256 mojave:   "e9629327e54e84b14ae2c3f54712376428f6c62e070760e6c62b0bdf83f691af"
+    sha256 big_sur:      "31de67be9674e5bd363a554e7f02002687a5ac9734526983e0430b041acea042"
+    sha256 catalina:     "66f0ab39e075db4f5de3403c0f8125b54be84b7d009491e0b8e040d774721c3b"
+    sha256 mojave:       "f1392338a52a0e3d74b3b4f9f1ad4e70977d80ad672789a1371bed545d5528e4"
+    sha256 x86_64_linux: "5f21f90491812fec4b5408fa7c0a308b3a7e60f12b435733364f635b9ae88cc9"
   end
 
   depends_on "python@3.9"
   depends_on "xz" # required for lzma support
 
+  uses_from_macos "texinfo" => :build
   uses_from_macos "expat"
   uses_from_macos "ncurses"
 
   on_linux do
     depends_on "pkg-config" => :build
+    depends_on "gcc"
     depends_on "guile"
   end
-
-  conflicts_with "i386-elf-gdb", because: "both install include/gdb, share/gdb and share/info"
-  conflicts_with "x86_64-elf-gdb", because: "both install include/gdb, share/gdb and share/info"
 
   fails_with :clang do
     build 800
@@ -35,6 +34,8 @@ class Gdb < Formula
       'const any_static_probe_ops' without a user-provided default constructor
     EOS
   end
+
+  fails_with gcc: "5"
 
   def install
     args = %W[

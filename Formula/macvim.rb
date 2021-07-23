@@ -2,23 +2,25 @@
 class Macvim < Formula
   desc "GUI for vim, made for macOS"
   homepage "https://github.com/macvim-dev/macvim"
-  url "https://github.com/macvim-dev/macvim/archive/snapshot-170.tar.gz"
-  version "8.2-170"
-  sha256 "6c38d2f91568751927e641fd9846230e2562d90e678d2dcd8e61d41fe670021b"
+  url "https://github.com/macvim-dev/macvim/archive/snapshot-171.tar.gz"
+  version "8.2-171"
+  sha256 "1ef6766abefc6d67dd717f1a92aa294304817a462a98153f2696e83340ffce25"
   license "Vim"
+  revision 1
   head "https://github.com/macvim-dev/macvim.git"
 
   bottle do
-    sha256 arm64_big_sur: "90bf9eef4540da97d5ae765e3f2fbb3732f9a288d688c87f64290b3d19308496"
-    sha256 big_sur:       "fd6fec971df13cef023afbd662ea2b3dc8186815e32e373144ccb69ce26d1195"
-    sha256 catalina:      "58f3f219e4c7258edf51edb64222698ff5f3307e08dabfcf059288540850fc3b"
-    sha256 mojave:        "c225ac2bf20a32239460c9f74742a87f962a61268787f4e887224a141f54a6b7"
+    sha256 arm64_big_sur: "87e1904216e8f0131e055f5a44b2c863b812ed855c53f377ec1d0afe81c30230"
+    sha256 big_sur:       "607b58cfc70e02d68aa491f8c968f11341386c6f0972d2a113d41c69658c51a7"
+    sha256 catalina:      "eba980cb563fb4766e330e45d0bb7fa3f1f1be020b3490d0421e0816c266ea19"
+    sha256 mojave:        "a13d4c099c2f0769bfb31fdbafcf9c3a6dd53e583b82d0f2076f39310118ac8b"
   end
 
   depends_on xcode: :build
   depends_on "cscope"
   depends_on "gettext"
   depends_on "lua"
+  depends_on :macos
   depends_on "python@3.9"
   depends_on "ruby"
 

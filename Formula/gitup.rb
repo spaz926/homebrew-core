@@ -14,6 +14,7 @@ class Gitup < Formula
     sha256 cellar: :any_skip_relocation, big_sur:       "5ea818d777b458b351c6dba3fced8dfe0b2872855041f2f4dce01751e4ead21c"
     sha256 cellar: :any_skip_relocation, catalina:      "741ddc9b31fff9cab313a9bd9da4ef42d94946887b730db62a1ca437bd67b485"
     sha256 cellar: :any_skip_relocation, mojave:        "30d5bfe2d496259630b86658d0269cdb8ae6039e8edc77f9651d21a74c6f2b3e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ffd9d75739ea219cf727d12c46dc0f4dacab636f75378ed22c883c514ad29e49"
   end
 
   depends_on "python@3.9"
@@ -66,10 +67,10 @@ class Gitup < Formula
     system bin/"gitup", "first", "second"
 
     first_head = Utils.git_head(testpath/"first")
-    assert_not_equal first_head, first_head_start
+    refute_equal first_head, first_head_start
 
     second_head = Utils.git_head(testpath/"second")
-    assert_not_equal second_head, second_head_start
+    refute_equal second_head, second_head_start
 
     third_head_start = "f47ab45abdbc77e518776e5dc44f515721c523ae"
     mkdir "third" do
@@ -80,7 +81,7 @@ class Gitup < Formula
 
     system bin/"gitup"
     third_head = Utils.git_head(testpath/"third")
-    assert_not_equal third_head, third_head_start
+    refute_equal third_head, third_head_start
 
     assert_match %r{#{Dir.pwd}/third}, `#{bin}/gitup --list`.strip
 

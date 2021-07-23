@@ -1,16 +1,12 @@
 class Jolie < Formula
   desc "Service-oriented programming language"
   homepage "https://www.jolie-lang.org/"
-  url "https://github.com/jolie/jolie/releases/download/v1.9.1/jolie-1.9.1.jar"
-  sha256 "e4b43f2b247102f49c05fb48d64ca294141b3488de38bd089c99653ca83c644d"
-  license "LGPL-2.1"
+  url "https://github.com/jolie/jolie/releases/download/v1.10.5/jolie-1.10.5.jar"
+  sha256 "1088c357838c58f132c1d17598d5841e63e5dccb0ea518a2cd9aa281def7d92d"
+  license "LGPL-2.1-only"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "418e6d2516610113c2977ca48fc54927e30cea26300b6d6c62aa415f6e4e47f8"
-    sha256 cellar: :any_skip_relocation, big_sur:       "03517491264e7bdbdb6bc71648f1a8d654ef5a192af2c0233470808bf5a570ef"
-    sha256 cellar: :any_skip_relocation, catalina:      "f8aecb9822259d55665704df3939d474d4c86de04979d4f8cf244a4cf2ba3150"
-    sha256 cellar: :any_skip_relocation, mojave:        "f8aecb9822259d55665704df3939d474d4c86de04979d4f8cf244a4cf2ba3150"
-    sha256 cellar: :any_skip_relocation, high_sierra:   "f8aecb9822259d55665704df3939d474d4c86de04979d4f8cf244a4cf2ba3150"
+    sha256 cellar: :any_skip_relocation, all: "50dcf57021a1915c8403e3596b6189dc435f3e8f286dd66d9efb3a5e2799cbe9"
   end
 
   depends_on "openjdk"
@@ -29,29 +25,34 @@ class Jolie < Formula
   test do
     file = testpath/"test.ol"
     file.write <<~EOS
-      include "console.iol"
+      from Console import Console, ConsoleIface
 
-      interface EchoInterface {
-        OneWay: echo( int )
-      }
+      interface PowTwoInterface { OneWay: powTwo( int ) }
 
-      inputPort In {
-        location: "local://testPort"
-        interfaces: EchoInterface
-      }
+      service main(){
 
-      outputPort Self {
-        location: "local://testPort"
-        interfaces: EchoInterface
-      }
+        outputPort Console { interfaces: ConsoleIface }
+        embed Console in Console
 
-      init{
-        echo@Self( 4 )
-      }
+        inputPort In {
+          location: "local://testPort"
+          interfaces: PowTwoInterface
+        }
 
-      main {
-        echo( x )
-        println@Console( x * x )()
+        outputPort Self {
+          location: "local://testPort"
+          interfaces: PowTwoInterface
+        }
+
+        init {
+          powTwo@Self( 4 )
+        }
+
+        main {
+          powTwo( x )
+          println@Console( x * x )()
+        }
+
       }
     EOS
 

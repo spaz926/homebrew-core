@@ -2,8 +2,8 @@ class Ipfs < Formula
   desc "Peer-to-peer hypermedia protocol"
   homepage "https://ipfs.io/"
   url "https://github.com/ipfs/go-ipfs.git",
-      tag:      "v0.8.0",
-      revision: "ce693d7e81e0206b3afbce30333c21a36a9f094b"
+      tag:      "v0.9.1",
+      revision: "dc2715af68b93611a116b83fca90714e7c5cb50b"
   license all_of: [
     "MIT",
     any_of: ["MIT", "Apache-2.0"],
@@ -16,20 +16,20 @@ class Ipfs < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, big_sur:  "26b96618554fa924bf04a04b0f3c68714b92b1493f9391c973b7eb7b3409a744"
-    sha256 cellar: :any_skip_relocation, catalina: "f75c5837fecebbeeb36be86091e719d85b0922654d406753bfe3c4f7f4a2e1a9"
-    sha256 cellar: :any_skip_relocation, mojave:   "868371961578f442159865ff5111d778dbc730cda71058f942cbb354e6a46029"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "231298d145992a014cbb51f662441680df8f3770454c72bb6190d8324a78667b"
+    sha256 cellar: :any_skip_relocation, big_sur:       "e378ee908d60a07630e6825480c88e4d622131c313a4e12e239f0b19dad4e0ad"
+    sha256 cellar: :any_skip_relocation, catalina:      "60c16d40c1350166baf81c50b420504c4cf75af958da803383cc6f7b74b7f1fc"
+    sha256 cellar: :any_skip_relocation, mojave:        "567aeeb741ac0e393b848bf01c1015ac471cb0d0049478493a22b2b6dc732006"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0a778ad8f01d55f6857cb5e6159584331936ea573a8d3a0586c5637a921c89ba"
   end
 
-  depends_on "go@1.14" => :build
+  depends_on "go" => :build
 
   def install
-    ENV["GOPATH"] = buildpath
-    (buildpath/"src/github.com/ipfs/go-ipfs").install buildpath.children
-    cd("src/github.com/ipfs/go-ipfs") { system "make", "install" }
-    bin.install "bin/ipfs"
+    system "make", "build"
+    bin.install "cmd/ipfs/ipfs"
 
-    cd("src/github.com/ipfs/go-ipfs") { bash_completion.install "misc/completion/ipfs-completion.bash" }
+    bash_completion.install "misc/completion/ipfs-completion.bash"
   end
 
   plist_options manual: "ipfs daemon"

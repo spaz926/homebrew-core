@@ -1,16 +1,15 @@
 class Wartremover < Formula
   desc "Flexible Scala code linting tool"
   homepage "https://github.com/wartremover/wartremover"
-  url "https://github.com/wartremover/wartremover/archive/v2.4.13.tar.gz"
-  sha256 "d8fb123dc4f9327adf17e4a59c6004e6eece840725175968049d6d9f3b3e545e"
+  url "https://github.com/wartremover/wartremover/archive/v2.4.15.tar.gz"
+  sha256 "980f56470d7000cc6c33ede1e98d2a71fda63ab2a269c74fffb141a0d6fd30e8"
   license "Apache-2.0"
   head "https://github.com/wartremover/wartremover.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, big_sur:     "4917537fc324d707919f8fffbce15b779a9a85a5534d9800bcaa2928a5d4ab47"
-    sha256 cellar: :any_skip_relocation, catalina:    "3cf1ce30e281fc782c0463c14b6770ff3901a882284942438fb060dd2ebb1120"
-    sha256 cellar: :any_skip_relocation, mojave:      "c50a74a7a86bf484bfdb8efcf66a41526b80ebc511af0353093006c2e220a0cc"
-    sha256 cellar: :any_skip_relocation, high_sierra: "ed0dbc9e416d425b93070435d5c17620aa81642f9f1b7bca4c76cf4a36b5cdf0"
+    sha256 cellar: :any_skip_relocation, big_sur:  "01e5f3a7df0d0565a77eb618f0e8096f61c1f638a5eacd91d8d9aaadff210fce"
+    sha256 cellar: :any_skip_relocation, catalina: "56415ad54c5ea4cfe7c031408a49e06d5bc971cc767f5e0df2c177be41d6b705"
+    sha256 cellar: :any_skip_relocation, mojave:   "92d53eea1122fd6bf2d55983ed52751a436da82050bb4078fa68b4cc3f45b3df"
   end
 
   depends_on "sbt" => :build

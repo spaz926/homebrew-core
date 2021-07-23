@@ -1,15 +1,12 @@
 class Utf8cpp < Formula
   desc "UTF-8 with C++ in a Portable Way"
   homepage "https://github.com/nemtrif/utfcpp"
-  url "https://github.com/nemtrif/utfcpp/archive/v3.1.2.tar.gz"
-  sha256 "fea3bfa39fb8bd7368077ea5e1e0db9a8951f7e6fb6d9400b00ab3d92b807c6d"
+  url "https://github.com/nemtrif/utfcpp/archive/v3.2.1.tar.gz"
+  sha256 "8d6aa7d77ad0abb35bb6139cb9a33597ac4c5b33da6a004ae42429b8598c9605"
   license "BSL-1.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "1a2e11d78a9dc402debeddd7ece934e3474f5d14c13919b4ec1d7648bbc1a5dc"
-    sha256 cellar: :any_skip_relocation, big_sur:       "4a8248499ba22f0297020be8647f9a31601f288a67301618f2d53b1dd323c75a"
-    sha256 cellar: :any_skip_relocation, catalina:      "a0fa75e69c89763a208e702c4c9c60199596305db62666940a15cecd65de2a2e"
-    sha256 cellar: :any_skip_relocation, mojave:        "d90fa3e80a1b718889cc44d54a55790051bd919f3733ad124fdab15ea16ed9c6"
+    sha256 cellar: :any_skip_relocation, all: "28ec6ef62b638e29d1dbd3efeef96a3484ad643ad99c5ed2912a6752c25a4f4d"
   end
 
   depends_on "cmake" => [:build, :test]

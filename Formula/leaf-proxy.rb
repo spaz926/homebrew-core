@@ -1,16 +1,17 @@
 class LeafProxy < Formula
   desc "Lightweight and fast proxy utility"
   homepage "https://github.com/eycorsican/leaf"
-  url "https://github.com/eycorsican/leaf/archive/v0.2.13.tar.gz"
-  sha256 "4688bf50d3e8c27babe174a09ef2fff66a8843ae33f010081182bac6380b9977"
+  url "https://github.com/eycorsican/leaf/archive/v0.3.1.tar.gz"
+  sha256 "895057e2424a8b99c2fc330a8b9f34895a377d7fcff5d5fb7b867d357a3bdd83"
   license "Apache-2.0"
   head "https://github.com/eycorsican/leaf.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "5cf0070ceacfd72e04d6adbd77851b1c15ec01ff79f2add28407a8452f5bb2b3"
-    sha256 cellar: :any_skip_relocation, big_sur:       "d95b88877ccd9d3a77758887f0696fffa46b23ae492960a1716005b2349e4bef"
-    sha256 cellar: :any_skip_relocation, catalina:      "a0ee193feb50ee14874647967eaca61de66b267265ee5035a24047ad8ebb30fa"
-    sha256 cellar: :any_skip_relocation, mojave:        "8c8694440e773387ed663a650f8609aa27ec5c454166337e3f09941803292b91"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "7436395fb5eb5616771b7b521d8abd053f28b6b370e3244220a78ef3cae7a602"
+    sha256 cellar: :any_skip_relocation, big_sur:       "3acdb89d85419f3f767b19782bd3442c74baad9b0527471ab83bd9f74efa8dd9"
+    sha256 cellar: :any_skip_relocation, catalina:      "31c45ca626144ad34a3bcf09440077cbaeb793851538e2046c581122f378ebe9"
+    sha256 cellar: :any_skip_relocation, mojave:        "e0ea5b75bd333e98c716f9f9782aadb47e4e8d9c6b0e8f087f782eb8c67a58bd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9473c11cdbfee47a2c7a8f6b8b803413a48f135378c747ac74de4d12dedf5a0c"
   end
 
   depends_on "rust" => :build
@@ -19,7 +20,7 @@ class LeafProxy < Formula
 
   resource "lwip" do
     url "https://github.com/eycorsican/lwip-leaf.git",
-        revision: "0c189c0fffa52354738ebba6033d365bc0d096fd"
+        revision: "86632e2747c926a75d32be8bd9af059aa38ae75e"
   end
 
   def install
@@ -38,7 +39,7 @@ class LeafProxy < Formula
       [Proxy]
       SS = ss, 127.0.0.1, #{free_port}, encrypt-method=chacha20-ietf-poly1305, password=123456
     EOS
-    output = shell_output "#{bin}/leaf -c #{testpath}/config.conf -t SS", 1
+    output = shell_output "#{bin}/leaf -c #{testpath}/config.conf -t SS"
 
     assert_match "dispatch to outbound SS failed", output
   end

@@ -1,23 +1,24 @@
 class ProtocGenGo < Formula
   desc "Go support for Google's protocol buffers"
-  homepage "https://github.com/golang/protobuf"
-  url "https://github.com/golang/protobuf/archive/v1.5.1.tar.gz"
-  sha256 "d6f2c6973d08e6701c41e6c0afc381c985270ad8050c7819da197b258ac8959d"
+  homepage "https://github.com/protocolbuffers/protobuf-go"
+  url "https://github.com/protocolbuffers/protobuf-go/archive/v1.27.1.tar.gz"
+  sha256 "3ec41a8324431e72f85e0dc0c2c098cc14c3cb1ee8820996c8f46afca2d65609"
   license "BSD-3-Clause"
-  head "https://github.com/golang/protobuf.git"
+  head "https://github.com/protocolbuffers/protobuf-go.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "ccdf8bdcba2e1fda82663ddd65757b6a97369965af903e2d73d52ca8af481c7d"
-    sha256 cellar: :any_skip_relocation, big_sur:       "5ad7555788800ed282712de3d1b2546fca56b75cc4322cfd70558f933797489e"
-    sha256 cellar: :any_skip_relocation, catalina:      "0a15603b6ac4a957f82a807e8cd0a828685ae7907d21587ecc0146c44b233ec4"
-    sha256 cellar: :any_skip_relocation, mojave:        "648ad38adc976cf325d78dde60483119c1b2df1efb8ad9e27afd69335a09a2dc"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "577196328ed1d829d999d7eb7a1fbdcd340831619b5e53db1e9ff880bb0514cb"
+    sha256 cellar: :any_skip_relocation, big_sur:       "3990c0be0447ef4cebc03575c737a01a8a7af9e3766cb014addc4c932eeb4228"
+    sha256 cellar: :any_skip_relocation, catalina:      "3990c0be0447ef4cebc03575c737a01a8a7af9e3766cb014addc4c932eeb4228"
+    sha256 cellar: :any_skip_relocation, mojave:        "3990c0be0447ef4cebc03575c737a01a8a7af9e3766cb014addc4c932eeb4228"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bf23c02b98cfea6ed4a0d293a6f669b61fa11c6a04f5288ae6d910b20c0a8f4c"
   end
 
   depends_on "go" => :build
   depends_on "protobuf"
 
   def install
-    system "go", "build", *std_go_args, "-ldflags", "-s -w", "./protoc-gen-go"
+    system "go", "build", *std_go_args(ldflags: "-s -w"), "./cmd/protoc-gen-go"
     prefix.install_metafiles
   end
 

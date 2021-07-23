@@ -1,8 +1,8 @@
 class Pdnsrec < Formula
   desc "Non-authoritative/recursing DNS server"
   homepage "https://www.powerdns.com/recursor.html"
-  url "https://downloads.powerdns.com/releases/pdns-recursor-4.4.2.tar.bz2"
-  sha256 "b0b97f49848a1758b64bc0b99a596c1583ea525477193f3c01905f5163a4f5cf"
+  url "https://downloads.powerdns.com/releases/pdns-recursor-4.5.4.tar.bz2"
+  sha256 "015d606a8f9a4a711489634d57375c77cc34f999ca43c195d8002e31a747896a"
   license "GPL-2.0-only"
 
   livecheck do
@@ -11,10 +11,11 @@ class Pdnsrec < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "a6aa0796a7d756013f091d557864091220ca773ee298c609b344a7288408dcf7"
-    sha256 big_sur:       "09aedfb6fae88ddc911022c9f2d8166e3746d401a9d54fe3742bc117831beff1"
-    sha256 catalina:      "5d78e21c1882b3bdf96317c7044a8f247f0601f33ba9dcb074be05ac9d9c7475"
-    sha256 mojave:        "1ebddc007e37972ec7703a6c422dcc81991fd721c32a3ae07d4117ba34faf6a6"
+    sha256 arm64_big_sur: "da945ba43769742cd9e0263e6c12e81a6a1e2efbd039ca696257f77284f2dc8b"
+    sha256 big_sur:       "f49c224c33ed279bcb5b932401b69448dcbb8d6738413bddf67e6380685b3844"
+    sha256 catalina:      "f788ecc3c854cae9a7b5ea0f4a72c7a6631d60ae8f7d1d87c3fd24ca84a89f6b"
+    sha256 mojave:        "fe84e72a0968bbcad84bf3cfb8d46c1676801c8808b9084b9bc580e22d727c4d"
+    sha256 x86_64_linux:  "fdae24f7ccc5dcb221f5a6d544e508b9de96f9dcf388f9b81335dcfa6790ab65"
   end
 
   depends_on "pkg-config" => :build
@@ -22,8 +23,30 @@ class Pdnsrec < Formula
   depends_on "lua"
   depends_on "openssl@1.1"
 
+  on_macos do
+    depends_on "llvm" => :build if DevelopmentTools.clang_build_version <= 1100
+  end
+
+  on_linux do
+    depends_on "gcc"
+  end
+
+  fails_with :clang do
+    build 1100
+    cause <<-EOS
+      Undefined symbols for architecture x86_64:
+        "MOADNSParser::init(bool, std::__1::basic_string_view<char, std::__1::char_traits<char> > const&)"
+    EOS
+  end
+
+  fails_with gcc: "5"
+
   def install
     ENV.cxx11
+    ENV.remove "HOMEBREW_LIBRARY_PATHS", Formula["llvm"].opt_lib
+    on_macos do
+      ENV.llvm_clang if DevelopmentTools.clang_build_version <= 1100
+    end
 
     args = %W[
       --prefix=#{prefix}

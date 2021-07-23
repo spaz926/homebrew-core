@@ -1,16 +1,15 @@
 class Matplotplusplus < Formula
   desc "C++ Graphics Library for Data Visualization"
   homepage "https://github.com/alandefreitas/matplotplusplus"
-  url "https://github.com/alandefreitas/matplotplusplus/archive/v1.0.1.tar.gz"
-  sha256 "19f5f6fe40b56efc49dcda7f6c6de07679f5707254dea6859c3c7b4a8a0759a3"
+  url "https://github.com/alandefreitas/matplotplusplus/archive/v1.1.0.tar.gz"
+  sha256 "5c3a1bdfee12f5c11fd194361040fe4760f57e334523ac125ec22b2cb03f27bb"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "979279ad16e5e814b368c88c46cc5d995367c245100b033fade178ef3ab3cbeb"
-    sha256 cellar: :any, big_sur:       "a1f77bf8f309843d278ea940822578bf48d2aaf9697566ed46287a20ad1896bb"
-    sha256 cellar: :any, catalina:      "e24805c80b41e2d9957c1757e3f7cb329b39302127eeced2c81c9091487986db"
-    sha256 cellar: :any, mojave:        "e522028527552e68faedc2377ff419ea08986b10f0a5b74e1f573537e99ee41c"
-    sha256 cellar: :any, high_sierra:   "c17c5db0287c73c0d126c0d459a32c1c56ebb702e19f8c53f8d8d91880dfc75a"
+    sha256 cellar: :any, arm64_big_sur: "19cb7c2dd1eb682773ab6022a5eeeedcfe423765eccba27ab9d5f2124db7fdab"
+    sha256 cellar: :any, big_sur:       "4179a851403a2af2264efa5b766b708c256f66b37680a8ebcf1f5c2f9b4b3866"
+    sha256 cellar: :any, catalina:      "52ae1b2728e95782080b211eef063972aac7751e02f1714a9dc41d57c5ddcdaa"
+    sha256 cellar: :any, mojave:        "4cdcc03dcf7ffaed40caf7e052de33836e195c375585d13e73d3a720bf61cb84"
   end
 
   depends_on "cmake" => :build

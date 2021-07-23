@@ -1,10 +1,10 @@
 class TaskwarriorTui < Formula
   desc "Terminal user interface for taskwarrior"
   homepage "https://github.com/kdheepak/taskwarrior-tui"
-  url "https://github.com/kdheepak/taskwarrior-tui/archive/v0.12.2.tar.gz"
-  sha256 "db87db1d6757b3750f3deb3061295f29a74d325308bdc245f7e48714e1d5d501"
+  url "https://github.com/kdheepak/taskwarrior-tui/archive/v0.13.27.tar.gz"
+  sha256 "f23532d099311281b684ace68511c20e8c50718d806924fa42d20d24a8c64579"
   license "MIT"
-  head "https://github.com/kdheepak/taskwarrior-tui.git"
+  head "https://github.com/kdheepak/taskwarrior-tui.git", branch: "main"
 
   livecheck do
     url :stable
@@ -12,31 +12,35 @@ class TaskwarriorTui < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "48e5f0f0d08778162f412655c8d342f632d6cf4e02bbec84c62d750085188f1f"
-    sha256 cellar: :any_skip_relocation, big_sur:       "2dd6d04319b90b8959bb9c3a7ecaad1f6d56b7687902d037f67e0d6e2622b61f"
-    sha256 cellar: :any_skip_relocation, catalina:      "094233f8bd827802a27490b00eaaf3cca46d2829c903543c715d26bdd6acd1d7"
-    sha256 cellar: :any_skip_relocation, mojave:        "79da49259457386bee3fc7b1327f2570b4f8f8c85d94e612662996a0c673f141"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "16e135961241c544a3b5688f3d5547b4b28570ee97e0ea6bb106426f8e3eff72"
+    sha256 cellar: :any_skip_relocation, big_sur:       "8ef7fcf7f6371f419ef38a2408cab871db200718d6487b252663896aeafbaad4"
+    sha256 cellar: :any_skip_relocation, catalina:      "5ae5580f13a7fd320c699973393b71eb1902710a7d4cd49fd4882640ed90843c"
+    sha256 cellar: :any_skip_relocation, mojave:        "e7382c7ee1ffb352fd59f1000ea0a0b4017a20dd11d1524703aeb990586c665e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e60acb0619dc4f3ee6fe3c77e080c54e4a34e6a541a7ee89190cc42f1f569131"
   end
 
-  depends_on "pandoc" => :build unless Hardware::CPU.arm?
+  depends_on "pandoc" => :build
   depends_on "rust" => :build
   depends_on "task"
 
   def install
     system "cargo", "install", *std_cargo_args
-    unless Hardware::CPU.arm?
-      args = %w[
-        --standalone
-        --to=man
-      ]
-      system "pandoc", *args, "docs/taskwarrior-tui.1.md", "-o", "taskwarrior-tui.1"
-      man1.install "taskwarrior-tui.1"
-    end
+
+    args = %w[
+      --standalone
+      --to=man
+    ]
+    system "pandoc", *args, "docs/taskwarrior-tui.1.md", "-o", "taskwarrior-tui.1"
+    man1.install "taskwarrior-tui.1"
+
+    bash_completion.install "completions/taskwarrior-tui.bash"
+    fish_completion.install "completions/taskwarrior-tui.fish"
+    zsh_completion.install "completions/_taskwarrior-tui"
   end
 
   test do
     assert_match version.to_s, shell_output("#{bin}/taskwarrior-tui --version")
     assert_match "The argument '--config <FILE>' requires a value but none was supplied",
-      shell_output("#{bin}/taskwarrior-tui --config 2>&1", 1)
+      shell_output("#{bin}/taskwarrior-tui --config 2>&1", 2)
   end
 end

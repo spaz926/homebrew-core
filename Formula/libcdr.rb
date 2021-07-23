@@ -1,9 +1,10 @@
 class Libcdr < Formula
   desc "C++ library to parse the file format of CorelDRAW documents"
   homepage "https://wiki.documentfoundation.org/DLP/Libraries/libcdr"
-  url "https://dev-www.libreoffice.org/src/libcdr/libcdr-0.1.6.tar.xz"
-  sha256 "01cd00b04a030977e544433c2d127c997205332cd9b8e35ec0ee17110da7f861"
-  revision 3
+  url "https://dev-www.libreoffice.org/src/libcdr/libcdr-0.1.7.tar.xz"
+  sha256 "5666249d613466b9aa1e987ea4109c04365866e9277d80f6cd9663e86b8ecdd4"
+  license "MPL-2.0"
+  revision 1
 
   livecheck do
     url "https://dev-www.libreoffice.org/src/"
@@ -11,10 +12,11 @@ class Libcdr < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "e28a17a4fb749e9f9f7d24ffc6f405db6c520ab8f4749f67ea9ac3f43ad976d4"
-    sha256 cellar: :any, big_sur:       "4fbab883412b32a9caf978ccfe1dbb9828c6d321cbb766c7e196910c8c36caff"
-    sha256 cellar: :any, catalina:      "0745bfaffbc67e43ae6768548e807922cf1ab0cc3a530dd0b523aeb89ae1ddc4"
-    sha256 cellar: :any, mojave:        "10f5db05d1dda0ef55f1322d91cb607f092fc7766624fbbf5e4617d17b27f6b1"
+    sha256 cellar: :any,                 arm64_big_sur: "5ae923701714fad81fced4eb8c7eb2c171c3e675c685a0649b561004a587a03b"
+    sha256 cellar: :any,                 big_sur:       "0c5c055abec9d36ae8beaaf07e0268cb5b4495ec3103b933b03ff2676d96d049"
+    sha256 cellar: :any,                 catalina:      "e79b945338269508e453ed4f8748d0a9b5e19304658621765c2eae54120d0537"
+    sha256 cellar: :any,                 mojave:        "42016c8a3b6e75ce702e84f2afdf3c328807b776b10e9c809772c0f69d569d1a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b6cf82a1af01f907eb5476947c63b6a9241c5d5d72291f3f2263c1e6c5b70cdf"
   end
 
   depends_on "cppunit" => :build
@@ -23,13 +25,6 @@ class Libcdr < Formula
   depends_on "icu4c"
   depends_on "librevenge"
   depends_on "little-cms2"
-
-  # Patch for `error: use of undeclared identifier 'TRUE'`
-  # when built against icu4c 68.1+
-  patch do
-    url "https://github.com/LibreOffice/libcdr/commit/bf3e7f3bbc414d4341cf1420c99293debf1bd894.patch?full_index=1"
-    sha256 "7009cef94c259d4e6f7c62214df4661507d89ac7b548db60ed7ab5e37c8e0dcc"
-  end
 
   def install
     ENV.cxx11

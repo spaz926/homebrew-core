@@ -32,10 +32,14 @@ class Freerdp < Formula
   depends_on "libxv"
   depends_on "openssl@1.1"
 
+  uses_from_macos "cups"
+
   on_linux do
     depends_on "alsa-lib"
     depends_on "ffmpeg"
     depends_on "glib"
+    depends_on "systemd"
+    depends_on "wayland"
   end
 
   def install
@@ -48,6 +52,11 @@ class Freerdp < Formula
   end
 
   test do
+    on_linux do
+      # failed to open display
+      return if ENV["HOMEBREW_GITHUB_ACTIONS"]
+    end
+
     success = `#{bin}/xfreerdp --version` # not using system as expected non-zero exit code
     details = $CHILD_STATUS
     raise "Unexpected exit code #{$CHILD_STATUS} while running xfreerdp" if !success && details.exitstatus != 128

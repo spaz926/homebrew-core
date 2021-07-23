@@ -1,20 +1,21 @@
 class Guile < Formula
   desc "GNU Ubiquitous Intelligent Language for Extensions"
   homepage "https://www.gnu.org/software/guile/"
-  url "https://ftp.gnu.org/gnu/guile/guile-3.0.5.tar.xz"
-  mirror "https://ftpmirror.gnu.org/guile/guile-3.0.5.tar.xz"
-  sha256 "2d76fb023d2366126a5fac04704f9bd843846b80cccba6da5d752318b03350f1"
+  url "https://ftp.gnu.org/gnu/guile/guile-3.0.7.tar.xz"
+  mirror "https://ftpmirror.gnu.org/guile/guile-3.0.7.tar.xz"
+  sha256 "f57d86c70620271bfceb7a9be0c81744a033f08adc7ceba832c9917ab3e691b7"
   license "LGPL-3.0-or-later"
 
   bottle do
-    sha256 arm64_big_sur: "ce524aaa55b2a6200e4ba4a05b3d40e726eef82750767bbdebf2243c9c766ee9"
-    sha256 big_sur:       "ce8a02da2f7a50ee2df21ace1dac3b8335855907ec31224cea3ea5f89d82c463"
-    sha256 catalina:      "18a97a127b757c021f8f3b7257306cac30efd055d1bde8cee88874d62b72d8b0"
-    sha256 mojave:        "1775232d131525bf77530ab194a4688e1a14804669267ef22b6d78ab3e088b70"
+    sha256 arm64_big_sur: "1943b7ddae69e16cf1b9f81505bfb20129b988d7bffc40460088d29c518a960a"
+    sha256 big_sur:       "776b3c2922a166b53c4613ff04fcd2d031a5cc34108f753c9b2857a271f89163"
+    sha256 catalina:      "ee1867daea429b0e7867a30890e07f3c7e4a69d6d483c728c912aea34aa4f83d"
+    sha256 mojave:        "4152090b41a47a1a640bb5ade7a40f55e309628b0fde7eb3b87b98976583613d"
+    sha256 x86_64_linux:  "389766b4355007d56f3f9bc4c1953edf373c82a0983d256685f4c8a8f613377d"
   end
 
   head do
-    url "https://git.savannah.gnu.org/git/guile.git"
+    url "https://git.savannah.gnu.org/git/guile.git", branch: "main"
 
     depends_on "autoconf" => :build
     depends_on "automake" => :build

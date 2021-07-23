@@ -2,16 +2,17 @@ class Ghq < Formula
   desc "Remote repository management made easy"
   homepage "https://github.com/x-motemen/ghq"
   url "https://github.com/x-motemen/ghq.git",
-      tag:      "v1.1.7",
-      revision: "7f314194088ffbb61a45dade72ae7a13ef84952c"
+      tag:      "v1.2.1",
+      revision: "dd139fb46cb7c1a3b19bca7a0c3762090c7c522f"
   license "MIT"
   head "https://github.com/x-motemen/ghq.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "415bcc81a4ccc64b2826f4fcce95e38b0ba4da271a25d747459b4edb5e83ec82"
-    sha256 cellar: :any_skip_relocation, big_sur:       "1c10e27ea29c0c826277a547516ed8fc2e764b165656ee64271ae4279c93a5ef"
-    sha256 cellar: :any_skip_relocation, catalina:      "ba1e0aa00eca4fb0861473eb7ae100c69ed3491fb4844f469944763a2aaae99c"
-    sha256 cellar: :any_skip_relocation, mojave:        "c4811a44a52b77365872099ab762a93ef1088686de096ffa1093be1b597b262a"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "8b1f5f18b219a60f8d86556e0e6542edb7e9e8fb010bbf55ab83859e32ba5f00"
+    sha256 cellar: :any_skip_relocation, big_sur:       "82fd83decb4539c9c0050d59a240c37149cf61ff5d6b6b6e47e7d6cba83c4d2d"
+    sha256 cellar: :any_skip_relocation, catalina:      "8a337adf03ab11238253364863890654ebb92b6cc0b602658c54017059f4f6b5"
+    sha256 cellar: :any_skip_relocation, mojave:        "983535fe9c12471da7b4cb2c72035dd602e525f3bcc26579d2d865a5c9cc263c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f7a52d8fb22234e9c3ee2ab8ab48fae4a47a0b7c2b13da13fa96de8377b9f8c4"
   end
 
   depends_on "go" => :build

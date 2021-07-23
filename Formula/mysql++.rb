@@ -1,16 +1,21 @@
 class Mysqlxx < Formula
   desc "C++ wrapper for MySQL's C API"
   homepage "https://tangentsoft.com/mysqlpp/home"
-  url "https://tangentsoft.com/mysqlpp/releases/mysql++-3.2.5.tar.gz"
-  sha256 "839cfbf71d50a04057970b8c31f4609901f5d3936eaa86dab3ede4905c4db7a8"
+  url "https://tangentsoft.com/mysqlpp/releases/mysql++-3.3.0.tar.gz"
+  sha256 "449cbc46556cc2cc9f9d6736904169a8df6415f6960528ee658998f96ca0e7cf"
   license "LGPL-2.1-or-later"
-  revision 2
+
+  livecheck do
+    url :homepage
+    regex(/href=.*?mysql\+\+[._-]v?(\d+(?:\.\d+)+)\.t/i)
+  end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "84187bd98edc4c965935f5cbd38572bbc01c755bd8fa31808571c66ccd6fe589"
-    sha256 cellar: :any, big_sur:       "8217141b2c7f02ee63c256b20bac582b8dcfca969b3bc1658cbe3a234e5eff98"
-    sha256 cellar: :any, catalina:      "b7e5c1ede992e84fc7200d5216b2643cd8a3e5839a3b8610640c67d6ad675a12"
-    sha256 cellar: :any, mojave:        "6eebecae2b6b3f1b4144c0e731ab8774eb9ed4f918369b6593c55d88258dd07e"
+    sha256 cellar: :any,                 arm64_big_sur: "f7a7c4dc1a39553297a0be0dcae8914afee296416318ce447413988d94306906"
+    sha256 cellar: :any,                 big_sur:       "d7957ee5ab8476ac890144b0c64bcd20137867b1266d3e022305a5c4f2c3372a"
+    sha256 cellar: :any,                 catalina:      "14dd4833fb2dbfbefa0267f36ffc828f7306509a2dbd12c6fdec7f6f9173cf81"
+    sha256 cellar: :any,                 mojave:        "d9a31961dea425b21c279b5fb995d242b6201332e4745662e06647631ff98fba"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "85e07407a7b99c89510e5b66d43db09ffbd3bb4f0e1a758c8eb04afb6a6c640d"
   end
 
   depends_on "mysql-client"
@@ -22,6 +27,12 @@ class Mysqlxx < Formula
                           "--with-field-limit=40",
                           "--with-mysql-lib=#{mysql.opt_lib}",
                           "--with-mysql-include=#{mysql.opt_include}/mysql"
+
+    # Delete "version" file incorrectly included as C++20 <version> header
+    # Issue ref: https://tangentsoft.com/mysqlpp/tktview/4ea874fe67e39eb13ed4b41df0c591d26ef0a26c
+    # Remove when fixed upstream
+    rm "version"
+
     system "make", "install"
   end
 

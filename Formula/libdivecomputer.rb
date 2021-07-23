@@ -1,19 +1,17 @@
 class Libdivecomputer < Formula
   desc "Library for communication with various dive computers"
   homepage "https://www.libdivecomputer.org/"
-  url "https://www.libdivecomputer.org/releases/libdivecomputer-0.6.0.tar.gz"
-  sha256 "a0fe75b7e5f7d8b73bfe46beb858dde4f5e2b2692d5270c96e69f5cb34aba15a"
-  license "LGPL-2.1"
-  head "https://git.code.sf.net/p/libdivecomputer/code.git"
+  url "https://www.libdivecomputer.org/releases/libdivecomputer-0.7.0.tar.gz"
+  sha256 "80d9f194ea24502039df98598482e0afc6b0e333de79db34c29b2d68934d25b9"
+  license "LGPL-2.1-or-later"
+  head "https://github.com/libdivecomputer/libdivecomputer.git"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "d3e4b45b8b1118b83084477da48b00a56b36e3a1c945a3155dca5bc59d13b798"
-    sha256 cellar: :any, big_sur:       "a75f2bfefc391e7064b57d3a372aac193d307ab8be911a32b0aca011f29629ab"
-    sha256 cellar: :any, catalina:      "77d221b1a1761aaab3beb86663f18f2610874a9b95158aef7b5620f12bc39310"
-    sha256 cellar: :any, mojave:        "d27cbe3800c83225dade44ea62ae7ddfa4018866ed1a6628b6f3bda6abf68df7"
-    sha256 cellar: :any, high_sierra:   "09dd65b72be93f3364b0b0da389fc4aa4d1fea2094ffe53275544e74ac6a7674"
-    sha256 cellar: :any, sierra:        "bbc60092aee1409bd0001e2f3cfdde47bb3d2348d3bf18f1fc6921920607f947"
-    sha256 cellar: :any, el_capitan:    "507134023caaaebd5b1689f324aea50839e13f57d180f7134ee270edc2b02cf6"
+    sha256 cellar: :any,                 arm64_big_sur: "c5f918bf0cf0716949639440453e31eb929a918d5328fb1d4dd50ad6f6a497a5"
+    sha256 cellar: :any,                 big_sur:       "80a648490411d90cee0ae9bbafbc91e48e6ee1d4b449bfad5795cd375b5337d0"
+    sha256 cellar: :any,                 catalina:      "b0e1c5af39a3a474f72a89b669acfd82628f91aabe21c719e2eee78dc0099950"
+    sha256 cellar: :any,                 mojave:        "79ea433c1787070be036fa259b1cb7bd673d5c787ac937291361711d967708d5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f3a241ae2fd6589976993f2ac0fea3114a1131514f6bafcace961a53c28658da"
   end
 
   depends_on "autoconf" => :build

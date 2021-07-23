@@ -1,24 +1,27 @@
 class Lapack < Formula
   desc "Linear Algebra PACKage"
   homepage "https://www.netlib.org/lapack/"
-  url "https://github.com/Reference-LAPACK/lapack/archive/v3.9.0.tar.gz"
-  sha256 "106087f1bb5f46afdfba7f569d0cbe23dacb9a07cd24733765a0e89dbe1ad573"
+  url "https://github.com/Reference-LAPACK/lapack/archive/v3.10.0.tar.gz"
+  sha256 "328c1bea493a32cac5257d84157dc686cc3ab0b004e2bea22044e0a59f6f8a19"
   license "BSD-3-Clause"
-  revision 1
   head "https://github.com/Reference-LAPACK/lapack.git"
 
   bottle do
-    sha256 arm64_big_sur: "7b84850a2c6dd2c589630c1c61157594c05689b516e1e072d1e0ad62e0df40e2"
-    sha256 big_sur:       "4545eca9af03f52eb2080a3e45017d877b1832a9096c5c023886bd8aa1116bec"
-    sha256 catalina:      "be00d33447ab0bb47a05f89517640c984cafb7723fd6fff9749de773c304f2df"
-    sha256 mojave:        "ad84de82af78dc5ee4b305c76a79a3fc18420beeac2be72d1c262936d5a9110e"
-    sha256 high_sierra:   "fd360d9073e8a483e88a0bca6c8dc96a8159488fa3a6009bb8cbe03747f20f4f"
+    sha256 cellar: :any,                 arm64_big_sur: "57b25ebfd66edca32e16acf1f7127af22bb1ea43a1f7b758895789696fe0590e"
+    sha256 cellar: :any,                 big_sur:       "3b57e303806b0fa8cb17738b10b3bd2b4801ef898fc5433af05b90cab9dddf40"
+    sha256 cellar: :any,                 catalina:      "cbdfdaa3de046ff377bf0e6a974541016a0790c0ddba295eecdb4615f8ec5923"
+    sha256 cellar: :any,                 mojave:        "619839fc1623b36c0b7bf8903e424c003bbd6ef96a0f9f7ed1ff684f231c54ec"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7f1c1dcfcf68dd35f484bba3c43c7e070dcd4da9a03fad5c50a408a00d26e217"
   end
 
   keg_only :shadowed_by_macos, "macOS provides LAPACK in Accelerate.framework"
 
   depends_on "cmake" => :build
   depends_on "gcc" # for gfortran
+
+  on_linux do
+    keg_only "it conflicts with openblas"
+  end
 
   def install
     ENV.delete("MACOSX_DEPLOYMENT_TARGET")

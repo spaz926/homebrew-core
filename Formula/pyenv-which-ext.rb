@@ -6,7 +6,9 @@ class PyenvWhichExt < Formula
   license "MIT"
   head "https://github.com/pyenv/pyenv-which-ext.git"
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "47846141f51863aeda9dbc0578498ec9d550597581a392eeed1d71979156d3f4"
+  end
 
   depends_on "pyenv"
 

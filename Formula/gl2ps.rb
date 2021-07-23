@@ -11,11 +11,12 @@ class Gl2ps < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "02cad33d0c39773c7a0c0983f125fc04fe86d265b31cac034be45379265e65be"
-    sha256 cellar: :any, big_sur:       "4ad3d5fcf0a8393e77881e4ea73c160200f6573aa05f6db84e452d920a5f7185"
-    sha256 cellar: :any, catalina:      "dbdfe5d8458e1224941d6e5707b725ab6872333112dc408dbf35202eddbc8d15"
-    sha256 cellar: :any, mojave:        "bc857ec44c73448acf748dea7a699e1018a874196dec19659a63aa70a7b5e970"
-    sha256 cellar: :any, high_sierra:   "6c36dc780b0579f44057cadddb9e1a2e369e2ba9205b68d6c81ebd79defc45b4"
+    sha256 cellar: :any,                 arm64_big_sur: "02cad33d0c39773c7a0c0983f125fc04fe86d265b31cac034be45379265e65be"
+    sha256 cellar: :any,                 big_sur:       "4ad3d5fcf0a8393e77881e4ea73c160200f6573aa05f6db84e452d920a5f7185"
+    sha256 cellar: :any,                 catalina:      "dbdfe5d8458e1224941d6e5707b725ab6872333112dc408dbf35202eddbc8d15"
+    sha256 cellar: :any,                 mojave:        "bc857ec44c73448acf748dea7a699e1018a874196dec19659a63aa70a7b5e970"
+    sha256 cellar: :any,                 high_sierra:   "6c36dc780b0579f44057cadddb9e1a2e369e2ba9205b68d6c81ebd79defc45b4"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e85c3e2f25855ef919358e1912f3190ba8e6890cfd5329931638b595cab962d1"
   end
 
   depends_on "cmake" => :build
@@ -26,18 +27,17 @@ class Gl2ps < Formula
   end
 
   def install
-    # Prevent linking against X11's libglut.dylib when it's present
-    # Reported to upstream's mailing list gl2ps@geuz.org (1st April 2016)
-    # https://www.geuz.org/pipermail/gl2ps/2016/000433.html
-    # Reported to cmake's bug tracker, as well (1st April 2016)
-    # https://public.kitware.com/Bug/view.php?id=16045
-    system "cmake", ".", "-DGLUT_glut_LIBRARY=/System/Library/Frameworks/GLUT.framework", *std_cmake_args
+    system "cmake", ".", *std_cmake_args
     system "make", "install"
   end
 
   test do
+    glu = "GLUT"
+    on_linux do
+      glu = "GL"
+    end
     (testpath/"test.c").write <<~EOS
-      #include <GLUT/glut.h>
+      #include <#{glu}/glut.h>
       #include <gl2ps.h>
 
       int main(int argc, char *argv[])
@@ -66,8 +66,16 @@ class Gl2ps < Formula
         return 0;
       }
     EOS
-    system ENV.cc, "-L#{lib}", "-lgl2ps", "-framework", "OpenGL", "-framework", "GLUT",
-                   "-framework", "Cocoa", "test.c", "-o", "test"
+    on_macos do
+      system ENV.cc, "-L#{lib}", "-lgl2ps", "-framework", "OpenGL", "-framework", "GLUT",
+                     "-framework", "Cocoa", "test.c", "-o", "test"
+    end
+    on_linux do
+      system ENV.cc, "test.c", "-o", "test", "-L#{lib}", "-lgl2ps", "-lglut", "-lGL"
+
+      # Fails without an X11 display: freeglut (./test): failed to open display ''
+      return if ENV["HOMEBREW_GITHUB_ACTIONS"]
+    end
     system "./test"
     assert_predicate testpath/"test.eps", :exist?
     assert_predicate File.size("test.eps"), :positive?

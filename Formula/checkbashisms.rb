@@ -1,15 +1,17 @@
 class Checkbashisms < Formula
   desc "Checks for bashisms in shell scripts"
   homepage "https://launchpad.net/ubuntu/+source/devscripts/"
-  url "https://deb.debian.org/debian/pool/main/d/devscripts/devscripts_2.21.1.tar.xz"
-  sha256 "d596c8894ac5777f2e3152f2ed86b22cb9b946b99ca2fb00fbe2536fc3db4c52"
+  url "https://deb.debian.org/debian/pool/main/d/devscripts/devscripts_2.21.3.tar.xz"
+  sha256 "7e50ff28b39a157ba96568a961f88c49cb9175481bd03f4f27dbe968079ef7ab"
 
   livecheck do
     url "https://deb.debian.org/debian/pool/main/d/devscripts/"
     regex(/href=.*?devscripts[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "96550aec2f0cbd9912f9224dd855dd39368e7ae0d357b1b273e8022d0cb05a03"
+  end
 
   def install
     inreplace "scripts/checkbashisms.pl" do |s|

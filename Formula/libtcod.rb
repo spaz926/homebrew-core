@@ -1,15 +1,15 @@
 class Libtcod < Formula
   desc "API for roguelike developers"
   homepage "https://github.com/libtcod/libtcod"
-  url "https://github.com/libtcod/libtcod/archive/1.16.6.tar.gz"
-  sha256 "7f55579f163ad48ce05bc9f7a7597bf2bcf8449f5249b49d45567d7e2940ab29"
+  url "https://github.com/libtcod/libtcod/archive/1.18.1.tar.gz"
+  sha256 "6bced6115bc764c0465db96e3553662ae6dc2f9358c5499a1984758a841f8ec7"
   license "BSD-3-Clause"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "0770edf9bc3a7596f90d4cc154e164b18a2ba35ffdbdefab82c57d41c9df5bb3"
-    sha256 cellar: :any, big_sur:       "ae925c1b758d1f1b7b7a00709c6bb32107f81af13a6ba947c187737290eebae1"
-    sha256 cellar: :any, catalina:      "b8ba426399d67c23880e2657e2c8ddd69b9e4e48f51ddbf708a3b8b3bc23c997"
-    sha256 cellar: :any, mojave:        "afdc4240c571e2c34e33b59b6506ef0705a7b69b75f5fee899a2e37c247c4cfe"
+    sha256 cellar: :any, arm64_big_sur: "1fab6b1ff1ee7f9ab0ded5b89867f4250b882445ffef5c73b20348227abdd00f"
+    sha256 cellar: :any, big_sur:       "0110681440d6825ef184dea27219a190126ab176d5e278c5d27c2e38c33444f5"
+    sha256 cellar: :any, catalina:      "55e5e93eb87f3e7b7df2fdaa497b8888bf899139b4cad0cb1c1790eeed77bb6b"
+    sha256 cellar: :any, mojave:        "b9b4bd6b64f52cac8e09e7263caed4bad328eae3a58e3e43cba7b50a957c1371"
   end
 
   depends_on "autoconf" => :build
@@ -18,6 +18,8 @@ class Libtcod < Formula
   depends_on "pkg-config" => :build
   depends_on "python@3.9" => :build
   depends_on "sdl2"
+
+  conflicts_with "libzip", "minizip-ng", because: "libtcod, libzip and minizip-ng install a `zip.h` header"
 
   def install
     cd "buildsys/autotools" do

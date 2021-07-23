@@ -5,12 +5,18 @@ class P0f < Formula
   sha256 "543b68638e739be5c3e818c3958c3b124ac0ccb8be62ba274b4241dbdec00e7f"
   license "LGPL-2.1-only"
 
+  livecheck do
+    url :homepage
+    regex(/href=.*?p0f[._-]v?(\d+(?:\.\d+)+[a-z]?)\.t/i)
+  end
+
   bottle do
     rebuild 2
     sha256 arm64_big_sur: "c2b5dfb6885142c3066f900623a1cb1e4920335ad80455f49ae463f2bb07e953"
     sha256 big_sur:       "333bc8a70dec845a21858507a78babe80e6c7cd15b1a2f4ea3c4715daeef331f"
     sha256 catalina:      "e92f0c171b9cf2c80436092412916c98391d6fdc9f37ec16ab2243ad4539b288"
     sha256 mojave:        "7c69ba2615e5ac9c84dba65ed8a208c7b3cc8b68d1f11b07ae3c5db17103557d"
+    sha256 x86_64_linux:  "d24c287755ee5a370ba3676590241e2ad2bf01ca672aecfa108725a165288d87"
   end
 
   uses_from_macos "libpcap"

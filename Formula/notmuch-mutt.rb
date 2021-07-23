@@ -1,8 +1,8 @@
 class NotmuchMutt < Formula
   desc "Notmuch integration for Mutt"
   homepage "https://notmuchmail.org/"
-  url "https://notmuchmail.org/releases/notmuch-0.31.4.tar.xz"
-  sha256 "8661b66567660fd630af10c4647c30327fdd1b34a988cab80d614328a5b74f55"
+  url "https://notmuchmail.org/releases/notmuch-0.32.2.tar.xz"
+  sha256 "8e0a7eb8ff2e6011ef48b2bf11d79b9c4bb74511cfe2987758b64898c2a2ded7"
   license "GPL-3.0-or-later"
   head "https://git.notmuchmail.org/git/notmuch", using: :git
 
@@ -12,17 +12,16 @@ class NotmuchMutt < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "fa40637028973e773db35f68452157b6db2fcfa9e78d094ee621ae404b39378d"
-    sha256 cellar: :any, big_sur:       "50102305f751aa81344c6ee74463d4a7ed4931da790c7c518b4244e34d424fd0"
-    sha256 cellar: :any, catalina:      "6d872acb64af2a755ab6303534ac9b94b289053ccc04de0fd6fe5df498dd1502"
-    sha256 cellar: :any, mojave:        "be03e8e0f1ab57b0cb37c2b58173ac6d43fa70e34779799aeae85f7d29cd6819"
+    sha256 cellar: :any, arm64_big_sur: "244e14a00d9771201dd024dbbef450851a97c128a791f2693f9d7cd278da68d2"
+    sha256 cellar: :any, big_sur:       "7f4007b0e895f0726176e659d7ae16c46a5c1a9f9d338957a2cd443537a87429"
+    sha256 cellar: :any, catalina:      "4606a8de4f790a4cb395fb4730a75877a38e06a68c394c50386d78d2a4aced76"
+    sha256 cellar: :any, mojave:        "9767e63cf02da43304191762eed9fd0cae875f31b08937e6fa9a96b4535f49b8"
   end
 
   depends_on "notmuch"
   depends_on "readline"
 
   uses_from_macos "perl"
-  uses_from_macos "pod2man"
 
   resource "Term::ReadLine::Gnu" do
     url "https://cpan.metacpan.org/authors/id/H/HA/HAYASHI/Term-ReadLine-Gnu-1.37.tar.gz"

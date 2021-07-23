@@ -1,20 +1,20 @@
 class Petsc < Formula
   desc "Portable, Extensible Toolkit for Scientific Computation (real)"
   homepage "https://www.mcs.anl.gov/petsc/"
-  url "https://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-lite-3.14.5.tar.gz"
-  sha256 "8b8ff5c4e10468f696803b354a502d690c7d25c19d694a7e10008a302fdbb048"
+  url "https://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-lite-3.15.2.tar.gz"
+  sha256 "3b10c19c69fc42e01a38132668724a01f1da56f5c353105cd28f1120cc9041d8"
   license "BSD-2-Clause"
 
   livecheck do
-    url "https://www.mcs.anl.gov/petsc/download/"
+    url "https://ftp.mcs.anl.gov/pub/petsc/release-snapshots/"
     regex(/href=.*?petsc-lite[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
 
   bottle do
-    sha256 arm64_big_sur: "e07e8686997f1d27838e8fc9abdb85edb08ec9e2f8f241fdc3202a8a820ada36"
-    sha256 big_sur:       "f297696e560becc66043d2787f5386a6201205e2708e27938c693fc94b428593"
-    sha256 catalina:      "a283d7a72d6273e21fa61de0c03949ca52198ce73854f31f399308dfde4f817f"
-    sha256 mojave:        "d27458d650c0a4ded823ef17386bd98bb482b2c557b63317994bfd68ab89633c"
+    sha256 arm64_big_sur: "009847eca600431ddc7cd7c69d009591e1b4e73c70e33e8b33be2c337f06a16c"
+    sha256 big_sur:       "4d61a382a842bc0be05ccf462106edd5ddd13ee61854e3c566aba089112f005d"
+    sha256 catalina:      "094a754feb280743a1320da6ce559fe67c26c88f85cc0ae161f9b6def819d0e0"
+    sha256 mojave:        "ea0f8be5b92a1e8f08fdf38de826c810272ac827baddf414590b5b2dbc3da1ef"
   end
 
   depends_on "hdf5"

@@ -1,16 +1,16 @@
 class SpirvTools < Formula
   desc "API and commands for processing SPIR-V modules"
   homepage "https://github.com/KhronosGroup/SPIRV-Tools"
-  url "https://github.com/KhronosGroup/SPIRV-Tools/archive/v2020.7.tar.gz"
-  sha256 "c06eed1c7a1018b232768481184b5ae4d91d614d7bd7358dc2fe306bd0a39c6e"
+  url "https://github.com/KhronosGroup/SPIRV-Tools/archive/v2021.2.tar.gz"
+  sha256 "2416a0354a0b14b8e7b671f6f99652cc8a8a83dc9acf195dafd22fbee5e92035"
   license "Apache-2.0"
-  revision 1
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "f12ae92b52b9ea8020a5fe07ba44f3e4b465cacd71f23db04340a369f65c7f41"
-    sha256 cellar: :any, big_sur:       "d08bd6ce7194e2d2150a50319133c818b5525b22b78da8530e3a125c34602c29"
-    sha256 cellar: :any, catalina:      "485707bcd26aa53c8b92e3e2f885f0557dc0147eb114af89db8d1340b261b4bf"
-    sha256 cellar: :any, mojave:        "51d1671e0e01d9fa4601c5b153ccc0e372676fb444d19f7d57b51130868eb5d7"
+    sha256 cellar: :any,                 arm64_big_sur: "fde163985e77436a561a3d7bc519293312ff2182de12edeecfa8a2c5ede11d6d"
+    sha256 cellar: :any,                 big_sur:       "5771922301fbbececf2ea975947bb37fb755365f28b5d9877b67e6a935fd2b29"
+    sha256 cellar: :any,                 catalina:      "d1dd5215d2f0001194c143f3f7b77d68a40ecab0d3a9680b0ac9b011226ca22c"
+    sha256 cellar: :any,                 mojave:        "5319261202baf28c050bed985b4a012430a9568ae0f0ff968797941c299f0557"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7e9d50009fda4cb51207189872dfbd6dfccfab91e8d6e43d588d3897f61a0660"
   end
 
   depends_on "cmake" => :build
@@ -19,7 +19,7 @@ class SpirvTools < Formula
   resource "re2" do
     # revision number could be found in ./DEPS
     url "https://github.com/google/re2.git",
-        revision: "ca11026a032ce2a3de4b3c389ee53d2bdc8794d6"
+        revision: "f8e389f3acdc2517562924239e2a188037393683"
   end
 
   resource "effcee" do
@@ -31,7 +31,7 @@ class SpirvTools < Formula
   resource "spirv-headers" do
     # revision number could be found in ./DEPS
     url "https://github.com/KhronosGroup/SPIRV-Headers.git",
-        revision: "faa570afbc91ac73d594d787486bcf8f2df1ace0"
+        revision: "07f259e68af3a540038fa32df522554e74f53ed5"
   end
 
   def install

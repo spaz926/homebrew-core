@@ -3,16 +3,17 @@ class Flake8 < Formula
 
   desc "Lint your Python code for style and logical errors"
   homepage "https://flake8.pycqa.org/"
-  url "https://files.pythonhosted.org/packages/76/ef/63ca8e9026a942af5da9380481c51d9a51326af65d8051fc166ab858bbdb/flake8-3.9.0.tar.gz"
-  sha256 "78873e372b12b093da7b5e5ed302e8ad9e988b38b063b61ad937f26ca58fc5f0"
+  url "https://files.pythonhosted.org/packages/9e/47/15b267dfe7e03dca4c4c06e7eadbd55ef4dfd368b13a0bab36d708b14366/flake8-3.9.2.tar.gz"
+  sha256 "07528381786f2a6237b061f6e96610a4167b226cb926e2aa2b6b1d78057c576b"
   license "MIT"
-  head "https://gitlab.com/PyCQA/flake8.git", shallow: false
+  head "https://gitlab.com/PyCQA/flake8.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "21984464d73424bf014891c85318682610e5f6d975e5df18c3f5107937e6cd51"
-    sha256 cellar: :any_skip_relocation, big_sur:       "8d8886893eb6326f968b8adc0e9cb863329012903dbefe0ee251a9d5e861f10b"
-    sha256 cellar: :any_skip_relocation, catalina:      "c800bc9078ba5dfe566d3d52055089c3c59cd42729a1580e4884b94b9669d0bd"
-    sha256 cellar: :any_skip_relocation, mojave:        "8773e31daeb655f6fc113e939de4a796f67fdb614324aa2cd965a082f3bdb151"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "8aeeb7350e52e439082ff355558fd2d18de2f1c133cbbbda22678ec8438c7f0d"
+    sha256 cellar: :any_skip_relocation, big_sur:       "55dc84e2f26fac3cb589098c1906838ce676529667e9e8d7c3b970365977dcec"
+    sha256 cellar: :any_skip_relocation, catalina:      "55dc84e2f26fac3cb589098c1906838ce676529667e9e8d7c3b970365977dcec"
+    sha256 cellar: :any_skip_relocation, mojave:        "55dc84e2f26fac3cb589098c1906838ce676529667e9e8d7c3b970365977dcec"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "dcb176172dfc6e92d7e7c0c3746929de31d1021e3873ab9be3b84073e213a91e"
   end
 
   depends_on "python@3.9"
@@ -28,8 +29,8 @@ class Flake8 < Formula
   end
 
   resource "pyflakes" do
-    url "https://files.pythonhosted.org/packages/52/f2/5642322bb66a424c5d86c1ff3106260debc4f9677313b895358943d40e2f/pyflakes-2.3.0.tar.gz"
-    sha256 "e59fd8e750e588358f1b8885e5a4751203a0516e0ee6d34811089ac294c8806f"
+    url "https://files.pythonhosted.org/packages/a8/0f/0dc480da9162749bf629dca76570972dd9cce5bedc60196a3c912875c87d/pyflakes-2.3.1.tar.gz"
+    sha256 "f5bc8ecabc05bb9d291eb5203d6810b49040f6ff446a756326104746cc00c1db"
   end
 
   def install

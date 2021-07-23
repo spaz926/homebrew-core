@@ -4,6 +4,8 @@ class Libgxps < Formula
   url "https://download.gnome.org/sources/libgxps/0.3/libgxps-0.3.2.tar.xz"
   sha256 "6d27867256a35ccf9b69253eb2a88a32baca3b97d5f4ef7f82e3667fa435251c"
   license "LGPL-2.1-or-later"
+  revision 1
+  head "https://gitlab.gnome.org/GNOME/libgxps.git"
 
   livecheck do
     url :stable
@@ -11,15 +13,13 @@ class Libgxps < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "22c593c1dafcc8a09e55ba9fc2c376b404d0fb0b62f800065f0f6edf047bb2fa"
-    sha256 cellar: :any, big_sur:       "c5f3520c5a94f6e33ff52a745c1d1667440ef8d662948f16ad25e82155ac4c8d"
-    sha256 cellar: :any, catalina:      "994ff26d92b50c014da31562fadace384a425c61d42037e8a03c2fa8f3b6a27a"
-    sha256 cellar: :any, mojave:        "b1d3ce677599e912000eae265d671a8e38f21daefadcb0dd23845b8130665295"
+    sha256 cellar: :any, arm64_big_sur: "0243fa2f8e5b1559b417e47e5aea3b6ab8745164f397963c2ac94952c3915324"
+    sha256 cellar: :any, big_sur:       "6ad3b9179f42d68083b2b8bf54fe2d36433ed45d51e8ee13af392638e1b07174"
+    sha256 cellar: :any, catalina:      "52dc9223c583d315cc9b6edd29e696ac4e8dab1fe5d4d452c9ac3f20af185412"
+    sha256 cellar: :any, mojave:        "e113e3685b5f6a000d1e23f2bf67cb78e67c5bba58562156d5a78311ee28c05c"
   end
 
-  head do
-    url "https://gitlab.gnome.org/GNOME/libgxps.git"
-  end
+  keg_only "it conflicts with `ghostscript`"
 
   depends_on "gobject-introspection" => :build
   depends_on "meson" => :build
@@ -36,6 +36,13 @@ class Libgxps < Formula
       system "ninja", "-v"
       system "ninja", "install", "-v"
     end
+  end
+
+  def caveats
+    <<~EOS
+      `ghostscript` now installs a conflicting #{shared_library("libgxps")}.
+      You may need to `brew unlink libgxps` if you have both installed.
+    EOS
   end
 
   test do

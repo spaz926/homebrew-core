@@ -1,8 +1,8 @@
 class TraefikAT1 < Formula
   desc "Modern reverse proxy (v1.7)"
   homepage "https://traefik.io/"
-  url "https://github.com/traefik/traefik/releases/download/v1.7.28/traefik-v1.7.28.src.tar.gz"
-  sha256 "1baa2ca726c4eac71931284229b867a7f15cecb41c3ce8df3619502880ab6719"
+  url "https://github.com/traefik/traefik/releases/download/v1.7.30/traefik-v1.7.30.src.tar.gz"
+  sha256 "021e00c5ca1138b31330bab83db0b79fa89078b074f0120faba90e5f173104db"
   license "MIT"
 
   livecheck do
@@ -11,17 +11,18 @@ class TraefikAT1 < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "34c1ced84f74a815d10048832232bc46acba74b149271365f1178de9f3ad7ddc"
-    sha256 cellar: :any_skip_relocation, big_sur:       "2ebc160c9500db7fe90b9f3312a8d43bcdac819a16a4c1e641702b61c3e948a6"
-    sha256 cellar: :any_skip_relocation, catalina:      "4225edf0cb5466dd6031cb8bf149c764f8614c0fc97aa799c8271e373268a3f5"
-    sha256 cellar: :any_skip_relocation, mojave:        "a014d6c20348aab5eaf4a775906bf7b450d89edb16373328840d4f3a3d9e80cb"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "7a1dfc827581dc524c337537f65ab76d632447b2f058701011f2d50ca2d55f26"
+    sha256 cellar: :any_skip_relocation, big_sur:       "6733a3982d2031a5a0e647c50b6fe0e6f1ed18441102cc89d245c943f179c373"
+    sha256 cellar: :any_skip_relocation, catalina:      "9fed988a2abc60ec1022d504707c8b64bd9f73551a8f0698c4663669b153ddb4"
+    sha256 cellar: :any_skip_relocation, mojave:        "fbafd58e2104c0d4faa60784f0827cb891be4464ec9c86837f804937ac66a2c0"
   end
 
   keg_only :versioned_formula
 
   depends_on "go" => :build
   depends_on "go-bindata" => :build
-  depends_on "node" => :build
+  depends_on "node@14" => :build
   depends_on "yarn" => :build
 
   def install

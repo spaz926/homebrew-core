@@ -1,8 +1,8 @@
 class Eccodes < Formula
   desc "Decode and encode messages in the GRIB 1/2 and BUFR 3/4 formats"
   homepage "https://confluence.ecmwf.int/display/ECC"
-  url "https://software.ecmwf.int/wiki/download/attachments/45757960/eccodes-2.21.0-Source.tar.gz"
-  sha256 "da0a0bf184bb436052e3eae582defafecdb7c08cdaab7216780476e49b509755"
+  url "https://software.ecmwf.int/wiki/download/attachments/45757960/eccodes-2.22.1-Source.tar.gz"
+  sha256 "75c7ee96469bb30b0c8f7edbdc4429ece4415897969f75c36173545242bc9e85"
   license "Apache-2.0"
 
   livecheck do
@@ -11,10 +11,10 @@ class Eccodes < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "f74b5bb384bce5589fd3af3146782b4a0fb4698c3b5e12d29a349ea2b73262e7"
-    sha256 big_sur:       "791862aed908852b7588bd8c0cf33bd38f9eda6491e14f0fde72c768f7cc1240"
-    sha256 catalina:      "de0339d06a0774e858a76ecfd2a156e69d056e9e181862bf6ca621a397bff466"
-    sha256 mojave:        "15be2853b5d08d8e6e8a6bc091299c21eac59762985aa3fed39071aa975c6d3f"
+    sha256 arm64_big_sur: "a9ab14fc89f7fb8431e873769b02b03a92a2e6a605b608fb08a4ade32a4aced8"
+    sha256 big_sur:       "92a968f329882ab71b4cd181eba9b369d3a9118d02fdabd8f040d5b0b9119e95"
+    sha256 catalina:      "9b681316cca163189707ca1162df7af30e166151e1c11ad2a00ba75ea57b7120"
+    sha256 mojave:        "9e49cbea962e91b551edc93f5bde6f7f245fe23fb533a64c2f5ec4535576e00c"
   end
 
   depends_on "cmake" => :build
@@ -38,9 +38,8 @@ class Eccodes < Formula
     end
 
     # Avoid references to Homebrew shims directory
-    inreplace include/"eccodes_ecbuild_config.h", HOMEBREW_LIBRARY/"Homebrew/shims/mac/super/clang", "/usr/bin/clang"
-    inreplace lib/"pkgconfig/eccodes.pc", HOMEBREW_LIBRARY/"Homebrew/shims/mac/super/clang", "/usr/bin/clang"
-    inreplace lib/"pkgconfig/eccodes_f90.pc", HOMEBREW_LIBRARY/"Homebrew/shims/mac/super/clang", "/usr/bin/clang"
+    shim_references = [include/"eccodes_ecbuild_config.h", lib/"pkgconfig/eccodes.pc", lib/"pkgconfig/eccodes_f90.pc"]
+    inreplace shim_references, %r{#{HOMEBREW_SHIMS_PATH}/[^/]+/super/#{ENV.cc}}, ENV.cc
   end
 
   test do

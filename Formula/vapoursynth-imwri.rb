@@ -1,17 +1,17 @@
 class VapoursynthImwri < Formula
   desc "VapourSynth filters - ImageMagick HDRI writer/reader"
   homepage "http://www.vapoursynth.com"
-  url "https://github.com/vapoursynth/vapoursynth/archive/R52.tar.gz"
-  sha256 "4d5dc7950f4357da695d29708bc98013bc3e0bd72fc5d697f8c91ce3c4a4b2ac"
+  url "https://github.com/vapoursynth/vapoursynth/archive/R53.tar.gz"
+  sha256 "78e2c5311b2572349ff7fec2e16311e9e4f6acdda78673872206ab660eadf7c8"
   license "LGPL-2.1-or-later"
-  revision 2
+  revision 1
   head "https://github.com/vapoursynth/vapoursynth.git"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "20b6a0b07a2e4cbb8fe60a87a839f43f466514b2c5dc9198424774edec57f7e0"
-    sha256 cellar: :any, big_sur:       "11991f437ab02ddd68dec46cde3ecc78d79db72773486c4858b72151fc8c2cf3"
-    sha256 cellar: :any, catalina:      "6530be1c73bf93d1ab1d52f338d36fc1a18471a8f9f779cd8b3d74bed667b08b"
-    sha256 cellar: :any, mojave:        "88087c485608b4c72cf17bbc6b6be447be06e895caea683a6e1c49fae7bc61e4"
+    sha256 cellar: :any, arm64_big_sur: "b18dd1a4f43d95579c48d35f8ec579a706f6ed0ea104cf25dee995defd426ec8"
+    sha256 cellar: :any, big_sur:       "e9e17493e1e3f2ab020be8425ab9d17266b53f91e0c5277c156a2970f665ba75"
+    sha256 cellar: :any, catalina:      "be4e734c5d4cb506ff006ddd17d9fd536f3035f26315bac49bb151088b8ead71"
+    sha256 cellar: :any, mojave:        "e109782020a18bcf8b8a3c9ddddbd593abfabbc8e3513bee26abcfd1bf35d4d8"
   end
 
   depends_on "autoconf" => :build

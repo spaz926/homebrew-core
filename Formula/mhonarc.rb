@@ -4,13 +4,10 @@ class Mhonarc < Formula
   url "https://www.mhonarc.org/release/MHonArc/tar/MHonArc-2.6.19.tar.bz2"
   sha256 "08912eae8323997b940b94817c83149d2ee3ed11d44f29b3ef4ed2a39de7f480"
   license "GPL-2.0-or-later"
-  revision 1
+  revision 2
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "7100a27e7d9ea90abbee2f1d5eba2ef8a26c8fb38febb8fbf49f6da3a8bd785f"
-    sha256 cellar: :any_skip_relocation, big_sur:       "ea3e05965fe74d294f44cc7c445c70bad845ce11cc27cb97a2aec3ca3f0d944e"
-    sha256 cellar: :any_skip_relocation, catalina:      "d8d93f40967293512be76d832dd5ced8f4b40b720e20350f32a4237de04bcd19"
-    sha256 cellar: :any_skip_relocation, mojave:        "23a6289c76372033b3c328a8fc67cc94b3b0895b7be58a67bb2f5da21c2b4707"
+    sha256 cellar: :any_skip_relocation, all: "d9a6c4bddb21af835cc9664460d4cd83dc46175de5d338f4d719d0012a7df45b"
   end
 
   depends_on "perl"

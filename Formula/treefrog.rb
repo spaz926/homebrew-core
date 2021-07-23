@@ -1,8 +1,8 @@
 class Treefrog < Formula
   desc "High-speed C++ MVC Framework for Web Application"
   homepage "https://www.treefrogframework.org/"
-  url "https://github.com/treefrogframework/treefrog-framework/archive/v1.31.1.tar.gz"
-  sha256 "282197f1735f7766a804e1f06e29b45754e082db2eb596edcd929f8e308b2887"
+  url "https://github.com/treefrogframework/treefrog-framework/archive/v2.0.2.tar.gz"
+  sha256 "18b232d4ebc89d8cbfe3b75460fe5f5fc85e0e7a186c172c15219d3857e7d594"
   license "BSD-3-Clause"
   head "https://github.com/treefrogframework/treefrog-framework.git"
 
@@ -12,16 +12,19 @@ class Treefrog < Formula
   end
 
   bottle do
-    sha256 big_sur:  "d865266f65ca621ad8cc3f479ab5a80163b780d9a7507b95c0ce7d9dbda274ff"
-    sha256 catalina: "753c0f6725a75a4c61c50c9ba82c69d17a45adefc462c07942d8780e5fdb7080"
-    sha256 mojave:   "a3a7ed90190f54b848c92998924243bf376d9a4e13f44a03ef1212d4e83cd163"
+    sha256 arm64_big_sur: "1d360984e43004f5b22d5354116c51d151ef1cd84d80f82fb1a09a956145b510"
+    sha256 big_sur:       "aaa3208b6c9f7534c1c9e74aecb28f886bd8f8ff32b389cffbb132b95b317f15"
+    sha256 catalina:      "967507adb9e26f05f9b7e290b44e7a4ba19e711ce0f995e3fd841a0fcd6e1e1d"
+    sha256 mojave:        "d6e058393eb60b8a96d0b4bc7135fba39de517b049aec6e4777e0902b0ed5de2"
   end
 
   depends_on xcode: :build
   depends_on "mongo-c-driver"
-  depends_on "qt@5"
+  depends_on "qt"
 
   def install
+    inreplace "src/corelib.pro", "/usr/local", HOMEBREW_PREFIX
+
     system "./configure", "--prefix=#{prefix}", "--enable-shared-mongoc"
 
     cd "src" do
@@ -41,7 +44,7 @@ class Treefrog < Formula
     assert_predicate testpath/"hello", :exist?
     cd "hello" do
       assert_predicate Pathname.pwd/"hello.pro", :exist?
-      system Formula["qt@5"].opt_bin/"qmake"
+      system Formula["qt"].opt_bin/"qmake"
       assert_predicate Pathname.pwd/"Makefile", :exist?
       system "make"
       system bin/"treefrog", "-v"

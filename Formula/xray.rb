@@ -1,28 +1,36 @@
 class Xray < Formula
   desc "Platform for building proxies to bypass network restrictions"
   homepage "https://xtls.github.io/"
-  url "https://github.com/XTLS/Xray-core/archive/v1.4.0.tar.gz"
-  sha256 "09fcfec0b6e9362d36fb358fe781431a6c2baae71a7864eaeb1379977aa22ca9"
+  url "https://github.com/XTLS/Xray-core/archive/v1.4.2.tar.gz"
+  sha256 "565255d8c67b254f403d498b9152fa7bc097d649c50cb318d278c2be644e92cc"
   license all_of: ["MPL-2.0", "CC-BY-SA-4.0"]
+  revision 1
   head "https://github.com/XTLS/Xray-core.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "57de60b05b48e005338b6109a67d9ff37d26221b5e16d8564df800ddc01c5d4d"
-    sha256 cellar: :any_skip_relocation, big_sur:       "578b31c235ca19f47fabb2cc0cf370f7876386f3e5a0cce19de48885c3656ced"
-    sha256 cellar: :any_skip_relocation, catalina:      "c1dbfa4e54681f415f44a81045c8b82a48d81136f89ea8888fd4aaab6950274b"
-    sha256 cellar: :any_skip_relocation, mojave:        "fba7e730baf36cfa04a4b1843faa45bdd66204a0e4c1a9ffb33be24f4718278a"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "e7bd4ff6c49faa87d273c9cae05a46d4613e7718d192477e44ce34913f4b21a5"
+    sha256 cellar: :any_skip_relocation, big_sur:       "e6045666df8f87a58ded259f67bfea7199eeca12cb0b29f8e697b1c71ae95123"
+    sha256 cellar: :any_skip_relocation, catalina:      "c8e68f1c303bc7dcfd045fc7344183aaf79cf1a836c4781b7e60aacebe312d3c"
+    sha256 cellar: :any_skip_relocation, mojave:        "1a45b3784597260e0659cd0ae2127edeffccf83c5051cecbda6f1b046ff034f1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ce48403bf39cc4c6dc819a0533301e0458f56f16f1f979dfed4754efa83c1577"
   end
 
   depends_on "go" => :build
 
   resource "geoip" do
-    url "https://github.com/v2fly/geoip/releases/download/202103150217/geoip.dat"
-    sha256 "c55224b5dbefe6ab0e739cd8e2f6e628571c9245def25e93f244fa5a7d39fc37"
+    url "https://github.com/v2fly/geoip/releases/download/202104010913/geoip.dat"
+    sha256 "f94e464f7f37e6f3c88c2aa5454ab02a4b840bc44c75c5001719a618916906cf"
   end
 
   resource "geosite" do
-    url "https://github.com/v2fly/domain-list-community/releases/download/20210316053120/dlc.dat"
-    sha256 "b85355097f660164a65723223aaef0a62c671266d4a18927c5c12c32c036cc54"
+    url "https://github.com/v2fly/domain-list-community/releases/download/20210401091829/dlc.dat"
+    sha256 "ee9778dc00b703905ca1f400ad13dd462eae52c5aee6465f0a7543b0232c9d08"
+  end
+
+  resource "example_config" do
+    # borrow v2ray (v4.36.2) example config
+    url "https://raw.githubusercontent.com/v2fly/v2ray-core/v4.36.2/release/config/config.json"
+    sha256 "1bbadc5e1dfaa49935005e8b478b3ca49c519b66d3a3aee0b099730d05589978"
   end
 
   def install
@@ -34,13 +42,23 @@ class Xray < Formula
     (bin/"xray").write_env_script execpath,
       XRAY_LOCATION_ASSET: "${XRAY_LOCATION_ASSET:-#{pkgshare}}"
 
-    resource("geoip").stage do
-      pkgshare.install "geoip.dat"
-    end
-
+    pkgshare.install resource("geoip")
     resource("geosite").stage do
       pkgshare.install "dlc.dat" => "geosite.dat"
     end
+    pkgetc.install resource("example_config")
+  end
+
+  def caveats
+    <<~EOS
+      An example config is installed to #{etc}/xray/config.json
+    EOS
+  end
+
+  service do
+    run [opt_bin/"xray", "run", "--config", "#{etc}/xray/config.json"]
+    run_type :immediate
+    keep_alive true
   end
 
   test do

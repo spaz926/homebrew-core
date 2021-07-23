@@ -13,6 +13,7 @@ class Parliament < Formula
     sha256 cellar: :any_skip_relocation, big_sur:       "055f7fefb957c5269ab8ec19654b06e0e7db865333bbebb62a5e2ea9940ddfca"
     sha256 cellar: :any_skip_relocation, catalina:      "b29b423794a9ccb15f1509f6086b170f4f3393bad15a8bdaa9ab7312fc09ae31"
     sha256 cellar: :any_skip_relocation, mojave:        "2e59a17e90ad49204bd45177cddf947bd1fda2405572ae62b194143bb9cab337"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7b49f599b5b557d4fb45bdaed4f874f70bedaba7f087ee3ec851d4cd44b29edd"
   end
 
   depends_on "python@3.9"
@@ -73,7 +74,7 @@ class Parliament < Formula
 
   test do
     assert_equal "MEDIUM - No resources match for the given action -  - [{'action': 's3:GetObject',"\
-    " 'required_format': 'arn:*:s3:::*/*'}] - {'line': 1, 'column': 40, 'filepath': None}", \
+                 " 'required_format': 'arn:*:s3:::*/*'}] - {'line': 1, 'column': 40, 'filepath': None}", \
     pipe_output("#{bin}/parliament --string \'{\"Version\": \"2012-10-17\", \"Statement\": {\"Effect\": \"Allow\","\
                 " \"Action\": \"s3:GetObject\", \"Resource\": \"arn:aws:s3:::secretbucket\"}}\'").strip
   end

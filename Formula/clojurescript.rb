@@ -1,10 +1,9 @@
 class Clojurescript < Formula
   desc "Clojure to JS compiler"
   homepage "https://github.com/clojure/clojurescript"
-  url "https://github.com/clojure/clojurescript/releases/download/r1.10.758/cljs.jar"
-  sha256 "dcc98e103d281d4eab21ca94fba11728e9f587c3aa09c8ffc3b96cff210adcce"
+  url "https://github.com/clojure/clojurescript/releases/download/r1.10.866/cljs.jar"
+  sha256 "a1b0e00934d6fe059d5a84f8f19879c702cdebb8a507799b921932354dcc020e"
   license "EPL-1.0"
-  revision 1
   head "https://github.com/clojure/clojurescript.git"
 
   livecheck do
@@ -13,7 +12,9 @@ class Clojurescript < Formula
     regex(%r{href=.*?/tag/r?(\d+(?:\.\d+)+)["' >]}i)
   end
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "96f5fb870831289f84b565bc7fd72a75e59a0b234986c0077fac9b3665dc7235"
+  end
 
   depends_on "openjdk"
 

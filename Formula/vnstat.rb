@@ -1,16 +1,17 @@
 class Vnstat < Formula
   desc "Console-based network traffic monitor"
   homepage "https://humdi.net/vnstat/"
-  url "https://humdi.net/vnstat/vnstat-2.6.tar.gz"
-  sha256 "89276e0a7281943edb554b874078278ad947dc312938a2451e03eb80679f7ff7"
+  url "https://humdi.net/vnstat/vnstat-2.7.tar.gz"
+  sha256 "4c28a1d8bc03c2b6e7ab96c876e07dd8ea174b7cad73b7190ecb2b9501e83e9e"
   license "GPL-2.0"
   head "https://github.com/vergoh/vnstat.git"
 
   bottle do
-    sha256 big_sur:     "f2927c9530127989258ee417145dc37f3bb958086724c143051f4d9c5b93e7d1"
-    sha256 catalina:    "c4087b24e69aa3bbf9ccb7f58ca3d942bc3403bcfff47df7657cac00e8c9fc75"
-    sha256 mojave:      "795d67ae3e4d0f8683ee0812d29a4205aab38a2f453a09cd714adac7f00aaea8"
-    sha256 high_sierra: "5e873fe1cb03aecfc02e0a5224f2fa222ef9e3f2a2e8a007a031cf4a1f9cf3ee"
+    sha256 arm64_big_sur: "31160d2bd7a24af3e788d29b9465399ec27bcfe5b44bdf9a9d2176b540245fe9"
+    sha256 big_sur:       "817351cc1ffa85d14ea28c820837e9077d77302f0e2439a9686e22d0ebbc1093"
+    sha256 catalina:      "5167bdbf374cb87411a3b3aa5b431f2777a90bff8fec599079794f06f0511dbb"
+    sha256 mojave:        "7c13d764a6f0fc06d1ea7a7800c568c2cab8f02ed2f50b12d62cef720c7baad9"
+    sha256 x86_64_linux:  "e4c902e80f8d1c70a08b266d7dc5440b67135fa5803a72559413a551a35e7816"
   end
 
   depends_on "gd"
@@ -79,7 +80,7 @@ class Vnstat < Formula
 
   test do
     cp etc/"vnstat.conf", testpath
-    inreplace "vnstat.conf", "/usr/local/var", testpath/"var"
+    inreplace "vnstat.conf", var, testpath/"var"
     (testpath/"var/db/vnstat").mkpath
 
     begin

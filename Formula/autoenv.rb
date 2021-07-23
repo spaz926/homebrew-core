@@ -6,7 +6,11 @@ class Autoenv < Formula
   license "MIT"
   head "https://github.com/kennethreitz/autoenv.git"
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, all: "657fdd3a35ac9967764be96cd948ad27ac9eb3160120ff16d77c24b7ab15cd09"
+  end
+
+  patch :DATA
 
   def install
     prefix.install "activate.sh"
@@ -25,3 +29,17 @@ class Autoenv < Formula
     assert_match "it works", shell_output(testcmd)
   end
 end
+
+__END__
+diff --git a/activate.sh b/activate.sh
+index 05e908c..091e915 100755
+--- a/activate.sh
++++ b/activate.sh
+@@ -28,6 +28,7 @@ ${_file}"
+ 				fi
+ 			fi
+ 			[ "$(pwd -P)" = "${_mountpoint}" ] && break
++			[ "$(pwd -P)" = "/" ] && break
+ 			command -v chdir >/dev/null 2>&1 && \chdir "$(pwd -P)/.." || builtin cd "$(pwd -P)/.."
+ 		done
+ 	`"

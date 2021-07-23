@@ -1,9 +1,10 @@
 class OsrmBackend < Formula
   desc "High performance routing engine"
   homepage "http://project-osrm.org/"
-  url "https://github.com/Project-OSRM/osrm-backend/archive/v5.24.0.tar.gz"
-  sha256 "a66b20e7ffe83e5e5fe12324980320e12a6ec2b05f2befd157de5c60c665613c"
+  url "https://github.com/Project-OSRM/osrm-backend/archive/v5.25.0.tar.gz"
+  sha256 "6da276d609a54600bb37007fd98d14c2a48639f51dda0d962b5801dd0118dfbb"
   license "BSD-2-Clause"
+  revision 1
   head "https://github.com/Project-OSRM/osrm-backend.git"
 
   livecheck do
@@ -12,10 +13,10 @@ class OsrmBackend < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "fe1d2680e22150a35b6d5c76157c867e3faed556bb127fe2b57eff79858ac668"
-    sha256 cellar: :any, big_sur:       "e6dfd1fc4adacbf0b54be1b1c10218fa18b6ea186ea802df3791a023b95f5705"
-    sha256 cellar: :any, catalina:      "fd6cad0c66a91a963006b7f961d3fbdce9d4ecf47acb4c578f23602f8025512e"
-    sha256 cellar: :any, mojave:        "b4dd6eb3f99a2caf3f733beb93046bb69813a3b3b32cb73410527b03e20a5c93"
+    sha256 cellar: :any, arm64_big_sur: "4f459e02861a2bd1f069f4e4eaf5d067c3f8533c45f05e5d92e3485ba6eed0de"
+    sha256 cellar: :any, big_sur:       "9503f806b2f88daf95a054754e3fcee7c49cb4e89414d1ff18452b476ea80cf1"
+    sha256 cellar: :any, catalina:      "a28c8d9695583ead07fc870472a2701ff9702493147f04467e73371899e88abd"
+    sha256 cellar: :any, mojave:        "1a2240493d43b788bd4c5e0018ed8fa076833b28068364806a9ef9754323a84a"
   end
 
   depends_on "cmake" => :build
@@ -24,7 +25,7 @@ class OsrmBackend < Formula
   depends_on "libxml2"
   depends_on "libzip"
   depends_on "lua"
-  depends_on "tbb"
+  depends_on "tbb@2020"
 
   def install
     lua = Formula["lua"]

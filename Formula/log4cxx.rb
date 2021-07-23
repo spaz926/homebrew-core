@@ -1,37 +1,27 @@
 class Log4cxx < Formula
   desc "Library of C++ classes for flexible logging"
   homepage "https://logging.apache.org/log4cxx/index.html"
-  url "https://www.apache.org/dyn/closer.lua?path=logging/log4cxx/0.11.0/apache-log4cxx-0.11.0.tar.gz"
-  mirror "https://archive.apache.org/dist/logging/log4cxx/0.11.0/apache-log4cxx-0.11.0.tar.gz"
-  sha256 "c316705ee3c4e5b919d3561d5f305162d21687aa6ae1f31f02f6cdadc958b393"
+  url "https://www.apache.org/dyn/closer.lua?path=logging/log4cxx/0.12.0/apache-log4cxx-0.12.0.tar.gz"
+  mirror "https://archive.apache.org/dist/logging/log4cxx/0.12.0/apache-log4cxx-0.12.0.tar.gz"
+  sha256 "bd5b5009ca914c8fa7944b92ea6b4ca6fb7d146f65d526f21bf8b3c6a0520e44"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "3608d04c6ad5e3d6d0186519f9ad31157add75820c8a651a77cdc89e77c81ff1"
-    sha256 cellar: :any, big_sur:       "33929bf44a188a1e7f16ae25a4b6495b63846640ed74a7d5f0c94db15151f5d0"
-    sha256 cellar: :any, catalina:      "ec9ff34b2c49aa9a48536f7d109da16cc32f9ce83e95ac1dc3efc8a982709908"
-    sha256 cellar: :any, mojave:        "23a968d63f8a181a73410cffcde5fd16fbacd5867453e7c0d7b0cb3815942bf8"
-    sha256 cellar: :any, high_sierra:   "11478b4f5ece24ec391954cc0538bb28f11ae6256a9499ca1e95103c2eb1d75c"
+    sha256 cellar: :any, arm64_big_sur: "5654067019235ef0ea4d7d2dda99116a5f59eb9de503d02c2831c1f54e971d88"
+    sha256 cellar: :any, big_sur:       "c7c19a708049c810cea3514308e52316d25c02f8ffc1fd2eb3f80485d34bb916"
+    sha256 cellar: :any, catalina:      "6cfbf907bb67c4ffb62c71e91343d894e0ead3534856933801df942f60ffc3a5"
+    sha256 cellar: :any, mojave:        "1c56033e73bf61b3c5742d7b9f64f65c3d2e4223edbb30a3fef45287f3efe883"
   end
 
-  depends_on "autoconf" => :build
-  depends_on "automake" => :build
-  depends_on "libtool" => :build
-
+  depends_on "cmake" => :build
   depends_on "apr-util"
 
   def install
-    # Fixes build error with clang, old libtool scripts. cf. #12127
-    # Reported upstream here: https://issues.apache.org/jira/browse/LOGCXX-396
-    # Remove at: unknown, waiting for developer comments.
-    system "./autogen.sh"
-    system "./configure", "--disable-debug", "--disable-dependency-tracking",
-                          "--prefix=#{prefix}",
-                          # Docs won't install on macOS
-                          "--disable-doxygen",
-                          "--with-apr=#{Formula["apr"].opt_bin}",
-                          "--with-apr-util=#{Formula["apr-util"].opt_bin}"
-    system "make", "install"
+    mkdir "build" do
+      system "cmake", "..", *std_cmake_args, "-DBUILD_SHARED_LIBS=ON"
+      system "make"
+      system "make", "install"
+    end
   end
 
   test do
@@ -67,7 +57,7 @@ class Log4cxx < Formula
       log4j.appender.R.layout=org.apache.log4j.PatternLayout
       log4j.appender.R.layout.ConversionPattern=%p %t %c - %m%n
     EOS
-    system ENV.cxx, "test.cpp", "-o", "test", "-L#{lib}", "-llog4cxx"
+    system ENV.cxx, "-std=c++17", "test.cpp", "-o", "test", "-L#{lib}", "-llog4cxx"
     assert_match(/ERROR.*Foo/, shell_output("./test", 1))
   end
 end

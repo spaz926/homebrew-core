@@ -1,21 +1,24 @@
 class SqliteAnalyzer < Formula
   desc "Analyze how space is allocated inside an SQLite file"
   homepage "https://www.sqlite.org/"
-  url "https://www.sqlite.org/2021/sqlite-src-3350300.zip"
-  version "3.35.3"
-  sha256 "4ca1dff5578b1720061dd4452f91a5c3eced5ba3773354291d9aee9e2796a720"
+  url "https://www.sqlite.org/2021/sqlite-src-3360000.zip"
+  version "3.36.0"
+  sha256 "25a3b9d08066b3a9003f06a96b2a8d1348994c29cc912535401154501d875324"
   license "blessing"
 
   livecheck do
-    url "https://sqlite.org/news.html"
-    regex(%r{v?(\d+(?:\.\d+)+)</h3>}i)
+    url "https://sqlite.org/index.html"
+    regex(%r{href=.*?releaselog/v?(\d+(?:[._]\d+)+)\.html}i)
+    strategy :page_match do |page, regex|
+      page.scan(regex).map { |match| match&.first&.gsub("_", ".") }
+    end
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "c7ce1b6b5e65f146261cc11d3104ea38070e42bf96b51998d50e5576e0ac2749"
-    sha256 cellar: :any_skip_relocation, big_sur:       "512191b5c3ca145bab8daab7407826b3ff6ff843b1c9a5bfa8133e6f1a749b35"
-    sha256 cellar: :any_skip_relocation, catalina:      "d78a7067cdb519c7fd1bdb450173fc5549ba4cd01c16f64618aaa64b3843b6cf"
-    sha256 cellar: :any_skip_relocation, mojave:        "65c16d45b0afc3bd942cd1b69728bd1db83942e1593218b2a329a0cda7bb4e61"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "279951170e98f9f3b4b23fbd34cd210c6a3ad3c8b564f7a6dd41366f98610cf9"
+    sha256 cellar: :any_skip_relocation, big_sur:       "8e912eaec069e12f498c2ba3bc09217cd2cf924ff8e26bfa966680b98d53f95c"
+    sha256 cellar: :any_skip_relocation, catalina:      "927cb8b16c0c5c4fefc9169c1d51346c6db3daaba27219a194b353d0e1a4b08f"
+    sha256 cellar: :any_skip_relocation, mojave:        "039205cb4d999259011589f99db4dea8612a0a743cca17265c06734342820489"
   end
 
   def install

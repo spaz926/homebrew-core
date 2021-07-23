@@ -2,8 +2,8 @@ class SwiftFormat < Formula
   desc "Formatting technology for Swift source code"
   homepage "https://github.com/apple/swift-format"
   url "https://github.com/apple/swift-format.git",
-      tag:      "0.50300.0",
-      revision: "12089179aa1668a2478b2b2111d98fa37f3531e3"
+      tag:      "0.50400.0",
+      revision: "9c15831b798d767c9af0927a931de5d557004936"
   license "Apache-2.0"
   version_scheme 1
   head "https://github.com/apple/swift-format.git", branch: "main"
@@ -14,19 +14,15 @@ class SwiftFormat < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "75fa25fe584857edcac70f44e1bf5f2c1ab8cea794cab40955da080f0f2b1061"
-    sha256 cellar: :any_skip_relocation, big_sur:       "7db963099096dac3d24d2d3095286791c55837506c12d8ebde3560c2c169890b"
-    sha256 cellar: :any_skip_relocation, catalina:      "21776a6b8f2417f3d2171536f6788948f3c5e8e4f1681cd4cf088ebd828c307b"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "9de7f5147825f582c55d7c10b112d10751bd7e20bb01d071db7ab6c6e6ccf451"
+    sha256 cellar: :any_skip_relocation, big_sur:       "d10327986ea438f3210b4589ca7f63d7698681c7546cdf62b07f36c8748f2a66"
   end
 
   # The bottles are built on systems with the CLT installed, and do not work
   # out of the box on Xcode-only systems due to an incorrect sysroot.
-  pour_bottle? do
-    reason "The bottle needs the Xcode CLT to be installed."
-    satisfy { MacOS::CLT.installed? }
-  end
+  pour_bottle? only_if: :clt_installed
 
-  depends_on xcode: ["12.0", :build]
+  depends_on xcode: ["12.5", :build]
 
   def install
     system "swift", "build", "--disable-sandbox", "-c", "release"

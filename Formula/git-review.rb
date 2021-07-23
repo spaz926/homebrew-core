@@ -3,16 +3,17 @@ class GitReview < Formula
 
   desc "Submit git branches to gerrit for review"
   homepage "https://opendev.org/opendev/git-review"
-  url "https://files.pythonhosted.org/packages/54/36/445652deaa5e19a58e5512bdc8c5a37ccc9673cb205c7e06ff776cb8b228/git-review-2.0.0.tar.gz"
-  sha256 "6e6c86b61334526c5c0f200fdf61957310b0c32208339a38c890db7fe0de5452"
+  url "https://files.pythonhosted.org/packages/52/32/314cdb83186d43661a36d3e49390f818bce4e878b90a0bc980a3c70252bb/git-review-2.1.0.tar.gz"
+  sha256 "3a6c775645b1fa8c40c49fbfce6f8d7e225a1e797a0aa92912607b1d97e61ed6"
   license "Apache-2.0"
   head "https://opendev.org/opendev/git-review.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "9debd3ad5a89634c1bca857954d4779f373bc99399c8db0cff255e311fbebb4e"
-    sha256 cellar: :any_skip_relocation, big_sur:       "c58c18e8d55c19ecb4929a18fd312289f50e58bb9b45a63a5fbd7fd29abf31f6"
-    sha256 cellar: :any_skip_relocation, catalina:      "ec3f9cba6b5196e3c0637e557c7412808f35c8707f73b88112938e9da6b0e1fb"
-    sha256 cellar: :any_skip_relocation, mojave:        "ca833fbdf9790089a597b8e52ecccca721b518fd6ac6ca09ae63521d5e1a3ebf"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "496d650aae18c08a27c9a35b2af2402c06817acc44f317c7bb835b98640e38c5"
+    sha256 cellar: :any_skip_relocation, big_sur:       "c0453ff5e5450402026b4480cab678f615673b5cbb7e0bdd066cc601418aff88"
+    sha256 cellar: :any_skip_relocation, catalina:      "c0453ff5e5450402026b4480cab678f615673b5cbb7e0bdd066cc601418aff88"
+    sha256 cellar: :any_skip_relocation, mojave:        "c0453ff5e5450402026b4480cab678f615673b5cbb7e0bdd066cc601418aff88"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5da052e738e69ae15c6ed1f71fb85fe77f31ad529b52ce4a69784408ea042fc2"
   end
 
   depends_on "python@3.9"
@@ -38,8 +39,8 @@ class GitReview < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/d7/8d/7ee68c6b48e1ec8d41198f694ecdc15f7596356f2ff8e6b1420300cf5db3/urllib3-1.26.3.tar.gz"
-    sha256 "de3eedaad74a2683334e282005cd8d7f22f4d55fa690a2a1020a416cb0a47e73"
+    url "https://files.pythonhosted.org/packages/cb/cf/871177f1fc795c6c10787bc0e1f27bb6cf7b81dbde399fd35860472cecbc/urllib3-1.26.4.tar.gz"
+    sha256 "e7b021f7241115872f92f43c6508082facffbd1c048e3c6e2bb9c2a157e28937"
   end
 
   def install

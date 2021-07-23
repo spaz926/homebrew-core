@@ -1,23 +1,23 @@
 class IamPolicyJsonToTerraform < Formula
   desc "Convert a JSON IAM Policy into terraform"
   homepage "https://github.com/flosell/iam-policy-json-to-terraform"
-  url "https://github.com/flosell/iam-policy-json-to-terraform/archive/1.6.0.tar.gz"
-  sha256 "714b8aead9bf5a88989a62eb520163565c890f37ee13783a3ae549bb0b8cdead"
+  url "https://github.com/flosell/iam-policy-json-to-terraform/archive/1.8.0.tar.gz"
+  sha256 "428ee4c7c40a77c3f2c08f1ea5b5ac145db684bba038ab113848e1697ef906dc"
   license "Apache-2.0"
-  revision 1
   head "https://github.com/flosell/iam-policy-json-to-terraform.git"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "d1114f74f71e918ec5aa63a06ceedc1d190757c6427a8711623b6e428abbdfc8"
-    sha256 cellar: :any_skip_relocation, big_sur:       "e4316885451a287ef712e0838c680b55cc1267d04d77609f4f320b1728257ebf"
-    sha256 cellar: :any_skip_relocation, catalina:      "86e9ee53bdcda8143b96d78acc61c55f759d098039e1304b38f92293f99d8878"
-    sha256 cellar: :any_skip_relocation, mojave:        "cbb79fcd24013f6850f12bf1dc31ffaac3c47cba3386ee1f40dbcc55073a8170"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "ac00a7ac5a6ff93c27f096a6a8ff9e77cfbe65a18825f4d70411b0dfd93c64ed"
+    sha256 cellar: :any_skip_relocation, big_sur:       "414adbbf759816cf41a250c66cf375e85d0d4e03d94cdb6b41aba59000f72b87"
+    sha256 cellar: :any_skip_relocation, catalina:      "414adbbf759816cf41a250c66cf375e85d0d4e03d94cdb6b41aba59000f72b87"
+    sha256 cellar: :any_skip_relocation, mojave:        "414adbbf759816cf41a250c66cf375e85d0d4e03d94cdb6b41aba59000f72b87"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "04e3ec2788df5965f842759d48c939efbd699fbcc66d2d3e000a6c844607630e"
   end
 
   depends_on "go" => :build
 
   def install
-    system "go", "build", *std_go_args, "-ldflags", "-s -w"
+    system "go", "build", *std_go_args(ldflags: "-s -w")
   end
 
   test do

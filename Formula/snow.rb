@@ -3,7 +3,7 @@ class Snow < Formula
   homepage "https://web.archive.org/web/20200701063014/www.darkside.com.au/snow/"
   # The upstream website seems to be rejecting curl connections.
   # Consistently returns "HTTP/1.1 406 Not Acceptable".
-  url "https://dl.bintray.com/homebrew/mirror/snow-20130616.tar.gz"
+  url "https://www.mirrorservice.org/sites/ftp.netbsd.org/pub/pkgsrc/distfiles/snow-20130616.tar.gz"
   sha256 "c0b71aa74ed628d121f81b1cd4ae07c2842c41cfbdf639b50291fc527c213865"
   license "Apache-2.0"
 
@@ -17,7 +17,7 @@ class Snow < Formula
     sha256 cellar: :any_skip_relocation, sierra:        "3c975f8c77c450c084b8a468f5d51dd12acaa15dd93dbc440b4523b8dc130316"
     sha256 cellar: :any_skip_relocation, el_capitan:    "5121a5196c5ed20b7496a5190830bf2e49bdd18c3950fc6b1b8fabb239c9ef7c"
     sha256 cellar: :any_skip_relocation, yosemite:      "f4e949f65f946916a5f0b018a75e741336fed9e6434f1802d906e003e9da6b65"
-    sha256 cellar: :any_skip_relocation, mavericks:     "4d6bd4ca3de8ee330802495bdb04b0928afa21bb47a8fb1cde71d8a0c7919ada"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b2e1c6de8181532e1de1703e7ad9cfbb7568faf4c77cb18b2e8eae00fede114a"
   end
 
   def install

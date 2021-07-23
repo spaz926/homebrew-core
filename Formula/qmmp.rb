@@ -1,11 +1,18 @@
 class Qmmp < Formula
   desc "Qt-based Multimedia Player"
   homepage "https://qmmp.ylsoftware.com/"
-  url "https://downloads.sourceforge.net/project/qmmp-dev/qmmp/qmmp-1.4.4.tar.bz2"
-  sha256 "b1945956109fd9c7844ee5780142c0d24564b88327dc2f9a61d29386abcf9d54"
   license "GPL-2.0-or-later"
-  revision 1
-  head "https://svn.code.sf.net/p/qmmp-dev/code/branches/qmmp-1.4/"
+  head "https://svn.code.sf.net/p/qmmp-dev/code/branches/qmmp-1.5/"
+
+  stable do
+    url "https://downloads.sourceforge.net/project/qmmp-dev/qmmp/qmmp-1.5.0.tar.bz2"
+    sha256 "2f796bdbfeee4c1226541e746bcfea3d5b983a559081529e4c86a2c792026be7"
+
+    # Fix build without mpg123
+    # See https://sourceforge.net/p/qmmp-dev/tickets/1082/
+    # Remove in the next release
+    patch :DATA
+  end
 
   livecheck do
     url :stable
@@ -13,9 +20,9 @@ class Qmmp < Formula
   end
 
   bottle do
-    sha256 big_sur:  "63ce3f17fa4f0d129ca5273addd5d6eb13a1a09b8874fb9beee1ad2adbd0d994"
-    sha256 catalina: "24bc3187a83efa5687a03497c3bb3dc0772a924b71ca8663b40851c8b8d604d1"
-    sha256 mojave:   "5368c30b051f55c972b792655aa0a3c0e5e6cf65b7caeee4da973be5b2bd37ce"
+    sha256 big_sur:  "9dee25c49a89bedc44b8a45cce9c1eee237f0d04b2765a930e2482baed663f3c"
+    sha256 catalina: "3a59c33536865917e8426e7076d6e33aa465add0f0d89a60edb1dded6ef475ab"
+    sha256 mojave:   "7ff2b3f1d2b6adb30d9a8051e1c19e822eaac3643483d16150a15116d0179879"
   end
 
   depends_on "cmake" => :build
@@ -57,3 +64,18 @@ class Qmmp < Formula
     system bin/"qmmp", "--version"
   end
 end
+
+__END__
+--- a/src/plugins/Input/mpeg/decodermpegfactory.cpp
++++ b/src/plugins/Input/mpeg/decodermpegfactory.cpp
+@@ -204,7 +204,9 @@
+         d = new DecoderMAD(crc, input);
+     }
+ #elif defined(WITH_MAD)
+-    d = new DecoderMAD(input);
++    QSettings settings(Qmmp::configFile(), QSettings::IniFormat);
++    bool crc = settings.value("MPEG/enable_crc", false).toBool();
++    d = new DecoderMAD(crc, input);
+ #elif defined(WITH_MPG123)
+     d = new DecoderMPG123(input);
+ #endif

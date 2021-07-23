@@ -5,7 +5,7 @@ class Hdf5AT18 < Formula
   # (see: https://portal.hdfgroup.org/display/support/HDF5%201.8.22#HDF51.8.22-futureFutureofHDF5-1.8).
   url "https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-1.8.22/src/hdf5-1.8.22.tar.bz2"
   sha256 "689b88c6a5577b05d603541ce900545779c96d62b6f83d3f23f46559b48893a4"
-  revision 1
+  revision 2
 
   livecheck do
     url "https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/"
@@ -13,9 +13,10 @@ class Hdf5AT18 < Formula
   end
 
   bottle do
-    sha256 cellar: :any, big_sur:  "3c096b8675616ada699dbed4166448607ee962d9be0d204b4bfee7bed9a79dcc"
-    sha256 cellar: :any, catalina: "9e89965d4c4a107868f480a8ec339cd8e73e49bd919eb07e377f375a40558bef"
-    sha256 cellar: :any, mojave:   "5510c91c49d43e1b3f1b60a7792449f5133816ea9384c652c2120e489a975c65"
+    sha256 cellar: :any,                 big_sur:      "25f4af91d8f934b8d706271bb31d27a6b1f42e9fa4c6186687cea9078c0e56a0"
+    sha256 cellar: :any,                 catalina:     "65d03686011e2cd7c575c56829b9b639a0b04e1a94fb827f97e4897de2a9126c"
+    sha256 cellar: :any,                 mojave:       "b2af62b2ad8128b5df29097a95d32555b072aaf10f39ab2d0f3b36ca5c8b5d56"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "bea37af6734b50fdc36587b6bddea53c7aa24b6bcdcf17b303366b35870e46be"
   end
 
   keg_only :versioned_formula

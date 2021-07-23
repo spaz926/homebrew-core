@@ -1,10 +1,9 @@
 class MinimalRacket < Formula
   desc "Modern programming language in the Lisp/Scheme family"
   homepage "https://racket-lang.org/"
-  url "https://mirror.racket-lang.org/installers/8.0/racket-minimal-8.0-src.tgz"
-  sha256 "6092e251b7f067dc2ec554e96fa2f63d619cc1a847166cc2819fb3f4b2896e63"
+  url "https://mirror.racket-lang.org/installers/8.2/racket-minimal-8.2-src.tgz"
+  sha256 "6f4dcbb17493898c954973ddde3daee1f18aa3197e6ece0d3e48dc2d4cfa84c7"
   license any_of: ["MIT", "Apache-2.0"]
-  revision 2
 
   # File links on the download page are created using JavaScript, so we parse
   # the filename from a string in an object. We match the version from the
@@ -16,10 +15,11 @@ class MinimalRacket < Formula
   end
 
   bottle do
-    sha256 arm64_big_sur: "d25a57fc13b6174372f6fef049e7412188a9b9c2ae6dfa69bf00ddb7db209caf"
-    sha256 big_sur:       "94e7424a7f400a5af5fe569002b6a4a8fd731759a75748efbdc9a490af466175"
-    sha256 catalina:      "b4fe16faf4e0892db92b33963e31c48656e261f0a0ef299451713ff09a23c1d5"
-    sha256 mojave:        "f4e8d5367d0a2d8a33ad2f72e3e84e829a6306a3883c86ba7b5e51686b3bd36f"
+    sha256 arm64_big_sur: "2fcbd22adcdf16e1a8a1618f3c06022cc4081752b0802767b4e48469b22f4f36"
+    sha256 big_sur:       "2549795768caa35126b4464af7dd15bd4d3f11755f9853ffc3f248d061e7b457"
+    sha256 catalina:      "a79ff7f036256aae9159f89897e32629641d889b4bd37c98e91b216a7f3085f5"
+    sha256 mojave:        "56d2c05a1f17765404dad099fa7565883447be394f2ecbe2b74a19c13d6b7ded"
+    sha256 x86_64_linux:  "5649130e99166343b0147b8fc992d1004f1dfd8529e8de0f284c0912217aa0c8"
   end
 
   depends_on "openssl@1.1"

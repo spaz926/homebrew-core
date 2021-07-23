@@ -1,8 +1,8 @@
 class Composer < Formula
   desc "Dependency Manager for PHP"
   homepage "https://getcomposer.org/"
-  url "https://getcomposer.org/download/2.0.11/composer.phar"
-  sha256 "d6eee0d4637f4bd82bdae098fceda300dcb3ec35bf502604fbe7510933b8f952"
+  url "https://getcomposer.org/download/2.1.4/composer.phar"
+  sha256 "3c8f521888ccb51becae522e263dbfd17169fbf3d4716685858b2c7e7684f4ae"
   license "MIT"
 
   livecheck do
@@ -10,7 +10,23 @@ class Composer < Formula
     regex(%r{href=.*?/v?(\d+(?:\.\d+)+)/composer\.phar}i)
   end
 
-  bottle :unneeded
+  bottle do
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "3c77ce6a7dd0171cf2a033efb7f9488f5fc21e1e92068b78f74e5b7f692c3a94"
+    sha256 cellar: :any_skip_relocation, big_sur:       "8d81770feacaaa52e670ee68824c1786f6280c52028fc4befbff6ace4ff175ec"
+    sha256 cellar: :any_skip_relocation, catalina:      "8d81770feacaaa52e670ee68824c1786f6280c52028fc4befbff6ace4ff175ec"
+    sha256 cellar: :any_skip_relocation, mojave:        "8d81770feacaaa52e670ee68824c1786f6280c52028fc4befbff6ace4ff175ec"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3c77ce6a7dd0171cf2a033efb7f9488f5fc21e1e92068b78f74e5b7f692c3a94"
+  end
+
+  # Keg-relocation breaks the formula when it replaces `/usr/local` with a non-default prefix
+  pour_bottle? do
+    on_macos do
+      reason "The bottle needs to be installed into `#{Homebrew::DEFAULT_PREFIX}` on Intel macOS."
+      satisfy { HOMEBREW_PREFIX.to_s == Homebrew::DEFAULT_PREFIX || Hardware::CPU.arm? }
+    end
+  end
+
+  uses_from_macos "php"
 
   def install
     bin.install "composer.phar" => "composer"
@@ -36,7 +52,7 @@ class Composer < Formula
       }
     EOS
 
-    (testpath/"src/HelloWorld/greetings.php").write <<~EOS
+    (testpath/"src/HelloWorld/Greetings.php").write <<~EOS
       <?php
 
       namespace HelloWorld;

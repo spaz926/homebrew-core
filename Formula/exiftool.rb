@@ -3,8 +3,9 @@ class Exiftool < Formula
   homepage "https://exiftool.org"
   # Ensure release is tagged production before submitting.
   # https://exiftool.org/history.html
-  url "https://exiftool.org/Image-ExifTool-12.16.tar.gz"
-  sha256 "c140797d72acdaf04f7ce0629867353510b56fbe99ceaac0742bbc379610756a"
+  url "https://cpan.metacpan.org/authors/id/E/EX/EXIFTOOL/Image-ExifTool-12.26.tar.gz"
+  mirror "https://exiftool.org/Image-ExifTool-12.26.tar.gz"
+  sha256 "ed9f3285e263636c713ab52fcfb55cbcf4becd6c6e04bda410c8f240996ece9e"
   license any_of: ["Artistic-1.0-Perl", "GPL-1.0-or-later"]
 
   livecheck do
@@ -13,10 +14,11 @@ class Exiftool < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "a0d8370ee8da32d13b5deb9acfbfa5e460a17c248b358f44c026690a8d22905f"
-    sha256 cellar: :any_skip_relocation, big_sur:       "25ff309cacd34da2b0e285b0ae6a1eda155afe8fc76270f881127cef9fea9524"
-    sha256 cellar: :any_skip_relocation, catalina:      "8abcffb62ed34374bdb53169396db443b968631904a4450f6b68c9603e9392b9"
-    sha256 cellar: :any_skip_relocation, mojave:        "3faea0b5e1f2c4aba9273949f583e06a3a4cf7624b57883cd87f7889f2265989"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "d3a2f7e157086b5b36dd06a56e7d66692a11a8fa605e978ca4dea81809c8f00c"
+    sha256 cellar: :any_skip_relocation, big_sur:       "4d2164b47c21c2bc512a51e356350acd2e3c3eab476625678772ca20c4290a30"
+    sha256 cellar: :any_skip_relocation, catalina:      "dcecf0acae250788ce5a32aec3e45a11a45af51a92109f78a560b6d896cc21a7"
+    sha256 cellar: :any_skip_relocation, mojave:        "dcecf0acae250788ce5a32aec3e45a11a45af51a92109f78a560b6d896cc21a7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5fe3943d30b3a01a76465d736c9d5f0594889b57bae96ef15e22cdcc7499cd07"
   end
 
   def install
@@ -28,7 +30,11 @@ class Exiftool < Formula
     libexec.install "lib"
     bin.install "exiftool"
     doc.install Dir["html/*"]
-    man1.install "blib/man1/exiftool.1"
+    suffix = ""
+    on_linux do
+      suffix = "p"
+    end
+    man1.install "blib/man1/exiftool.1#{suffix}"
     man3.install Dir["blib/man3/*"]
   end
 

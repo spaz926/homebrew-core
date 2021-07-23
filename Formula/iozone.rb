@@ -1,20 +1,23 @@
 class Iozone < Formula
   desc "File system benchmark tool"
   homepage "https://www.iozone.org/"
-  url "https://www.iozone.org/src/current/iozone3_491.tgz"
-  sha256 "057d310cc0c16fcb35ac6de25bee363d54503377cbd93a6122797f8277aab6f0"
+  url "https://www.iozone.org/src/current/iozone3_492.tgz"
+  sha256 "cece887183d19b566633761f69b50952300cd594327a126a8aea184afbaa18d7"
   license :cannot_represent
 
   livecheck do
     url "https://www.iozone.org/src/current/"
     regex(/href=.*?iozone[._-]?v?(\d+(?:[._]\d+)+)\.t/i)
+    strategy :page_match do |page, regex|
+      page.scan(regex).map { |match| match&.first&.gsub("_", ".") }
+    end
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_big_sur: "4d23cb835d535b2b6a553e5e1bb1a9cceeba50745c45e97b53ce2057b9ef5d77"
-    sha256 cellar: :any_skip_relocation, big_sur:       "a6f0a32d9de27662d82b075d9bb59944a496c2782e5ce3e8b50228fbf48b1749"
-    sha256 cellar: :any_skip_relocation, catalina:      "a9865b6a1f2528acd3734a0833853a26a2b66c53c3f0e7f11be333a526c9d29d"
-    sha256 cellar: :any_skip_relocation, mojave:        "9fd8e8232cb83eaeabc297ec4c89ec264e91fab8991d86c9aa57385f7143bf48"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur: "aa676ffe3625bd4127956e10b39e4e25f51f82bb14ca061062282b81dd20318e"
+    sha256 cellar: :any_skip_relocation, big_sur:       "f47bc3f26886b9469cc471bdea595bacd0158199ad1892d2b1836100d617f1e5"
+    sha256 cellar: :any_skip_relocation, catalina:      "ac6f70cec9ffbf1c4be9feeb737bdf2eefeed1a9f9c62f6c4609fd08b6a3de4a"
+    sha256 cellar: :any_skip_relocation, mojave:        "8098476c90a74f06fa73eda62e402629fd179b2f008f59fc97d2f0b5dd633ab5"
   end
 
   def install

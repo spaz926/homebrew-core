@@ -2,15 +2,15 @@ class StellarCore < Formula
   desc "Backbone of the Stellar (XLM) network"
   homepage "https://www.stellar.org/"
   url "https://github.com/stellar/stellar-core.git",
-      tag:      "v15.3.0",
-      revision: "6b99ef893c7f13f22c7c72a7f66ea912aeb4ad73"
+      tag:      "v17.2.0",
+      revision: "e47d483433ce4f7eaf0a0512e2556beb482c8851"
   license "Apache-2.0"
   head "https://github.com/stellar/stellar-core.git"
 
   bottle do
-    sha256 cellar: :any, big_sur:  "35e9457b2e517326f149db3c0608d08a37f1bd906fa0dd5a18d1f754bb420027"
-    sha256 cellar: :any, catalina: "7b0f57cf2aa959f7841e9c7ba74998843701b72c79e91dd48dd33450320610dc"
-    sha256 cellar: :any, mojave:   "f897d9e2d87b5fcbc7b1140e87649a3849b6fe7a3ff4ceec4f3dc8ec8687cb4c"
+    sha256 cellar: :any, arm64_big_sur: "ae0e82196cc5dc7cc18df23908047a4518c2552be2a581da28a971323e8a19eb"
+    sha256 cellar: :any, big_sur:       "beb829af51d6968cb1e882066b53d6afc1b34dbc8070946ef599ecb1e585a5d5"
+    sha256 cellar: :any, catalina:      "80d262fcf4e6d4063595d8a471410358995cab712897f8c859fed03825ff12db"
   end
 
   depends_on "autoconf" => :build
@@ -22,9 +22,19 @@ class StellarCore < Formula
   depends_on "libpq"
   depends_on "libpqxx"
   depends_on "libsodium"
+  depends_on macos: :catalina # Requires C++17 filesystem
 
   uses_from_macos "bison" => :build
   uses_from_macos "flex" => :build
+
+  on_linux do
+    depends_on "gcc"
+  end
+
+  # Needs libraries at runtime:
+  # /usr/lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.22' not found
+  # Upstream has explicitly stated gcc-5 is too old: https://github.com/stellar/stellar-core/issues/1903
+  fails_with gcc: "5"
 
   def install
     system "./autogen.sh"

@@ -4,6 +4,7 @@ class SpatialiteTools < Formula
   url "https://www.gaia-gis.it/gaia-sins/spatialite-tools-sources/spatialite-tools-5.0.1.tar.gz"
   sha256 "9604c205e87f037789bc52302c66ccd1371c3e98c74e8ec4e29b0752de35171c"
   license "GPL-3.0-or-later"
+  revision 2
 
   livecheck do
     url "https://www.gaia-gis.it/gaia-sins/spatialite-tools-sources/"
@@ -11,23 +12,27 @@ class SpatialiteTools < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "5e0b6d533e1d0b31e29811693464ecc895fbf7a556a233b5f4e213036f53a7a3"
-    sha256 cellar: :any, big_sur:       "d7214560462a3031b23a7f0ae25ea019e44071e72a374a5621cfa4373e9db97e"
-    sha256 cellar: :any, catalina:      "2be1cfd090f14eecaf18974612ee0d6c7a751c1138fd2eea6d2667098f6315cb"
-    sha256 cellar: :any, mojave:        "94e72cdc9587bff34d6db75fd39eb8d94ca3992e1f94089f0eaf713d33372257"
+    sha256 cellar: :any, arm64_big_sur: "1dc66a96910742c330fa90b8c547ce7d7693d7c3af118707b5a15b6d6e013ef9"
+    sha256 cellar: :any, big_sur:       "1e4d449a6915bfe180238dd30ed93a2909661076a86f66cea306fda8dbdeb8c4"
+    sha256 cellar: :any, catalina:      "362dd2c109f880d356d7f7e0359936717acfc1ca146277f0e2c456955c33492f"
+    sha256 cellar: :any, mojave:        "ffdc8a4b476146b0f58965f3879f1418a4b151bcbe4a213a005cd5eae5ecc50f"
   end
 
   depends_on "pkg-config" => :build
   depends_on "libspatialite"
+  depends_on "proj@7"
   depends_on "readosm"
 
   def install
     # See: https://github.com/Homebrew/homebrew/issues/3328
     ENV.append "LDFLAGS", "-liconv"
     # Ensure Homebrew SQLite is found before system SQLite.
+    #
+    # spatialite-tools picks `proj` (instead of `proj@7`) if installed
     sqlite = Formula["sqlite"]
-    ENV.append "LDFLAGS", "-L#{sqlite.opt_lib}"
-    ENV.append "CFLAGS", "-I#{sqlite.opt_include}"
+    proj = Formula["proj@7"]
+    ENV.prepend "LDFLAGS", "-L#{sqlite.opt_lib} -lsqlite3 -L#{proj.opt_lib}"
+    ENV.prepend "CFLAGS", "-I#{sqlite.opt_include} -I#{proj.opt_include}"
 
     system "./configure", "--disable-dependency-tracking",
                           "--prefix=#{prefix}"

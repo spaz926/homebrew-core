@@ -12,6 +12,7 @@ class Xxh < Formula
     sha256 cellar: :any_skip_relocation, big_sur:       "11334c41c931307fe766117bfee9f6026f842adafbc24680bf7d12d600df8da5"
     sha256 cellar: :any_skip_relocation, catalina:      "da65d762bb12e804c65a925c1b1fa92ff96845478ff3843efcecc1164bdbedad"
     sha256 cellar: :any_skip_relocation, mojave:        "58f62dc572e312a5f2eb42ca0177b6b07ea4de7c710f03319f581b3843c1a6f1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6aff1a95baaf066ffe25886e39dea34d64d847a2e8301e6930961eb4f72d8653"
   end
 
   depends_on "python@3.9"
@@ -62,12 +63,12 @@ class Xxh < Formula
 
       argv = stdout.lines.grep(/^Final arguments list:/).first.split(":").second
       args = JSON.parse argv.tr("'", "\"")
-      assert_include args, "xxh-shell-zsh"
+      assert_includes args, "xxh-shell-zsh"
 
       ssh_argv = stderr.lines.grep(/^ssh arguments:/).first.split(":").second
       ssh_args = JSON.parse ssh_argv.tr("'", "\"")
-      assert_include ssh_args, "Port=#{port}"
-      assert_include ssh_args, "HostName=127.0.0.1"
+      assert_includes ssh_args, "Port=#{port}"
+      assert_includes ssh_args, "HostName=127.0.0.1"
       assert_match "Connection closed by remote host", stderr
     ensure
       Process.kill("TERM", server_pid)

@@ -5,32 +5,38 @@ class Qscintilla2 < Formula
   sha256 "a7331c44b5d7320cbf58cb2382c38857e9e9f4fa52c405bd7776c8b6649836c2"
   license "GPL-3.0-only"
 
+  # The downloads page also lists pre-release versions, which use the same file
+  # name format as stable versions. The only difference is that files for
+  # stable versions are kept in corresponding version subdirectories and
+  # pre-release files are in the parent QScintilla directory. The regex below
+  # omits pre-release versions by only matching tarballs in a version directory.
   livecheck do
     url "https://www.riverbankcomputing.com/software/qscintilla/download"
-    regex(/href=.*?QScintilla(?:[._-](?:gpl|src))?[._-]v?(\d+(?:\.\d+)+)\.t/i)
+    regex(%r{href=.*?QScintilla/v?\d+(?:\.\d+)+/QScintilla(?:[._-](?:gpl|src))?[._-]v?(\d+(?:\.\d+)+)\.t}i)
   end
 
   bottle do
-    sha256 cellar: :any, arm64_big_sur: "e8ce3df60b8f7de8340fadd1c831fb8ad187e096d1c86c4018ea3fa01fa29db1"
-    sha256 cellar: :any, big_sur:       "99fcaa6d776ba1ade8aa0a49f6dd92c75fbafedd1defae17ebf8df811fddf145"
-    sha256 cellar: :any, catalina:      "45540693835165a8841e92fa24bfe11c084375dcc932f1379c88ef53581a6692"
-    sha256 cellar: :any, mojave:        "9301017d40ca096b90daec0c01c55a89c29dd03d08c3d011fd7a798df2a1bff2"
+    rebuild 1
+    sha256 cellar: :any, arm64_big_sur: "fe9548ebe70dbd6d1470cf3394878ccae6bc4aa6dec7516fe6ab2e0e79285580"
+    sha256 cellar: :any, big_sur:       "e48009d9515d8fd172d77f712867cc703838f10c8d82476b391cc16dbcad3414"
+    sha256 cellar: :any, catalina:      "82e1076cc42016998ea0df9c0a699cbc7535cdf800771a2875dabfb392d2e451"
+    sha256 cellar: :any, mojave:        "753b282bb8e1251d1db37b171b3ef5d2b16212091e075c6065021c0417ac3f4d"
   end
 
   depends_on "pyqt-builder" => :build
+  depends_on "sip"          => :build
 
   # TODO: use qt when octave can migrate to qt6
   depends_on "pyqt@5"
   depends_on "python@3.9"
   depends_on "qt@5"
-  depends_on "sip"
 
   def install
     args = []
     spec = ""
 
     on_macos do
-      # TODO: when qt 6.1 is released, modify the spec
+      # TODO: when using qt 6, modify the spec
       spec = (ENV.compiler == :clang) ? "macx-clang" : "macx-g++"
       spec << "-arm64" if Hardware::CPU.arm?
       args = %W[-config release -spec #{spec}]
@@ -38,7 +44,7 @@ class Qscintilla2 < Formula
 
     pyqt = Formula["pyqt@5"]
     qt = Formula["qt@5"]
-    xy = Language::Python.major_minor_version Formula["python@3.9"].opt_bin/"python3"
+    site_packages = Language::Python.site_packages("python3")
 
     cd "src" do
       inreplace "qscintilla.pro" do |s|
@@ -69,14 +75,14 @@ class Qscintilla2 < Formula
       mv "pyproject-qt#{qt.version.major}.toml", "pyproject.toml"
       (buildpath/"Python/pyproject.toml").append_lines <<~EOS
         [tool.sip.project]
-        sip-include-dirs = ["#{pyqt.opt_lib}/python#{xy}/site-packages/PyQt#{pyqt.version.major}/bindings"]
+        sip-include-dirs = ["#{pyqt.opt_prefix/site_packages}/PyQt#{pyqt.version.major}/bindings"]
       EOS
 
       # TODO: qt6 options
       # --qsci-features-dir #{share}/qt/mkspecs/features
       # --api-dir #{share}/qt/qsci/api/python
       args = %W[
-        --target-dir #{prefix}
+        --target-dir #{prefix/site_packages}
 
         --qsci-features-dir #{prefix}/data/mkspecs/features
         --qsci-include-dir #{include}
@@ -84,8 +90,6 @@ class Qscintilla2 < Formula
         --api-dir #{prefix}/data/qsci/api/python
       ]
       system "sip-install", *args
-
-      (lib/"python#{xy}/site-packages").install %W[#{prefix}/PyQt#{pyqt.version.major} #{prefix}/QScintilla-#{version}.dist-info]
     end
   end
 
